@@ -277,7 +277,7 @@ height:50vh;
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/07/14</span>
+                    <span class="post-intro-time">2019/07/14</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -423,8 +423,8 @@ height:50vh;
 <p>  即new一个对象，它的_proto_属性指向了方法的prototype属性，并且constructor指向了prototype的constructor属性。</p>
 <h3 id="创建对象的过程-1"><a href="#创建对象的过程-1" class="headerlink" title="创建对象的过程"></a>创建对象的过程</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Hehe</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> h = <span class="keyword">new</span> Hehe(<span class="string">"笑你妹"</span>);</span><br><span class="line">	<span class="comment">//伪代码:</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">newObj</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">		 <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">		 obj.__proto__ = Hehe.prototype; </span><br><span class="line">		 obj.constructor = Hehe.prototype.constructor;</span><br><span class="line">		 <span class="keyword">var</span> result = Hehe.call(obj, name);</span><br><span class="line">		 <span class="keyword">return</span> <span class="keyword">typeof</span> result===<span class="string">'object'</span>&amp;&amp; result!=<span class="literal">null</span> ? result : obj;  <span class="comment">//当无返回对象或默认时返回obj。</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> hh = newObj(<span class="string">"笑你妹"</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(hh);</span><br><span class="line">	<span class="built_in">console</span>.log(h);</span><br><span class="line">	<span class="comment">//虽然hh!=h,但是可以看到这个hh就和h的结构一样了。</span></span><br></pre></td></tr></table></figure>
 <p><strong>过程：先创建一个空对象，设置一个_proto_指向方法的原型，设置constructor，用新对象做this指向方法，返回新对象。</strong></p>
-<h2 id="原型以及原型链关系"><a href="#原型以及原型链关系" class="headerlink" title="原型以及原型链关系"></a>原型以及原型链关系</h2><p><img src="/2020/07/14/%E5%8E%9F%E5%9E%8B%E9%93%BE/yuanxing.png" alt="image"></p>
-<p><img src="/2020/07/14/%E5%8E%9F%E5%9E%8B%E9%93%BE/gouzao.png" alt="image"></p>
+<h2 id="原型以及原型链关系"><a href="#原型以及原型链关系" class="headerlink" title="原型以及原型链关系"></a>原型以及原型链关系</h2><p><img src="/2019/07/14/%E5%8E%9F%E5%9E%8B%E9%93%BE/yuanxing.png" alt="image"></p>
+<p><img src="/2019/07/14/%E5%8E%9F%E5%9E%8B%E9%93%BE/gouzao.png" alt="image"></p>
 <h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><blockquote>
 <p>任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。</p>
 </blockquote>
@@ -473,12 +473,17 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/07/02/HTTP%E5%8D%8F%E8%AE%AE/" title= "HTTP协议">
+                    <div class="nextTitle">HTTP协议</div>
+                </a>
+            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2020/07/02/HTTP%E5%8D%8F%E8%AE%AE/" title= "HTTP协议">
-                    <div class="prevTitle">HTTP协议</div>
+                <a href= "/2019/06/25/Event%E4%BA%8B%E4%BB%B6%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/" title= "Event事件常见应用">
+                    <div class="prevTitle">Event事件常见应用</div>
                 </a>
             
         </li>
@@ -792,11 +797,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/14</span><a class="archive-post-title" href= "/2020/07/14/%E5%8E%9F%E5%9E%8B%E9%93%BE/" >原型链</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">07/02</span><a class="archive-post-title" href= "/2020/07/02/HTTP%E5%8D%8F%E8%AE%AE/" >HTTP协议</a>
         </li>
     
@@ -808,6 +808,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/14</span><a class="archive-post-title" href= "/2019/07/14/%E5%8E%9F%E5%9E%8B%E9%93%BE/" >原型链</a>
+        </li>
     
     
         <li class="archive-post-item">
