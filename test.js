@@ -17,3 +17,11 @@ Promise.all = (arr) => {
         }
     })
 };
+var a = { name: 'demo' };
+var b = new Object({ name: 'demo' });
+var func = function () {
+    this.name = 'demo';
+}
+var c = new func();
+var demo = { name: 'demo' };
+var d = Object.create(demo);
