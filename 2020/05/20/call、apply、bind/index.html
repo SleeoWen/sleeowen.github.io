@@ -401,8 +401,9 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。</p>
-<h2 id="apply、call"><a href="#apply、call" class="headerlink" title="apply、call"></a>apply、call</h2><p>在 javascript 中，<code>call</code> 和 <code>apply</code> 都是为了改变某个函数运行时的上下文（context）而存在的，换句话说，就是为了改变函数体内部 <code>this</code> 的指向。<br>JavaScript 的一大特点是，函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p>
+        <p>bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。<br> <a id="more"></a><br>apply、call</p>
+<hr>
+<p>在 javascript 中，<code>call</code> 和 <code>apply</code> 都是为了改变某个函数运行时的上下文（context）而存在的，换句话说，就是为了改变函数体内部 <code>this</code> 的指向。<br>JavaScript 的一大特点是，函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fruits</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"> </span><br><span class="line">fruits.prototype = &#123;</span><br><span class="line">    color: <span class="string">"red"</span>,</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"My color is "</span> + <span class="keyword">this</span>.color);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> apple = <span class="keyword">new</span> fruits;</span><br><span class="line">apple.say();</span><br></pre></td></tr></table></figure>
 
 <p>但是如果我们有一个对象<code>banana= {color : &quot;yellow&quot;}</code> , 我们不想对它重新定义 <code>say</code> 方法，那么我们可以通过 <code>call</code> 或 <code>apply</code> 用 <code>apple</code> 的 <code>say</code> 方法：</p>
@@ -646,7 +647,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#apply、call"><span class="toc-number">1.</span> <span class="toc-text">apply、call</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#apply、call-区别"><span class="toc-number">2.</span> <span class="toc-text">apply、call 区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#apply、call-实例"><span class="toc-number">3.</span> <span class="toc-text">apply、call 实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bind"><span class="toc-number">4.</span> <span class="toc-text">bind</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#apply、call、bind-比较"><span class="toc-number">5.</span> <span class="toc-text">apply、call、bind 比较</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#apply、call-区别"><span class="toc-number">1.</span> <span class="toc-text">apply、call 区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#apply、call-实例"><span class="toc-number">2.</span> <span class="toc-text">apply、call 实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bind"><span class="toc-number">3.</span> <span class="toc-text">bind</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#apply、call、bind-比较"><span class="toc-number">4.</span> <span class="toc-text">apply、call、bind 比较</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

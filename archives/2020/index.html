@@ -351,18 +351,8 @@
                 <span>实现call</span>
         </a>
         <div class="abstract-content">
-            call
-call() 方法在使用一个指定的 this 值和若干个指定的参数值的前提下调用某个函数或方法。举个栗子：
-
-1234567var foo =&#123;  value:1&#125;function bar()&#123;  console.log(this.value)&#125;bar.call(foo);
-
-需要注意两点：
-
-call 改变了 this 的指向，指向到 foo；
-调用了 bar 函数
-
-模拟实现第一步试想当调用 call 的时候，把 foo 对象改造成如下：
-1234567var foo = &#123;    value: 1,    bar: fun...
+            <h3 id="call"><a href="#call" class="headerlink" title="call"></a>call</h3><blockquote>
+<p>call() 方法在使用一个指定的 this 值和若干个指定的参数值的前提下调用某个函数或方法。<br>举个栗子：<br></p></blockquote>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -391,9 +381,7 @@ call 改变了 this 的指向，指向到 foo；
                 <span>call、apply、bind</span>
         </a>
         <div class="abstract-content">
-            bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。
-apply、call在 javascript 中，call 和 apply 都是为了改变某个函数运行时的上下文（context）而存在的，换句话说，就是为了改变函数体内部 this 的指向。JavaScript 的一大特点是，函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。
-1234567891011function fruits() &#123;&#125; fruits.prototype = &#123;    color: "red",    say: functio...
+            <p>bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。<br></p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
