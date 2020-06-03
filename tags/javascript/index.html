@@ -346,6 +346,46 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/05/21/%E5%AE%9E%E7%8E%B0call/" >
+            
+                <span>实现call</span>
+        </a>
+        <div class="abstract-content">
+            call
+call() 方法在使用一个指定的 this 值和若干个指定的参数值的前提下调用某个函数或方法。举个栗子：
+
+1234567var foo =&#123;  value:1&#125;function bar()&#123;  console.log(this.value)&#125;bar.call(foo);
+
+需要注意两点：
+
+call 改变了 this 的指向，指向到 foo；
+调用了 bar 函数
+
+模拟实现第一步试想当调用 call 的时候，把 foo 对象改造成如下：
+1234567var foo = &#123;    value: 1,    bar: fun...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/21</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "javascript">javascript</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/05/11/AMD%E3%80%81CMD%E3%80%81CommonJS%E3%80%81ES6Module%E7%9A%84%E5%8C%BA%E5%88%AB/" >
             
                 <span>AMD、CMD、CommonJS、ES6Module的区别</span>
@@ -1279,9 +1319,26 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 46
+        Total : 47
         </div>
         <!-- search  -->
         
@@ -1294,6 +1351,11 @@
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/21</span><a class="archive-post-title" href= "/2020/05/21/%E5%AE%9E%E7%8E%B0call/" >实现call</a>
+        </li>
     
     
         <li class="archive-post-item">
