@@ -22,7 +22,7 @@
     <meta name="description" content="个人的学习经历">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>SleeoWen-Blog</title>
+    <title>时间复杂度 · SleeoWen-Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Sleeo&#39;s Blog.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">时间复杂度</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Sleeo's Blog.</a>
 </header>
@@ -220,24 +231,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            时间复杂度
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "算法">算法</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.9k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/06/10</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,101 +399,109 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/06/25/Event%E4%BA%8B%E4%BB%B6%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/" >
-            
-                <span>Event事件常见应用</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="Event-对象"><a href="#Event-对象" class="headerlink" title="Event 对象"></a>Event 对象</h2><p>W3C的说法是：</p>
-<p>Event 对象代表事件的状态，比如事件在其中发生的元素、键盘按键的状态、鼠标的位置、鼠标按钮的状态。</p>
-<p>事件通常与函数结合使用，函数不会在事件发生前被执行！</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "html">html</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>我们假设计算机运行一行基础代码需要执行一次运算。<br> <a id="more"></a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int aFunc(<span class="keyword">void</span>) &#123;</span><br><span class="line">    printf(<span class="string">"Hello, World!\n"</span>);      </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么上面这个方法需要执行 2 次运算</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int aFunc(int n) &#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i&lt;n; i++) &#123;         </span><br><span class="line">        printf(<span class="string">"Hello, World!\n"</span>);      </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法需要 (n + 1 + n + 1) = 2n + 2 次运算。</p>
+<p>我们把 算法需要执行的运算次数 用 输入大小 n 的函数 表示，即 T(n) 。<br>此时为了 估算算法需要的运行时间 和 简化算法分析，我们引入时间复杂度的概念。</p>
+<p>定义：存在常数 c 和函数 f(N)，使得当 N &gt;= c 时 T(N) &lt;= f(N)，表示为 T(n) = O(f(n)) 。  </p>
+<p>当 N &gt;= 2 的时候，f(n) = n^2 总是大于 T(n) = n + 2 的，于是我们说 f(n) 的增长速度是大于或者等于 T(n) 的，也说 f(n) 是 T(n) 的上界，可以表示为 T(n) = O(f(n))。</p>
+<p>因为 f(n) 的增长速度是大于或者等于 T(n) 的，即 T(n) = O(f(n))，所以我们可以用 f(n) 的增长速度来度量 T(n) 的增长速度，所以我们说这个算法的时间复杂度是 O(f(n))。</p>
+<p><strong>算法的时间复杂度，用来度量算法的运行时间，记作: T(n) = O(f(n))。它表示随着 输入大小 n 的增大，算法执行需要的时间的增长速度可以用 f(n) 来描述。</strong></p>
+<p>显然如果 T(n) = n^2，那么 T(n) = O(n^2)，T(n) = O(n^3)，T(n) = O(n^4) 都是成立的，但是因为第一个 f(n) 的增长速度与 T(n) 是最接近的，所以第一个是最好的选择，所以我们说这个算法的复杂度是 O(n^2) 。</p>
+<p>那么当我们拿到算法的执行次数函数 T(n) 之后怎么得到算法的时间复杂度呢？</p>
+<ol>
+<li>我们知道常数项对函数的增长速度影响并不大，所以当 T(n) = c，c 为一个常数的时候，我们说这个算法的时间复杂度为 O(1)；如果 T(n) 不等于一个常数项时，直接将常数项省略。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">比如</span><br><span class="line">第一个 Hello, World 的例子中 T(n) &#x3D; 2，所以我们说那个函数(算法)的时间复杂度为 O(1)。</span><br><span class="line">T(n) &#x3D; n + 29，此时时间复杂度为 O(n)。</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>我们知道高次项对于函数的增长速度的影响是最大的。n^3 的增长速度是远超 n^2 的，同时 n^2 的增长速度是远超 n 的。 同时因为要求的精度不高，所以我们直接忽略低此项。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">比如</span><br><span class="line">T(n) &#x3D; n^3 + n^2 + 29，此时时间复杂度为 O(n^3)。</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>因为函数的阶数对函数的增长速度的影响是最显著的，所以我们忽略与最高阶相乘的常数。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">比如</span><br><span class="line">T(n) &#x3D; 3n^3，此时时间复杂度为 O(n^3)。</span><br></pre></td></tr></table></figure>
+
+<p><strong>综合起来：如果一个算法的执行次数是 T(n)，那么只保留最高次项，同时忽略最高项的系数后得到函数 f(n)，此时算法的时间复杂度就是 O(f(n))。为了方便描述，下文称此为 大 O 推导法。</strong></p>
+<p>由此可见，由执行次数 T(n) 得到时间复杂度并不困难，很多时候困难的是从算法通过分析和数学运算得到 T(n)。对此，提供下列四个便利的法则，这些法则都是可以简单推导出来的，总结出来以便提高效率。</p>
+<ol>
+<li>对于一个循环，假设循环体的时间复杂度为 O(n)，循环次数为 m，则这个<br>循环的时间复杂度为 O(n×m)。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> aFunc(int n) &#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; n; i++) &#123;         </span><br><span class="line">        printf(<span class="string">"Hello, World!\n"</span>);      </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时时间复杂度为 O(n × 1)，即 O(n)。</p>
+<ol start="2">
+<li>对于多个循环，假设循环体的时间复杂度为 O(n)，各个循环的循环次数分别是 a, b, c…，则这个循环的时间复杂度为 O(n×a×b×c…)。分析的时候应该由里向外分析这些循环。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> aFunc(int n) &#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; n; i++) &#123;         </span><br><span class="line">        <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; n; j++) &#123;       </span><br><span class="line">            printf(<span class="string">"Hello, World!\n"</span>);      </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时时间复杂度为 O(n × n × 1)，即 O(n^2)。</p>
+<ol start="3">
+<li>对于顺序执行的语句或者算法，总的时间复杂度等于其中最大的时间复杂度。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> aFunc(int n) &#123;</span><br><span class="line">    <span class="comment">// 第一部分时间复杂度为 O(n^2)</span></span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            printf(<span class="string">"Hello, World!\n"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 第二部分时间复杂度为 O(n)</span></span><br><span class="line">    <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">        printf(<span class="string">"Hello, World!\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时时间复杂度为 max(O(n^2), O(n))，即 O(n^2)。</p>
+<ol start="4">
+<li>对于条件判断语句，总的时间复杂度等于其中 时间复杂度最大的路径 的时间复杂度。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> aFunc(int n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 第一条路径时间复杂度为 O(n^2)</span></span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                printf(<span class="string">"输入数据大于等于零\n"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 第二条路径时间复杂度为 O(n)</span></span><br><span class="line">        <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            printf(<span class="string">"输入数据小于零\n"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时时间复杂度为 max(O(n^2), O(n))，即 O(n^2)。</p>
+<p><strong>时间复杂度分析的基本策略是：从内向外分析，从最深层开始分析。如果遇到函数调用，要深入函数进行分析。</strong></p>
+<p>最后，我们来练习一下</p>
+<p>一. 基础题<br>求该方法的时间复杂度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> aFunc(int n) &#123;</span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (int j = i; j &lt; n; j++) &#123;</span><br><span class="line">            printf(<span class="string">"Hello World\n"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考答案：<br>当 i = 0 时，内循环执行 n 次运算，当 i = 1 时，内循环执行 n - 1 次运算…… 当 i = n - 1 时，内循环执行 1 次运算。<br>所以，执行次数 T(n) = n + (n - 1) + (n - 2)……+ 1 = n(n + 1) / 2 = n^2 / 2 + n / 2。<br>根据上文说的 大 O 推导法 可以知道，此时时间复杂度为 O(n^2)。</p>
+<p>二. 进阶题<br>求该方法的时间复杂度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> aFunc(int n) &#123;</span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">2</span>; i &lt; n; i++) &#123;</span><br><span class="line">        i *= <span class="number">2</span>;</span><br><span class="line">        printf(<span class="string">"%i\n"</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考答案：<br>假设循环次数为 t，则循环条件满足 2^t &lt; n。<br>可以得出，执行次数 t = log(2)(n)，即 T(n) = log(2)(n)，可见时间复杂度为 O(log(2)(n))，即 O(log n)。</p>
+<p>三. 再次进阶<br>求该方法的时间复杂度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">long aFunc(int n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> aFunc(n - <span class="number">1</span>) + aFunc(n - <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考答案：<br>显然运行次数，T(0) = T(1) = 1，同时 T(n) = T(n - 1) + T(n - 2) + 1，这里的 1 是其中的加法算一次执行。<br>显然 T(n) = T(n - 1) + T(n - 2) 是一个<a href="https://baike.baidu.com/item/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97" target="_blank" rel="noopener">斐波那契数列</a>，通过归纳证明法可以证明，当 n &gt;= 1 时 T(n) &lt; (5/3)^n，同时当 n &gt; 4 时 T(n) &gt;= (3/2)^n。<br>所以该方法的时间复杂度可以表示为 O((5/3)^n)，简化后为 O(2^n)。<br>可见这个方法所需的运行时间是以指数的速度增长的。如果大家感兴趣，可以试下分别用 1，10，100 的输入大小来测试下算法的运行时间，相信大家会感受到时间复杂度的无穷魅力。</p>
+
     </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/06/11/DOM%E4%BA%8B%E4%BB%B6%E6%B5%81/" >
-            
-                <span>DOM事件流</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="什么是事件？"><a href="#什么是事件？" class="headerlink" title="什么是事件？"></a>什么是事件？</h2><blockquote>
-<p>事件, 就是文档或浏览器窗口发生的一些特定的交互瞬间. JavaScript 和 HTML 之间的交互是通过事件实现的. 可以使用事件监听器来监听事件, 以便事件发生时执行相应的代码.</p>
-</blockquote>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "html">html</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/06/01/DOM%E7%BA%A7%E5%88%AB%E4%B8%8EDOM%E4%BA%8B%E4%BB%B6/" >
-            
-                <span>DOM级别与DOM事件</span>
-        </a>
-        <div class="abstract-content">
-            <p>事件是javascript和HTML交互基础, 任何文档或者浏览器窗口发生的交互, 都要通过绑定事件进行交互;比如鼠标点击事件、敲击键盘事件等。这样的事件行为都是前端DOM事件的组成部分，不同的DOM事件会有不同的触发条件和触发效果。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "html">html</a>
-    
-</div>
-            
-        </div>
-    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/05/30/%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/" title= "手撕代码">
+                    <div class="prevTitle">手撕代码</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -509,6 +578,24 @@
 
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1579,6 +1666,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
