@@ -346,23 +346,23 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2019/09/27/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%87%E7%A8%8B/" >
+        <a class="abstract-title" href = "/2020/07/02/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bcheckbox/" >
             
-                <span>浏览器渲染原理与过程</span>
+                <span>element源码解析之checkbox</span>
         </a>
         <div class="abstract-content">
-            <h2 id="浏览器如何渲染网页"><a href="#浏览器如何渲染网页" class="headerlink" title="浏览器如何渲染网页"></a>浏览器如何渲染网页</h2><h3 id="什么是DOCTYPE"><a href="#什么是DOCTYPE" class="headerlink" title="什么是DOCTYPE"></a>什么是DOCTYPE</h3><p>在w3school上是这么解释的：&lt;!DOCTYPE&gt;声明不是HTML标签，指示web浏览器关于页面使用哪个HTML版本进行编写的指令；在 HTML 4.01 中，<code>&lt;!DOCTYPE&gt;</code> 声明引用 DTD，因为 HTML 4.01 基于 SGML。DTD 规定了标记语言的规则，这样浏览器才能正确地呈现内容。HTML5 不基于 SGML，所以不需要引用 DTD</p>
+            <h2 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ElCheckbox <span class="keyword">from</span> <span class="string">'./src/checkbox'</span>;</span><br><span class="line"><span class="keyword">import</span> ElCheckboxGroup <span class="keyword">from</span> <span class="string">'./src/checkbox-group.vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">install</span>(<span class="params">Vue</span>) </span>&#123;</span><br><span class="line">  Vue.component(ElCheckboxGroup.name, ElCheckboxGroup);</span><br><span class="line">  Vue.component(ElCheckbox.name, ElCheckbox);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">  ElCheckbox,</span><br><span class="line">  ElCheckboxGroup</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/27</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/02</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "浏览器">浏览器</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "element">element</a>
     
 </div>
             

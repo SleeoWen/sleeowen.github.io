@@ -22,7 +22,7 @@
     <meta name="description" content="个人的学习经历">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>SleeoWen-Blog</title>
+    <title>element源码解析之checkbox · SleeoWen-Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Sleeo&#39;s Blog.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">element源码解析之checkbox</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Sleeo's Blog.</a>
 </header>
@@ -220,24 +231,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            element源码解析之checkbox
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "element">element</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/07/02</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,39 +399,92 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/09/27/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%87%E7%A8%8B/" >
-            
-                <span>浏览器渲染原理与过程</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="浏览器如何渲染网页"><a href="#浏览器如何渲染网页" class="headerlink" title="浏览器如何渲染网页"></a>浏览器如何渲染网页</h2><h3 id="什么是DOCTYPE"><a href="#什么是DOCTYPE" class="headerlink" title="什么是DOCTYPE"></a>什么是DOCTYPE</h3><p>在w3school上是这么解释的：&lt;!DOCTYPE&gt;声明不是HTML标签，指示web浏览器关于页面使用哪个HTML版本进行编写的指令；在 HTML 4.01 中，<code>&lt;!DOCTYPE&gt;</code> 声明引用 DTD，因为 HTML 4.01 基于 SGML。DTD 规定了标记语言的规则，这样浏览器才能正确地呈现内容。HTML5 不基于 SGML，所以不需要引用 DTD</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "浏览器">浏览器</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ElCheckbox <span class="keyword">from</span> <span class="string">'./src/checkbox'</span>;</span><br><span class="line"><span class="keyword">import</span> ElCheckboxGroup <span class="keyword">from</span> <span class="string">'./src/checkbox-group.vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">install</span>(<span class="params">Vue</span>) </span>&#123;</span><br><span class="line">  Vue.component(ElCheckboxGroup.name, ElCheckboxGroup);</span><br><span class="line">  Vue.component(ElCheckbox.name, ElCheckbox);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">  ElCheckbox,</span><br><span class="line">  ElCheckboxGroup</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<h2 id="Checkbox-group"><a href="#Checkbox-group" class="headerlink" title="Checkbox-group"></a>Checkbox-group</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>checkbox-group</code>的<code>html</code>代码十分简单，就是一个<code>div.el-checkbox-group</code>包裹着一个<code>slot</code>，没有什么好说的，但是它在<code>script</code>里面做了许多处理。</p>
+<h3 id="Watch"><a href="#Watch" class="headerlink" title="Watch"></a>Watch</h3><p>监听<code>value</code>的变化，然后会触发一个<code>change</code>事件，并且根据<code>mixin</code>中的<code>emitter</code>增加的<code>dispatch</code>来向父组件派发事件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">  value(value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.$emit(<span class="string">'change'</span>, value);</span><br><span class="line">    <span class="keyword">this</span>.dispatch(<span class="string">'ElFormItem'</span>, <span class="string">'el.form.change'</span>, [value]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="dispatch"><a href="#dispatch" class="headerlink" title="dispatch"></a>dispatch</h3><p>具体的讲解将在<code>mixin篇</code>进行讲解，简单的说是模拟<code>vue 1.0</code>中的<code>$dispatch</code>，来将事件一直向上传递。</p>
+<h2 id="Checkbox"><a href="#Checkbox" class="headerlink" title="Checkbox"></a>Checkbox</h2><p>我们还是先分析其生命周期。</p>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><h3 id="created"><a href="#created" class="headerlink" title="created"></a>created</h3><p>创建的时候根据<code>checked</code>这一<code>prop</code>来决定是否调用<code>addToStore</code>方法，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">  addToStore() &#123;</span><br><span class="line">    if (</span><br><span class="line">      Array.isArray(this.model) &amp;&amp;</span><br><span class="line">      this.model.indexOf(this.label) &#x3D;&#x3D;&#x3D; -1</span><br><span class="line">    ) &#123;  </span><br><span class="line">      this.model.push(this.label);</span><br><span class="line">    &#125; else &#123;  </span><br><span class="line">      this.model &#x3D; this.trueLabel || true;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p><code>checkbox</code>组件一共有三种<code>label</code>，这里先列一下官方的说明，具体使用在接下来的分析中会提及：</p>
+<ol>
+<li><code>label</code>，选中状态的值（只有在<code>checkbox-group</code>或者绑定对象类型为<code>array</code>时有效），它的值是<code>string</code>；</li>
+<li><code>true-label</code>，选中时的值，它的值是<code>string</code>或者<code>number</code>；</li>
+<li><code>false-label</code>，没有选中时的值，它的值是<code>string</code>或者<code>number</code>。</li>
+</ol>
+<p>而<code>model</code>是一个计算属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  model: &#123;</span><br><span class="line">    <span class="keyword">get</span>() &#123;  </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.isGroup</span><br><span class="line">        ? <span class="keyword">this</span>.store : <span class="keyword">this</span>.value !== <span class="literal">undefined</span>  </span><br><span class="line">        ? <span class="keyword">this</span>.value : <span class="keyword">this</span>.selfModel;  </span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="keyword">set</span>(val) &#123;  </span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.isGroup) &#123;  </span><br><span class="line">        <span class="keyword">this</span>.dispatch(<span class="string">'ElCheckboxGroup'</span>, <span class="string">'input'</span>, [val]);  </span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.value !== <span class="literal">undefined</span>) &#123;  </span><br><span class="line">        <span class="keyword">this</span>.$emit(<span class="string">'input'</span>, val);  </span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">        <span class="keyword">this</span>.selfModel = val;  </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>value</code>是一个<code>prop</code>，而<code>selfModel</code>是一个<code>data</code>上的属性，<code>store</code>是一个计算属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  store() &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._checkboxGroup ? <span class="keyword">this</span>._checkboxGroup.value : <span class="keyword">this</span>.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而<code>isGroup</code>是另一个计算属性，它将一直向父级查找到<code>el-checkbox-group</code>，如果有则返回<code>true</code>，否则返回<code>false</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  isGroup() &#123;</span><br><span class="line">    <span class="keyword">let</span> parent = <span class="keyword">this</span>.$parent;</span><br><span class="line">    <span class="keyword">while</span> (parent) &#123;</span><br><span class="line">      <span class="keyword">if</span> (parent.$options.componentName !== <span class="string">'ElCheckboxGroup'</span>) &#123;</span><br><span class="line">        parent = parent.$parent;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>._checkboxGroup = parent;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="label"><a href="#label" class="headerlink" title="label"></a>label</h2><p>多选最外面是一个<code>label</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后是两个<code>span</code>，一个是<code>input</code>部分，另一个是<code>label</code>部分。</p>
+<h2 id="el-checkbox-input"><a href="#el-checkbox-input" class="headerlink" title="el-checkbox__input"></a>el-checkbox__input</h2><p><code>el-checkbox__input</code>最外层也是一个<code>span</code>，并在上面设置了动态的<code>class</code>：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:class</span>=<span class="string">"&#123;</span></span></span><br><span class="line"><span class="tag"><span class="string">    'is-disabled': disabled,  // 这是prop，控制是否可用</span></span></span><br><span class="line"><span class="tag"><span class="string">    'is-checked': isChecked,  // 这是一个计算属性</span></span></span><br><span class="line"><span class="tag"><span class="string">    'is-indeterminate': indeterminate,  // 这是prop，用来控制样式</span></span></span><br><span class="line"><span class="tag"><span class="string">    'is-focus': focus  // 这是data属性，用来控制是否聚焦</span></span></span><br><span class="line"><span class="tag"><span class="string">  &#125;"</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中<code>isChecked</code>的设置如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  isChecked() &#123;</span><br><span class="line">    <span class="keyword">if</span> (&#123;&#125;.toString.call(<span class="keyword">this</span>.model) === <span class="string">'[object Boolean]'</span>) &#123;  </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.model;  </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(<span class="keyword">this</span>.model)) &#123;  </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.model.indexOf(<span class="keyword">this</span>.label) &gt; <span class="number">-1</span>;  </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.model !== <span class="literal">null</span> &amp;&amp; <span class="keyword">this</span>.model !== <span class="literal">undefined</span>) &#123;  </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.model === <span class="keyword">this</span>.trueLabel;  </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="el-checkbox-inner"><a href="#el-checkbox-inner" class="headerlink" title="el-checkbox__inner"></a>el-checkbox__inner</h3><p>然后是用来表示前面对勾的<code>span</code>，它 主要通过<code>css</code>来控制对勾的显示。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="input"><a href="#input" class="headerlink" title="input"></a>input</h3><p>然后是传统的<code>input</code>，它的<code>type</code>是<code>checkbox</code>，但是这个<code>input</code>并不会显示，而且会根据传递的<code>prop</code>有两种不同的<code>input</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span></span></span><br><span class="line"><span class="tag">  <span class="attr">v-if</span>=<span class="string">"trueLabel || falseLabel"</span></span></span><br><span class="line"><span class="tag"> </span></span><br><span class="line"><span class="tag">  <span class="attr">type</span>=<span class="string">"checkbox"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:disabled</span>=<span class="string">"disabled"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:true-value</span>=<span class="string">"trueLabel"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:false-value</span>=<span class="string">"falseLabel"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">v-model</span>=<span class="string">"model"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">change</span>=<span class="string">"$emit('change', $event)"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">focus</span>=<span class="string">"focus = true"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">blur</span>=<span class="string">"focus = false"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span></span></span><br><span class="line"><span class="tag">  <span class="attr">v-else</span></span></span><br><span class="line"><span class="tag"> </span></span><br><span class="line"><span class="tag">  <span class="attr">type</span>=<span class="string">"checkbox"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:disabled</span>=<span class="string">"disabled"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:value</span>=<span class="string">"label"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:</span></span></span><br><span class="line"><span class="tag">  <span class="attr">v-model</span>=<span class="string">"model"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">change</span>=<span class="string">"$emit('change', $event)"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">focus</span>=<span class="string">"focus = true"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">blur</span>=<span class="string">"focus = false"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>它们不同的地方是，前者使用了<code>trueLabel</code>和<code>falseLabel</code>，后者使用了<code>label</code>它们都通过<code>v-model</code>绑定了<code>model</code>，在<code>change</code>的时候都会派发<code>change</code>事件，聚焦的时候会设置<code>focus</code>为<code>true</code>，</p>
+<h2 id="el-checkbox-label"><a href="#el-checkbox-label" class="headerlink" title="el-checkbox__label"></a>el-checkbox__label</h2><p>标签部分可以通过匿名<code>slot</code>或者<code>label</code>进行设置，前者具有优先权。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">v-if</span>=<span class="string">"$slots.default || label"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-if</span>=<span class="string">"!$slots.default"</span>&gt;</span>&#123;&#123;label&#125;&#125;<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：这里明显看出来，这和之前不是同一个人写的，这里值得注意的是<code>slot</code>内部的内容，在没有传入<code>slot</code>才会显示，因此不同特别做一个处理，也可能是有其他我没有考虑到的原因，如果以后发现了，会回来修正。</p>
+</blockquote>
+
     </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/06/29/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bemitter-js/" title= "element源码解析之emitter.js">
+                    <div class="prevTitle">element源码解析之emitter.js</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -447,6 +561,24 @@
 
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#index-js"><span class="toc-number">1.</span> <span class="toc-text">index.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Checkbox-group"><span class="toc-number">2.</span> <span class="toc-text">Checkbox-group</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Watch"><span class="toc-number">2.1.</span> <span class="toc-text">Watch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dispatch"><span class="toc-number">2.2.</span> <span class="toc-text">dispatch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Checkbox"><span class="toc-number">3.</span> <span class="toc-text">Checkbox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命周期"><span class="toc-number">4.</span> <span class="toc-text">生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#created"><span class="toc-number">4.1.</span> <span class="toc-text">created</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#label"><span class="toc-number">5.</span> <span class="toc-text">label</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#el-checkbox-input"><span class="toc-number">6.</span> <span class="toc-text">el-checkbox__input</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#el-checkbox-inner"><span class="toc-number">6.1.</span> <span class="toc-text">el-checkbox__inner</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#input"><span class="toc-number">6.2.</span> <span class="toc-text">input</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#el-checkbox-label"><span class="toc-number">7.</span> <span class="toc-text">el-checkbox__label</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1585,6 +1717,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
