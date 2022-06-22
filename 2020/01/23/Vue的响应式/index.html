@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Vue的响应式 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="Vue, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="Object.defineProperty(obj, prop, desc)核心的API">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue的响应式">
+<meta property="og:url" content="https://sleeowen.github.io/2020/01/23/Vue%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="Object.defineProperty(obj, prop, desc)核心的API">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-01-23T15:50:02.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.163Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Vue的响应式
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2020/01/" class="post-meta__date button">2020-01-23</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="Object-defineProperty-obj-prop-desc"><a href="#Object-defineProperty-obj-prop-desc" class="headerlink" title="Object.defineProperty(obj, prop, desc)"></a>Object.defineProperty(obj, prop, desc)</h2><p><strong>核心的API</strong></p>
+<span id="more"></span>
+<h3 id="监听对象（简单）"><a href="#监听对象（简单）" class="headerlink" title="监听对象（简单）"></a>监听对象（简单）</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = &#123;&#125;</span><br><span class="line"><span class="keyword">const</span> name = <span class="string">&#x27;zhangsan&#x27;</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(data, <span class="string">&#x27;name&#x27;</span> ,&#123;</span><br><span class="line">    <span class="attr">get</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;get &#x27;</span>+name)</span><br><span class="line">        <span class="keyword">return</span> name</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">set</span>: <span class="keyword">function</span> (<span class="params">value</span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;set &#x27;</span>+value)</span><br><span class="line">        name = value </span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="复杂对象监听"><a href="#复杂对象监听" class="headerlink" title="复杂对象监听"></a>复杂对象监听</h3><h4 id="线程上的代码"><a href="#线程上的代码" class="headerlink" title="线程上的代码"></a>线程上的代码</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 准备数据</span></span><br><span class="line"><span class="keyword">const</span> data = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;zhangsan&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">20</span>,</span><br><span class="line">    <span class="attr">info</span>: &#123;</span><br><span class="line">        <span class="attr">address</span>: <span class="string">&#x27;北京&#x27;</span> <span class="comment">// 需要深度监听</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">nums</span>: [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听数据</span></span><br><span class="line"><span class="title function_">observer</span>(data)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line">data.<span class="property">name</span> = <span class="string">&#x27;lisi&#x27;</span></span><br><span class="line">data.<span class="property">age</span> = <span class="number">21</span></span><br></pre></td></tr></table></figure>
+<h4 id="observer方法"><a href="#observer方法" class="headerlink" title="observer方法"></a>observer方法</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听对象属性</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">observer</span>(<span class="params">target</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> target !== <span class="string">&#x27;object&#x27;</span> || target === <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 不是对象或数组</span></span><br><span class="line">        <span class="keyword">return</span> target</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重新定义各个属性（for in 也可以遍历数组）</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> target) &#123;</span><br><span class="line">        <span class="title function_">defineReactive</span>(target, key, target[key])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="defineReactive方法"><a href="#defineReactive方法" class="headerlink" title="defineReactive方法"></a>defineReactive方法</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重新定义属性，监听起来</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">defineReactive</span>(<span class="params">target, key, value</span>) &#123;</span><br><span class="line">    <span class="comment">// 深度监听</span></span><br><span class="line">    <span class="title function_">observer</span>(value)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 核心 API</span></span><br><span class="line">    <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(target, key, &#123;</span><br><span class="line">        <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="title function_">set</span>(<span class="params">newValue</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (newValue !== value) &#123;</span><br><span class="line">                <span class="comment">// 深度监听</span></span><br><span class="line">                <span class="title function_">observer</span>(newValue)</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 设置新值</span></span><br><span class="line">                <span class="comment">// 注意，value 一直在闭包中，此处设置完之后，再 get 时也是会获取最新的值</span></span><br><span class="line">                value = newValue</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 触发更新视图</span></span><br><span class="line">                <span class="title function_">updateView</span>()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此处使用递归的形式，进行对象的向下遍历</p>
+</blockquote>
+<h4 id="Object-defineProperty的缺点"><a href="#Object-defineProperty的缺点" class="headerlink" title="Object.defineProperty的缺点"></a>Object.defineProperty的缺点</h4><ul>
+<li>深度监听，需要一次性递归到底，计算量大</li>
+<li>无法监听新增&#x2F;删除属性（所以使用Vue的set和delete方法）</li>
+<li>无法监听原生数组，需要特殊处理</li>
+</ul>
+<h3 id="数组监听"><a href="#数组监听" class="headerlink" title="数组监听"></a>数组监听</h3><h4 id="对数组进行重新定义"><a href="#对数组进行重新定义" class="headerlink" title="对数组进行重新定义"></a>对数组进行重新定义</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重新定义数组原型</span></span><br><span class="line"><span class="keyword">const</span> oldArrayProperty = <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line"><span class="comment">// 创建新对象，原型指向 oldArrayProperty ，再扩展新的方法不会影响原型</span></span><br><span class="line"><span class="keyword">const</span> arrProto = <span class="title class_">Object</span>.<span class="title function_">create</span>(oldArrayProperty);</span><br><span class="line">[<span class="string">&#x27;push&#x27;</span>, <span class="string">&#x27;pop&#x27;</span>, <span class="string">&#x27;shift&#x27;</span>, <span class="string">&#x27;unshift&#x27;</span>, <span class="string">&#x27;splice&#x27;</span>].<span class="title function_">forEach</span>(<span class="function"><span class="params">methodName</span> =&gt;</span> &#123;</span><br><span class="line">    arrProto[methodName] = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">updateView</span>() <span class="comment">// 触发视图更新</span></span><br><span class="line">        <span class="comment">// 在执行updateView后，任然能够继续执行数组对象原有的方法</span></span><br><span class="line">        oldArrayProperty[methodName].<span class="title function_">call</span>(<span class="variable language_">this</span>, ...<span class="variable language_">arguments</span>)</span><br><span class="line">        <span class="comment">// 污染全局</span></span><br><span class="line">        <span class="comment">// Array.prototype.push.call(this, ...arguments)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="修改observer"><a href="#修改observer" class="headerlink" title="修改observer"></a>修改observer</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听对象属性</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">observer</span>(<span class="params">target</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> target !== <span class="string">&#x27;object&#x27;</span> || target === <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 不是对象或数组</span></span><br><span class="line">        <span class="keyword">return</span> target</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 污染全局的 Array 原型</span></span><br><span class="line">    <span class="comment">// Array.prototype.push = function () &#123;</span></span><br><span class="line">    <span class="comment">//     updateView()</span></span><br><span class="line">    <span class="comment">//     ...</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(target)) &#123;</span><br><span class="line">        target.<span class="property">__proto__</span> = arrProto</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重新定义各个属性（for in 也可以遍历数组）</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> target) &#123;</span><br><span class="line">        <span class="title function_">defineReactive</span>(target, key, target[key])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2020/02/12/Vue%E8%99%9A%E6%8B%9FDOM/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            Vue虚拟DOM
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2020/01/12/Vue%E5%92%8CMVVM/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Vue和MVVM
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

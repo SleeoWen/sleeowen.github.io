@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>flex布局 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="css, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="现在让我们深入了解 Flexbox 的缩放 – 以及如何利用它来构建漂亮的自适应布局。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flex布局">
+<meta property="og:url" content="https://sleeowen.github.io/2020/09/18/flex%E5%B8%83%E5%B1%80/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="现在让我们深入了解 Flexbox 的缩放 – 以及如何利用它来构建漂亮的自适应布局。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sleeowen.github.io/IM2.gif">
+<meta property="og:image" content="https://sleeowen.github.io/IM3.png">
+<meta property="og:image" content="https://sleeowen.github.io/IM4.gif">
+<meta property="og:image" content="https://sleeowen.github.io/IM5.png">
+<meta property="og:image" content="https://sleeowen.github.io/IMG6.png">
+<meta property="og:image" content="https://sleeowen.github.io/IMG7.png">
+<meta property="og:image" content="https://sleeowen.github.io/IMG8.gif">
+<meta property="og:image" content="https://sleeowen.github.io/IMG9.png">
+<meta property="og:image" content="https://sleeowen.github.io/IMG10.gif">
+<meta property="og:image" content="https://sleeowen.github.io/IMG11.gif">
+<meta property="og:image" content="https://sleeowen.github.io/IMG12.gif">
+<meta property="og:image" content="https://sleeowen.github.io/IMG13.gif">
+<meta property="article:published_time" content="2020-09-18T08:21:29.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.166Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sleeowen.github.io/IM2.gif">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        flex布局
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2020/09/" class="post-meta__date button">2020-09-18</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p>现在让我们深入了解 Flexbox 的缩放 – 以及如何利用它来构建漂亮的自适应布局。</p>
+<span id="more"></span>
+<h3 id="属性-1-Flex-Basis"><a href="#属性-1-Flex-Basis" class="headerlink" title="属性 #1: Flex-Basis"></a>属性 #1: Flex-Basis</h3><p>在上一篇文章中，我们主要了解了适用于容器元素的属性。这一次，我们专门介绍如何控制子元素 (flex 项) 的大小。</p>
+<p>我想，我们这次介绍的第一个属性是 Flexbox 教程中最不好解释的属性之一。</p>
+<p>但 – 不要担心。 它实际上很简单。</p>
+<p><code>flex-basis</code> 控制一个子元素 (flex 项) 的默认大小，但是它可以被其他的 Flexbox 属性影响（稍后详细介绍）。</p>
+<p>在下面的 GIF 中，你会发现它可以与 <code>width</code> 属性互换（等价）：</p>
+<p><img src="/IM2.gif" alt="image"></p>
+<p>然而，flex-basis 和 width 有什么不同呢？<code>flex-basis</code> 对应于 flex 轴线而言的：</p>
+<p><img src="/IM3.png" alt="image"></p>
+<p>flex-basis 影响元素在主轴 (main axis) 上的大小。</p>
+<p>让我们看看当保持 flex-basis 不变的情况下，改变主轴方向，会发生什么。</p>
+<p><img src="/IM4.gif" alt="image"></p>
+<p>注意，我们必须从手动将 <code>height</code> 切换到设置 <code>width</code> 属性。 因此，<code>flex-basis</code> 是根据 <code>flex-direction</code> 的不同来确定 <code>width</code> 或 <code>height</code> 的。</p>
+<h3 id="属性-2-Flex-Grow（拉伸）"><a href="#属性-2-Flex-Grow（拉伸）" class="headerlink" title="属性 #2: Flex Grow（拉伸）"></a>属性 #2: Flex Grow（拉伸）</h3><p>现在我们要更复杂一点了。</p>
+<p>首先，让我们将所有的矩形子元素 (flex 项) 设置为相同的<code>width</code>，120px：</p>
+<p><img src="/IM5.png" alt="image"></p>
+<p>现在，涉及到名为 <code>flex-grow</code> 的属性，其默认值为 <code>0</code> 。这意味着矩形子元素 (flex 项) 不允许自动占据容器中剩余的空间。</p>
+<p>这意味着什么呢？好吧，让我们尝试把为每个矩形子元素 (flex 项) 的<code>flex-grow</code>设置为<code>1</code>：</p>
+<p><img src="/IMG6.png" alt="image"></p>
+<p>所有矩形子元素 (flex 项) 共同占据了整个容器的宽度，它们之间的间隔也都是均匀分布。<code>flex-grow</code> 值覆盖了 <code>width</code> 值。</p>
+<p>然而，关于 <code>flex-grow</code> 令人困惑的是其值实际上意味着什么呢？<code>flex-grow: 1</code>是什么意思呢？</p>
+<p>嗯，如果设置每个矩形子元素 (flex 项) 的 <code>flex-grow</code> 属性值为 <code>999</code> ，让我们来看一下效果：</p>
+<p><img src="/IMG7.png" alt="image"></p>
+<p>正如你所看到的，完全一样。</p>
+<p>这是因为 <code>flex-grow</code> 不是绝对值 – 它是一个相对值。</p>
+<p>对于每个矩形子元素 (flex 项) 来说，重要的不是其 <code>flex-grow</code> 值有多大，而是这个值与其他矩形子元素 (flex 项) 的 <code>flex-grow</code> 值相比较，相对值有多大。</p>
+<p>如果我们将每个矩形子元素 (flex 项) 设置为<code>flex-grow: 1</code>，然后调整第 3 个矩形子元素的<code>flex-grow</code>值，那么我们可以看到改变，如图：</p>
+<p><img src="/IMG8.gif" alt="image"></p>
+<p>要真正理解这里到底发生了什么，让我们快速过一边简单的数学知识。</p>
+<p>每个矩形子元素 (flex 项) 的 <code>flex-grow</code> 初始值都是 <code>1</code>。如果我们将每个矩形子元素 (flex 项) 的 <code>flex-grow</code> 相加起来，总和为 <code>6</code>。因此容器的总宽度被平均分成了 6 份。每个矩形子元素 (flex 项) 增长到填充容器可用空间的 1&#x2F;6。</p>
+<p>当我们将第 3 个矩形子元素的 <code>flex-grow</code> 设置为 <code>2</code> 时，容器现在被分成了 7 等份，因为所有 <code>flex-grow</code> 属性是：1 + 1 + 2 + 1 + 1 + 1。</p>
+<p>第 3 个矩形子元素占了整个容器空间的 2&#x2F;7，其他的占了 1&#x2F;7。</p>
+<p>同理，当设置第 3 个矩形子元素的 <code>flex-grow: 3</code> 的时候，整个容器宽度被分成了 8 等份（1 + 1 + 3 + 1 + 1 + 1），第 3 个矩形子元素占了 3&#x2F;8，其他的占了 1&#x2F;8。</p>
+<p>以此类推。</p>
+<p><code>flex-grow</code> 只和比例相关，如果我们设置第 3 个矩形子元素 <code>flex-grow: 12</code>，其余每个方块的 <code>flex-grow: 4</code>；跟第三个设置成 3，其他的设置成 1 得到同样的效果，见下图：</p>
+<p><img src="/IMG9.png" alt="image"></p>
+<p>重要的是每个矩形子元素的 <code>flex-grow</code> 与其他矩形子元素成比例的。</p>
+<p>最后一点，请记住，就像 <code>flex-basis</code> 一样，<code>flex-grow</code> 只适用于主轴 (main axis)。我们的矩形子元素只会影响宽度，除非我们将 <code>flex-direction</code>设置为<code>column</code>。</p>
+<h3 id="属性-3-Flex-Shrink（收缩）"><a href="#属性-3-Flex-Shrink（收缩）" class="headerlink" title="属性 #3: Flex Shrink（收缩）"></a>属性 #3: Flex Shrink（收缩）</h3><p><code>flex-shrink</code> 正好和 <code>flex-grow</code> 相反，它是决定矩形子元素允许收缩多少的。</p>
+<p>它的主要用途是指定哪些 flex 项 要缩小，哪些 flex 项 不要缩小。默认情况下，每个矩形子元素 (flex 项) 都为 <code>1</code> – 这意味着每个矩形子元素将随着容器收缩而收缩。</p>
+<p>让我们看看实际情况。 在下面的 GIF 中，每个矩形子元素 (flex 项) 的 <code>flex-grow</code> 为<code>1</code>，所以他们填充满了整个容器，并且<code>flex-shrink</code> 为 <code>1</code>，所以他们被允许收缩。</p>
+<p><img src="/IMG10.gif" alt="image"></p>
+<p>现在让我们将第 3 个矩形子元素的 <code>flex-shrink</code> 设置为 <code>0</code> 。它是禁止收缩，所以它会随着容器拉伸而拉伸，但是当容器收缩的时候，当其宽度收缩至设置的 120px 时，它不再允许收缩。</p>
+<p><img src="/IMG11.gif" alt="image"></p>
+<p><code>flex-shrink</code> 的默认值是 <code>1</code> – 这意味着你的元素默认允许收缩，除非你告诉他们不允许收缩！</p>
+<p>同样， <code>flex-shrink</code> 约为比例。如果一个矩形子元素的 <code>flex-shrink</code> 为 <code>6</code>，并且其余<code>flex-shrink</code> 为 <code>2</code>，那么这个矩形子元素随着容器空间的收缩，将以 3 倍于其他矩形子元素的速度缩小。</p>
+<p>注意这里的措辞：3x（3 倍）<code>flex-shrink</code>的矩形子元素将缩小 3 倍。这并不是收缩 1&#x2F;3 的宽度。</p>
+<p>稍后，我们将深入了解元素是如何收缩和拉伸的。但首先，让我们了解最后一个属性，把这些东西都串起来。</p>
+<h3 id="属性-4-Flex"><a href="#属性-4-Flex" class="headerlink" title="属性 #4: Flex"></a>属性 #4: Flex</h3><p><code>flex</code> 是 <code>flex-grow</code>，<code>flex-shrink</code> 和 <code>flex-basis</code> 的缩写 – 所有这些都放在一起。</p>
+<p>它的默认值是<code>0</code>（grow），<code>1</code>（shrink）和 <code>auto</code>（basis）。</p>
+<p>我们把上一个例子简化成只有两个矩形子元素 (flex 项)。</p>
+<p>下面是它们的属性：</p>
+<p>CSS 代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.square#one &#123;</span><br><span class="line">  flex: 2 1 300px;</span><br><span class="line">&#125;</span><br><span class="line">.square#two &#123;</span><br><span class="line">  flex: 1 2 300px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>两个矩形子元素 (flex 项) 具有着相同的 <code>flex-basis</code>。这意味着如果它们有足够的空间（容器的空间是 600px 加上 <code>margin</code> 和 <code>padding</code> ），它们的宽度都是 300px 。</p>
+<p>但随着容器的拉伸，第 1 个矩形子元素 (flex 项)（具有更高的 <code>flex-grow</code> ）将以两倍于第 2 个矩形子元素的速度增长。 随着容器的收缩，第 2 个矩形子元素（具有更高的柔性收缩）将会以两倍于第 1 个矩形子元素的的速度收缩。</p>
+<p>实际效果如下图：</p>
+<p><img src="/IMG12.gif" alt="image"></p>
+<h4 id="flex-项如何收缩和拉伸"><a href="#flex-项如何收缩和拉伸" class="headerlink" title="flex 项如何收缩和拉伸"></a>flex 项如何收缩和拉伸</h4><p>这里有什么可能会混淆：当第 1 个矩形子元素拉伸时，并没有拉伸到第 2 个矩形子元素的两倍大小。同样，当第 2 个矩形子元素缩小时，它不缩小到第 1 个矩形子元素的一半大小 – 即使<code>flex-shrink</code>(理解为收缩比率) 为<code>2</code>比<code>1</code>。</p>
+<p>这两个属性并不是说它们的大小比例是 <code>2:1</code> 或者 <code>1:2</code>，而是说它们的收缩或拉伸速度的比率。</p>
+<h4 id="简单的数学计算"><a href="#简单的数学计算" class="headerlink" title="简单的数学计算"></a>简单的数学计算</h4><p>容器的初始大小为 640px 。在容器的每一边占用 20px 的 <code>padding</code> ，剩下的空间足够让两个矩形子元素满足 <code>flex-basis</code> 等于 300px。</p>
+<p>当容器设置为 430px 时，空间收缩了 210px 。(注：两个矩形子元素的 <code>flex-shrink</code> 加起来为 <code>3</code> ，那么， ) 第 1 个矩形子元素的 <code>flex-shrink</code> 为 <code>1</code>, 也就是收缩了 70px 。 第 2 个矩形子元素的 <code>flex-shrink</code> 为 <code>1</code> 也就是收缩了 140px 。</p>
+<p>当容器收缩到 340px 时，空间收缩了 300px。第 1 个矩形子元素的收缩了 100px，第 2 个矩形子元素的收缩了 200px 。</p>
+<p>容器收缩的空间根据它们各自的 <code>flex-shrink</code> 收缩率（2:1）的比率来分割。</p>
+<p>这对于 <code>flex-grow</code> 也是同样的。 当容器拉伸到 940px 时，也就是说空间拉伸 300px ，第 1 个矩形子元素被拉伸 200px ，，第 2 个矩形子元素被拉伸 100px 。</p>
+<p>当涉及到 flex 属性时，其实它们说的都是比例。</p>
+<p><img src="/IMG13.gif" alt="image"></p>
+<p>在上面的 GIF 中，您可以看到宽度是如何根据比率进行调整的，增量（Δ）显示与 <code>flex-basis</code> 相比的差异。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>作为最后的总结：<code>flex-basis</code> 是控制元素在发生缩放之前，沿着主轴方向的大小。<code>flex-grow</code> 指的是在元素拉伸时，和兄弟元素之间相比的拉伸比例。而 <code>flex-shrink</code> 指的是在元素收缩时，和兄弟元素之间相比的收缩比例。</p>
+<p>我们还有更多的 Flexbox 属性要介绍 – 在接下来的几周里请密切关注。</p>
+<p>非常感谢阅读！ 如果你有一些特定的概念（ Flexbox 或其他），你想看到在类似的文章中解释，请留言。</p>
+<p>原文地址：<a target="_blank" rel="noopener" href="https://medium.freecodecamp.com/even-more-about-how-flexbox-works-explained-in-big-colorful-animated-gifs-a5a74812b053#.9hknw1qpd">https://medium.freecodecamp.com/even-more-about-how-flexbox-works-explained-in-big-colorful-animated-gifs-a5a74812b053#.9hknw1qpd</a></p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/css/" class="post-tags__link button"># css</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2020/10/26/%E5%89%8D%E7%AB%AF%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            前端状态管理
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2020/08/10/node%E6%A1%86%E6%9E%B6%E7%AE%80%E5%8D%95%E5%AF%B9%E6%AF%94/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            node框架简单对比
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

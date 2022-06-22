@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>js栈 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="javascript, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="什么是堆栈栈，又叫堆栈，是和列表类似的一种数据结构，但是却更高效，因为栈内的元素只能通过列表的一端访问，称为栈顶，数据只能在栈顶添加或删除，遵循 先入后出(LIFO，last-in-first-out) 的原则，普遍运用于计算机的方方面面。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js栈">
+<meta property="og:url" content="https://sleeowen.github.io/2019/08/19/js%E6%A0%88/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="什么是堆栈栈，又叫堆栈，是和列表类似的一种数据结构，但是却更高效，因为栈内的元素只能通过列表的一端访问，称为栈顶，数据只能在栈顶添加或删除，遵循 先入后出(LIFO，last-in-first-out) 的原则，普遍运用于计算机的方方面面。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sleeowen.github.io/duizhan1.webp">
+<meta property="article:published_time" content="2019-08-19T03:39:15.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.215Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sleeowen.github.io/duizhan1.webp">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        js栈
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/08/" class="post-meta__date button">2019-08-19</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="什么是堆栈"><a href="#什么是堆栈" class="headerlink" title="什么是堆栈"></a>什么是堆栈</h2><p>栈，又叫堆栈，是和列表类似的一种数据结构，但是却更高效，因为栈内的元素只能通过列表的一端访问，称为栈顶，数据只能在栈顶添加或删除，遵循 先入后出(LIFO，last-in-first-out) 的原则，普遍运用于计算机的方方面面。</p>
+<span id="more"></span>
+<p>对栈的操作主要有两种，一是将一个元素压入栈，push方法，另一个就是将栈顶元素出栈，pop方法。</p>
+<p>除此之外，栈还有其他的一些属性和方法：查看当前栈顶的元素值，我们使用 peek 方法，它仅仅返回栈顶元素值，并不删除它；clear 方法用于清空当前栈内的所有元素；top属性记录当前栈顶位置；length方法返回当前栈内元素总数等；接着我们定义栈的数据类型，并利用JS中的数组去实现它。</p>
+<p><img src="/duizhan1.webp" alt="image"></p>
+<h2 id="栈的实现"><a href="#栈的实现" class="headerlink" title="栈的实现"></a>栈的实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义栈</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Stack</span> () &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dataStore</span> = [];    <span class="comment">//初始化为空</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">top</span> = <span class="number">0</span>;           <span class="comment">//记录栈顶位置</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">pop</span> = pop;         <span class="comment">//出栈</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">push</span> = push;       <span class="comment">//入栈</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">peek</span> = peek;       <span class="comment">//查看栈顶元素</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">length</span> = length;   <span class="comment">//查看栈内元素总数</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">clear</span> = clear;     <span class="comment">//清空栈</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们利用 dataStore 来保存栈内元素，初始化为空数组，top 属性用于记录当前栈顶位置，初始化的时候为0，<br>表示栈顶对应数组的起始位置是0，如果有元素入栈，则该属性会随之反生变化。</p>
+<p><strong>首先我们先来实现第一个入栈方法。</strong></p>
+<h4 id="push：向栈内压入一个新的元素"><a href="#push：向栈内压入一个新的元素" class="headerlink" title="push：向栈内压入一个新的元素"></a>push：向栈内压入一个新的元素</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该方法将一个新元素入栈，放到数组中 top 所对应的位置上，并将 top 的值加 1，让其指向数组的下一个空位置</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">push</span>(<span class="params"> element </span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dataStore</span>[<span class="variable language_">this</span>.<span class="property">top</span>++] = element;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>能入栈，就得可以出栈，接着我们来看出栈方法：</p>
+<h4 id="pop：取出栈顶元素"><a href="#pop：取出栈顶元素" class="headerlink" title="pop：取出栈顶元素"></a>pop：取出栈顶元素</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该方法与入栈相反，返回栈顶元素，并将 top 的值减 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">pop</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">dataStore</span>[--<span class="variable language_">this</span>.<span class="property">top</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如何查看栈顶元素呢，peek方法！</p>
+<h4 id="peek：查看栈顶元素"><a href="#peek：查看栈顶元素" class="headerlink" title="peek：查看栈顶元素"></a>peek：查看栈顶元素</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该方法返回的是栈顶元素，即 top - 1 个位置元素</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">peek</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>( <span class="variable language_">this</span>.<span class="property">top</span> &gt; <span class="number">0</span> ) <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">dataStore</span>[<span class="variable language_">this</span>.<span class="property">top</span>-<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="string">&#x27;Empty&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我做了个判断，如果一个空栈调用了 peek 方法，因为栈内没有任何元素，所以我这里返回了一个 ‘Empty’;</p>
+<p>现在，我们已经有了基本的入栈、出栈、查看栈顶元素的方法，我们不妨试一试。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化一个栈</span></span><br><span class="line"><span class="keyword">var</span> stack = <span class="keyword">new</span> <span class="title class_">Stack</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( stack.<span class="title function_">peek</span>() );    <span class="comment">// Empty</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//入栈</span></span><br><span class="line">stack.<span class="title function_">push</span>(<span class="string">&#x27;Apple&#x27;</span>);</span><br><span class="line">stack.<span class="title function_">push</span>(<span class="string">&#x27;Banana&#x27;</span>);</span><br><span class="line">stack.<span class="title function_">push</span>(<span class="string">&#x27;Pear&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//查看当前栈顶元素</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( stack.<span class="title function_">peek</span>() );    <span class="comment">// Pear</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( stack.<span class="title function_">pop</span>() );     <span class="comment">// Pear    </span></span><br></pre></td></tr></table></figure>
+
+<p>如果我放入了一些水果，吃掉了一个，我现在想知道我还剩多少个水果怎么办？length 方法可以实现</p>
+<h4 id="length：返回栈内元素总数"><a href="#length：返回栈内元素总数" class="headerlink" title="length：返回栈内元素总数"></a>length：返回栈内元素总数</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该方法通过返回 top 属性的值来返回栈内总的元素个数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">length</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">top</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们把代码恢复到出栈前的状态，也就是里面已经放了三个水果，接着我们来看看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( stack.<span class="title function_">length</span>() );      <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//出栈</span></span><br><span class="line">stack.<span class="title function_">pop</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( stack.<span class="title function_">length</span>() );      <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p>好了，我们还剩最后一个clear方法，我们来实现一下</p>
+<h4 id="clear：清空栈"><a href="#clear：清空栈" class="headerlink" title="clear：清空栈"></a>clear：清空栈</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该方法实现很简单，我们将 top 值置为 0 ， dataStore 数值清空即可</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">clear</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">delete</span> <span class="variable language_">this</span>.<span class="property">dataStore</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dataStore</span> = [];</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">top</span> = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="实现数制间的相互转换"><a href="#实现数制间的相互转换" class="headerlink" title="实现数制间的相互转换"></a>实现数制间的相互转换</h2><p>我们可以利用栈将一个数字从一种数制转换成另一种数制。例如将数字 n 转换成以 b 为基数的数字，可以采用如下算法（该算法只针对基数为 2-9 的情况）：</p>
+<ol>
+<li>最高位为 n % b ， 直接压入栈;</li>
+<li>使用 n &#x2F; b 来代替 n ;</li>
+<li>重复上面的步骤，知道 n 为 0 ，并且没有余数；</li>
+<li>以此将栈内元素弹出，直到栈空，并依次将这些元素排列，就得到了转换后的形式</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//进制转换（2-9）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">mulBase</span> ( num , base ) &#123;</span><br><span class="line">    <span class="keyword">var</span> s = <span class="keyword">new</span> <span class="title class_">Stack</span>();</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        s.<span class="title function_">push</span>( num % base );</span><br><span class="line">        num = <span class="title class_">Math</span>.<span class="title function_">floor</span>( num /= base );</span><br><span class="line">    &#125;<span class="keyword">while</span> ( num &gt; <span class="number">0</span> );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> converted = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">while</span> (s.<span class="title function_">length</span>() &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        converted += s.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> converted;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="title function_">mulBase</span>( <span class="number">125</span> , <span class="number">2</span> ) );      <span class="comment">// 1111101</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="title function_">mulBase</span>( <span class="number">125</span> , <span class="number">8</span> ) );      <span class="comment">// 175</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/08/22/%E9%80%9A%E4%BF%A1%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            通信相关问题
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/07/25/js%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            js的面向对象
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

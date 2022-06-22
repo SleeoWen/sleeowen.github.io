@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>事件循环EventLoop | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="javascript, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="什么是Event Loopevent loop是一个执行模型，在不同的地方有不同的实现。浏览器和NodeJS基于不同的技术实现了各自的Event Loop。  浏览器的Event Loop是在html5的规范中明确定义。 NodeJS的Event Loop是基于libuv实现的。可以参考Node的官方文档以及libuv的官方文档。 libuv已经对Event Loop做出了实现，而HTML5规范中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事件循环EventLoop">
+<meta property="og:url" content="https://sleeowen.github.io/2019/10/07/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AFEventLoop/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="什么是Event Loopevent loop是一个执行模型，在不同的地方有不同的实现。浏览器和NodeJS基于不同的技术实现了各自的Event Loop。  浏览器的Event Loop是在html5的规范中明确定义。 NodeJS的Event Loop是基于libuv实现的。可以参考Node的官方文档以及libuv的官方文档。 libuv已经对Event Loop做出了实现，而HTML5规范中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sleeowen.github.io/eventloop1.png">
+<meta property="og:image" content="https://sleeowen.github.io/eventloop2.png">
+<meta property="og:image" content="https://sleeowen.github.io/eventloop3.png">
+<meta property="og:image" content="https://sleeowen.github.io/eventloop4.png">
+<meta property="og:image" content="https://sleeowen.github.io/eventloop5.png">
+<meta property="article:published_time" content="2019-10-07T03:27:31.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.221Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sleeowen.github.io/eventloop1.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        事件循环EventLoop
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/10/" class="post-meta__date button">2019-10-07</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="什么是Event-Loop"><a href="#什么是Event-Loop" class="headerlink" title="什么是Event Loop"></a>什么是Event Loop</h2><p><strong>event loop是一个执行模型，在不同的地方有不同的实现。浏览器和NodeJS基于不同的技术实现了各自的Event Loop。</strong></p>
+<ul>
+<li>浏览器的Event Loop是在html5的规范中明确定义。</li>
+<li>NodeJS的Event Loop是基于libuv实现的。可以参考Node的官方文档以及libuv的官方文档。</li>
+<li>libuv已经对Event Loop做出了实现，而HTML5规范中只是定义了浏览器中Event Loop的模型，具体的实现留给了浏览器厂商。 <span id="more"></span></li>
+</ul>
+<h2 id="宏队列和微队列"><a href="#宏队列和微队列" class="headerlink" title="宏队列和微队列"></a>宏队列和微队列</h2><h3 id="宏队列"><a href="#宏队列" class="headerlink" title="宏队列"></a>宏队列</h3><p><strong>宏队列，macrotask，也叫tasks。</strong></p>
+<p>一些异步任务的回调会依次进入macro task queue，等待后续被调用，这些异步任务包括：</p>
+<ul>
+<li>setTimeout</li>
+<li>setInterval</li>
+<li>setImmediate (Node独有)</li>
+<li>requestAnimationFrame (浏览器独有)</li>
+<li>I&#x2F;O</li>
+<li>UI rendering (浏览器独有)</li>
+</ul>
+<h3 id="微队列"><a href="#微队列" class="headerlink" title="微队列"></a>微队列</h3><p><strong>微队列，microtask，也叫jobs。</strong></p>
+<p>另一些异步任务的回调会依次进入micro task queue，等待后续被调用，这些异步任务包括：</p>
+<ul>
+<li>process.nextTick (Node独有)</li>
+<li>Promise</li>
+<li>Object.observe</li>
+<li>MutationObserver</li>
+</ul>
+<h2 id="浏览器的Event-Loop"><a href="#浏览器的Event-Loop" class="headerlink" title="浏览器的Event Loop"></a>浏览器的Event Loop</h2><p><img src="/eventloop1.png" alt="image"><br>这张图将浏览器的Event Loop完整的描述了出来，我来讲执行一个JavaScript代码的具体流程：</p>
+<ol>
+<li>执行全局Script同步代码，这些同步代码有一些是同步语句，有一些是异步语句（比如setTimeout等）；</li>
+<li>全局Script代码执行完毕后，调用栈Stack会清空；</li>
+<li>从微队列microtask queue中取出位于队首的回调任务，放入调用栈Stack中执行，执行完后microtask queue长度减1；</li>
+<li>继续取出位于队首的任务，放入调用栈Stack中执行，以此类推，直到直到把microtask queue中的所有任务都执行完毕。注意，如果在执行microtask的过程中，又产生了microtask，那么会加入到队列的末尾，也会在这个周期被调用执行；</li>
+<li>microtask queue中的所有任务都执行完毕，此时microtask queue为空队列，调用栈Stack也为空；</li>
+<li>取出宏队列macrotask queue中位于队首的任务，放入Stack中执行；</li>
+<li>执行完毕后，调用栈Stack为空；</li>
+<li>重复第3-7个步骤；</li>
+<li>重复第3-7个步骤；</li>
+<li>…</li>
+</ol>
+<p><strong>可以看到，这就是浏览器的事件循环Event Loop</strong><br>这里归纳3个重点：</p>
+<ol>
+<li>宏队列macrotask一次只从队列中取一个任务执行，执行完后就去执行微任务队列中的任务；</li>
+<li>微任务队列中所有的任务都会被依次取出来执行，知道microtask queue为空；</li>
+<li>图中没有画UI rendering的节点，因为这个是由浏览器自行判断决定的，但是只要执行UI rendering，它的节点是在执行完所有的microtask之后，下一个macrotask之前，紧跟着执行UI render。</li>
+</ol>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><h4 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>);</span><br><span class="line">  <span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>)</span><br><span class="line">  <span class="title function_">resolve</span>(<span class="number">5</span>)</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">6</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">7</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正确答案</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>);</span><br><span class="line">  <span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>)</span><br><span class="line">  <span class="title function_">resolve</span>(<span class="number">5</span>)</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br><span class="line">  </span><br><span class="line">  <span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">6</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">7</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">8</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">9</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正确答案</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">9</span></span><br><span class="line"><span class="number">8</span></span><br></pre></td></tr></table></figure>
+<p>**在执行微队列microtask queue中任务的时候，如果又产生了microtask，那么会继续添加到队列的末尾，也会在这个周期执行，直到microtask queue为空停止。<br>**<br>注：当然如果你在microtask中不断的产生microtask，那么其他宏任务macrotask就无法执行了，但是这个操作也不是无限的，拿NodeJS中的微任务process.nextTick()来说，它的上限是1000个，后面我们会讲到。</p>
+<p>浏览器的Event Loop就说到这里，下面我们看一下NodeJS中的Event Loop，它更复杂一些，机制也不太一样。</p>
+<h2 id="NodeJS中的Event-Loop"><a href="#NodeJS中的Event-Loop" class="headerlink" title="NodeJS中的Event Loop"></a>NodeJS中的Event Loop</h2><p>NodeJS的Event Loop中，执行宏队列的回调任务有6个阶段，如下图：</p>
+<p><img src="/eventloop2.png" alt="image"></p>
+<p>各个阶段执行的任务如下：</p>
+<ul>
+<li><strong>timers阶段</strong>：这个阶段执行setTimeout和setInterval预定的callback</li>
+<li><strong>I&#x2F;O callback阶段</strong>：执行除了close事件的callbacks、被timers设定的callbacks、setImmediate()设定的callbacks这些之外的callbacks</li>
+<li><strong>idle, prepare阶段</strong>：仅node内部使用</li>
+<li><strong>poll阶段</strong>：获取新的I&#x2F;O事件，适当的条件下node将阻塞在这里</li>
+<li><strong>check阶段</strong>：执行setImmediate()设定的callbacks</li>
+<li><strong>close callbacks阶段</strong>：执行socket.on(‘close’, ….)这些callbacks</li>
+</ul>
+<h4 id="NodeJS中宏队列主要有4个"><a href="#NodeJS中宏队列主要有4个" class="headerlink" title="NodeJS中宏队列主要有4个"></a>NodeJS中宏队列主要有4个</h4><p>由上面的介绍可以看到，回调事件主要位于4个macrotask queue中：</p>
+<ol>
+<li>Timers Queue</li>
+<li>IO Callbacks Queue</li>
+<li>Check Queue</li>
+<li>Close Callbacks Queue</li>
+</ol>
+<p>这4个都属于宏队列，但是在浏览器中，可以认为只有一个宏队列，所有的macrotask都会被加到这一个宏队列中，但是在NodeJS中，不同的macrotask会被放置在不同的宏队列中。</p>
+<h4 id="NodeJS中微队列主要有2个："><a href="#NodeJS中微队列主要有2个：" class="headerlink" title="NodeJS中微队列主要有2个："></a>NodeJS中微队列主要有2个：</h4><ol>
+<li>Next Tick Queue：是放置process.nextTick(callback)的回调任务的</li>
+<li>Other Micro Queue：放置其他microtask，比如Promise等</li>
+</ol>
+<p>在浏览器中，也可以认为只有一个微队列，所有的microtask都会被加到这一个微队列中，但是在NodeJS中，不同的microtask会被放置在不同的微队列中。</p>
+<p>具体可以通过下图加深一下理解：</p>
+<p><img src="/eventloop3.png" alt="image"></p>
+<p>大体解释一下NodeJS的Event Loop过程：</p>
+<ol>
+<li>执行全局Script的同步代码</li>
+<li>执行microtask微任务，先执行所有Next Tick Queue中的所有任务，再执行Other Microtask Queue中的所有任务</li>
+<li>开始执行macrotask宏任务，共6个阶段，从第1个阶段开始执行相应每一个阶段macrotask中的所有任务，注意，这里是所有每个阶段宏任务队列的所有任务，在浏览器的Event Loop中是只取宏队列的第一个任务出来执行，每一个阶段的macrotask任务执行完毕后，开始执行微任务，也就是步骤2</li>
+<li>Timers Queue -&gt; 步骤2 -&gt; I&#x2F;O Queue -&gt; 步骤2 -&gt; Check Queue -&gt; 步骤2 -&gt; Close Callback Queue -&gt; 步骤2 -&gt; Timers Queue ……</li>
+<li>这就是Node的Event Loop</li>
+</ol>
+<h4 id="关于NodeJS的macrotask-queue和microtask-queue"><a href="#关于NodeJS的macrotask-queue和microtask-queue" class="headerlink" title="关于NodeJS的macrotask queue和microtask queue"></a>关于NodeJS的macrotask queue和microtask queue</h4><p><img src="/eventloop4.png" alt="image"></p>
+<p><img src="/eventloop5.png" alt="image"></p>
+<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;start&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;          <span class="comment">// callback1</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">111</span>);</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;        <span class="comment">// callback2</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">222</span>);</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">  <span class="title function_">setImmediate</span>(<span class="function">() =&gt;</span> &#123;      <span class="comment">// callback3</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">333</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  process.<span class="title function_">nextTick</span>(<span class="function">() =&gt;</span> &#123;  <span class="comment">// callback4</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">444</span>);  </span><br><span class="line">  &#125;)</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(<span class="function">() =&gt;</span> &#123;        <span class="comment">// callback5</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">555</span>);</span><br><span class="line">  process.<span class="title function_">nextTick</span>(<span class="function">() =&gt;</span> &#123;  <span class="comment">// callback6</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">666</span>);  </span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;          <span class="comment">// callback7              </span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">777</span>);</span><br><span class="line">  process.<span class="title function_">nextTick</span>(<span class="function">() =&gt;</span> &#123;  <span class="comment">// callback8</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">888</span>);   </span><br><span class="line">  &#125;)</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">process.<span class="title function_">nextTick</span>(<span class="function">() =&gt;</span> &#123;    <span class="comment">// callback9</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">999</span>);  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;end&#x27;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="结果-2"><a href="#结果-2" class="headerlink" title="结果"></a>结果</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正确答案</span></span><br><span class="line">start</span><br><span class="line">end</span><br><span class="line"><span class="number">999</span></span><br><span class="line"><span class="number">111</span></span><br><span class="line"><span class="number">777</span></span><br><span class="line"><span class="number">444</span></span><br><span class="line"><span class="number">888</span></span><br><span class="line"><span class="number">555</span></span><br><span class="line"><span class="number">333</span></span><br><span class="line"><span class="number">666</span></span><br><span class="line"><span class="number">222</span></span><br></pre></td></tr></table></figure>
+<h3 id="setTimeout-对比-setImmediate"><a href="#setTimeout-对比-setImmediate" class="headerlink" title="setTimeout 对比 setImmediate"></a>setTimeout 对比 setImmediate</h3><ul>
+<li>setTimeout(fn, 0)在Timers阶段执行，并且是在poll阶段进行判断是否达到指定的timer时间才会执行</li>
+<li>setImmediate(fn)在Check阶段执行</li>
+</ul>
+<p>两者的执行顺序要根据当前的执行环境才能确定：</p>
+<ul>
+<li>如果两者都在主模块(main module)调用，那么执行先后取决于进程性能，顺序随机</li>
+<li>如果两者都不在主模块调用，即在一个I&#x2F;O Circle中调用，那么setImmediate的回调永远先执行，因为会先到Check阶段</li>
+</ul>
+<h3 id="setImmediate-对比-process-nextTick"><a href="#setImmediate-对比-process-nextTick" class="headerlink" title="setImmediate 对比 process.nextTick"></a>setImmediate 对比 process.nextTick</h3><ul>
+<li>setImmediate(fn)的回调任务会插入到宏队列Check Queue中</li>
+<li>process.nextTick(fn)的回调任务会插入到微队列Next Tick Queue中</li>
+<li>process.nextTick(fn)调用深度有限制，上限是1000，而setImmedaite则没有</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>浏览器的Event Loop和NodeJS的Event Loop是不同的，实现机制也不一样，不要混为一谈。</li>
+<li>浏览器可以理解成只有1个宏任务队列和1个微任务队列，先执行全局Script代码，执行完同步代码调用栈清空后，从微任务队列中依次取出所有的任务放入调用栈执行，微任务队列清空后，从宏任务队列中只取位于队首的任务放入调用栈执行，注意这里和Node的区别，只取一个，然后继续执行微队列中的所有任务，再去宏队列取一个，以此构成事件循环。</li>
+<li>NodeJS可以理解成有4个宏任务队列和2个微任务队列，但是执行宏任务时有6个阶段。先执行全局Script代码，执行完同步代码调用栈清空后，先从微任务队列Next Tick Queue中依次取出所有的任务放入调用栈中执行，再从微任务队列Other Microtask Queue中依次取出所有的任务放入调用栈中执行。Node 在新版本中，也是每个 Macrotask 执行完后，就去执行 Microtask 了，和浏览器的模型一致。</li>
+<li>MacroTask包括： setTimeout、setInterval、 setImmediate(Node)、requestAnimation(浏览器)、IO、UI rendering</li>
+<li>Microtask包括： process.nextTick(Node)、Promise、Object.observe、MutationObserver</li>
+</ol>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/10/11/%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            页面性能优化
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/09/27/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%87%E7%A8%8B/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            浏览器渲染原理与过程
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

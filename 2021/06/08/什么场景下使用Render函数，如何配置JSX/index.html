@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>什么场景下使用Render函数，如何配置JSX | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="Vue, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="Render 函数render函数是组件渲染的重要核心，它跟template模板开发一样，只不过这种形式开发，它 (render) 更接近底层，这样能让Vue编译时少转换一次。 让我们来看一下哪里能用到render函数。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么场景下使用Render函数，如何配置JSX">
+<meta property="og:url" content="https://sleeowen.github.io/2021/06/08/%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF%E4%B8%8B%E4%BD%BF%E7%94%A8Render%E5%87%BD%E6%95%B0%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEJSX/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="Render 函数render函数是组件渲染的重要核心，它跟template模板开发一样，只不过这种形式开发，它 (render) 更接近底层，这样能让Vue编译时少转换一次。 让我们来看一下哪里能用到render函数。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1f6fac23ec51446dbc81d8450f2adbe2~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="article:published_time" content="2021-06-08T12:28:50.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.222Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1f6fac23ec51446dbc81d8450f2adbe2~tplv-k3u1fbpfcp-zoom-1.image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        什么场景下使用Render函数，如何配置JSX
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2021/06/" class="post-meta__date button">2021-06-08</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="Render-函数"><a href="#Render-函数" class="headerlink" title="Render 函数"></a>Render 函数</h2><p><code>render</code>函数是组件渲染的重要核心，它跟<code>template</code>模板开发一样，只不过这种形式开发，它 (<code>render</code>) 更接近底层，这样能让<code>Vue</code>编译时少转换一次。</p>
+<p>让我们来看一下哪里能用到<code>render</code>函数。<br> <span id="more"></span><br>我们都知道<code>Vue</code>项目入口文件<code>main.js</code>里面有个<code>render</code>函数长下面这样，将项目的<code>App</code>根组件，挂载到根实例上通过<code>render</code>渲染。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>)</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>我们来解刨一下<code>render</code>函数身体。</p>
+<ul>
+<li><p>render 函数返回值是一个<code>VNode</code> -&gt; “virtual node” 虚拟节点</p>
+</li>
+<li><p>render 函数的参数是一个<code>createElement</code>函数</p>
+<ul>
+<li><code>createElement</code>返回值也是一个<code>VNode</code>节点</li>
+<li><code>createElement</code>函数的参数有三个<ul>
+<li>第一个 标签名称</li>
+<li>第二个 属性值</li>
+<li>第三个 标签子级元素</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>代码演示：</strong></p>
+<p>index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;蛙人&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">render</span>(<span class="params">createElement</span>) &#123;</span><br><span class="line">       	<span class="keyword">return</span> <span class="title function_">createElement</span>(</span><br><span class="line">            <span class="string">&quot;div&quot;</span>, </span><br><span class="line">            &#123; <span class="attr">attrs</span>: &#123;<span class="attr">title</span>: <span class="string">&quot;蛙人&quot;</span>&#125; &#125;, </span><br><span class="line">            [</span><br><span class="line">                <span class="title function_">createElement</span>(<span class="string">&quot;span&quot;</span>, <span class="literal">null</span>, <span class="string">&quot;蛙人&quot;</span>)</span><br><span class="line">            ]</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>main.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> config <span class="keyword">from</span> <span class="string">&quot;./index.js&quot;</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&quot;test&quot;</span>, config)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>上面会调用标签会创建出一个<code>div</code>带有<code>span</code>子级的内容，注意<code>createElement</code>第二个参数属性这里，这里不能乱写，必须遵守官网风格<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/render-function.html#%E6%B7%B1%E5%85%A5%E6%95%B0%E6%8D%AE%E5%AF%B9%E8%B1%A1">点击这里</a>。</p>
+<p>当然这里肯定有人会问，这样写有什么用，跟<code>template</code>写不一样嘛，<code>render</code>函数这样写还麻烦可读性不强。</p>
+<p>分情况，有时候用<code>render</code>更加灵活，咱就拿官网最典型的案例来<strong>举个例子</strong>。</p>
+<p>封装一个组件，进行传入数字参数，就显示数字参数的标签，你肯定会先想到这样。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">v-if</span>=<span class="string">&quot;num == 1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h2</span> <span class="attr">v-if</span>=<span class="string">&quot;num == 2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span> <span class="attr">v-if</span>=<span class="string">&quot;num == 3&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h4</span> <span class="attr">v-if</span>=<span class="string">&quot;num == 4&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h5</span> <span class="attr">v-if</span>=<span class="string">&quot;num == 5&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h6</span> <span class="attr">v-if</span>=<span class="string">&quot;num == 6&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h6</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>上面这样实现是没问题的，但是代码会冗余，一堆判断。我们再来看一下<code>render函数</code>的实现</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">return</span> <span class="title function_">createElement</span>(</span></span><br><span class="line"><span class="language-javascript">      <span class="string">&#x27;h&#x27;</span> + <span class="variable language_">this</span>.<span class="property">num</span>,</span></span><br><span class="line"><span class="language-javascript">    )</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">props</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">num</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">type</span>: <span class="title class_">Number</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">required</span>: <span class="literal">true</span></span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>上面两种都实现了同样的功能，是不是<code>render函数</code>这种方式看起来要简洁的多。所以一般用<code>render函数</code>封装东西是比较灵活的，尤其是配置和模板分离。深入理解配置<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/render-function.html#%E6%B7%B1%E5%85%A5%E6%95%B0%E6%8D%AE%E5%AF%B9%E8%B1%A1">这里</a>。</p>
+<h2 id="什么是-JSX"><a href="#什么是-JSX" class="headerlink" title="什么是 JSX"></a>什么是 JSX</h2><p><code>JSX</code>是<code>JavScript</code>和<code>XML</code>结合一种的格式，是<code>JavaScript</code>的扩展语法。说白了就是可以在<code>JavaScript</code>代码中使用<code>JSX</code>。<code>JavaScript</code>在解析<code>JSX</code>时会先创建虚拟<code>DOM</code>，<code>JSX</code>最后会被编译为<code>JavaScript</code>代码执行。</p>
+<h2 id="为什么要用-JSX"><a href="#为什么要用-JSX" class="headerlink" title="为什么要用 JSX"></a>为什么要用 JSX</h2><p>有的人肯定觉得用<code>render</code>函数写如果嵌套子级太多层看着太别扭了，可读性太差。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="title function_">render</span>(<span class="params">createElement</span>) &#123;</span><br><span class="line">       	<span class="keyword">return</span> <span class="title function_">createElement</span>(</span><br><span class="line">            <span class="string">&quot;div&quot;</span>, </span><br><span class="line">            &#123; <span class="attr">attrs</span>: &#123;<span class="attr">title</span>: <span class="string">&quot;蛙人&quot;</span>&#125; &#125;, </span><br><span class="line">            [</span><br><span class="line">                <span class="title function_">createElement</span>(</span><br><span class="line">                    <span class="string">&quot;span&quot;</span>, </span><br><span class="line">                    <span class="literal">null</span>, </span><br><span class="line">                    <span class="string">&quot;蛙人&quot;</span></span><br><span class="line">                ),</span><br><span class="line">                <span class="title function_">createElement</span>(</span><br><span class="line">                    <span class="string">&quot;span&quot;</span>, </span><br><span class="line">                    <span class="literal">null</span>, </span><br><span class="line">                    <span class="title function_">createElement</span>(</span><br><span class="line">                        <span class="string">&quot;b&quot;</span>, </span><br><span class="line">                        <span class="literal">null</span>, </span><br><span class="line">                        <span class="string">&quot;前端娱乐圈&quot;</span></span><br><span class="line">                    )</span><br><span class="line">                ),</span><br><span class="line">                <span class="title function_">createElement</span>(</span><br><span class="line">                    <span class="string">&quot;span&quot;</span>, </span><br><span class="line">                    <span class="literal">null</span>, </span><br><span class="line">                    <span class="title function_">createElement</span>(</span><br><span class="line">                        <span class="string">&quot;b&quot;</span>, </span><br><span class="line">                        <span class="literal">null</span>, </span><br><span class="line">                        <span class="title function_">createElement</span>(</span><br><span class="line">                            <span class="string">&quot;i&quot;</span>, </span><br><span class="line">                            <span class="literal">null</span>, </span><br><span class="line">                            <span class="string">&quot;关注前端娱乐圈&quot;</span></span><br><span class="line">                        )</span><br><span class="line">                    )</span><br><span class="line">                )</span><br><span class="line">            ]</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>比如上面这种，嵌套多层，可读性太差，时间一长自己还得捋半天。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1f6fac23ec51446dbc81d8450f2adbe2~tplv-k3u1fbpfcp-zoom-1.image"></p>
+<p>所以为了解决这问题，<code>JSX</code>就登场了，<code>JSX</code>相当于就是<code>createElement</code>的语法糖，这种形式可以直接使用<code>template</code>模板那种格式在<code>render</code>函数里写。</p>
+<p>我们用这种形式来还原一下上面的<code>createElement</code>写的，是不是这种很简洁易读。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>蛙人<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">b</span>&gt;</span>前端娱乐圈<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">b</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                    <span class="tag">&lt;<span class="name">i</span>&gt;</span>关注前端娱乐圈<span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;/<span class="name">b</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSX-和-Render-函数有什么不同"><a href="#JSX-和-Render-函数有什么不同" class="headerlink" title="JSX 和 Render 函数有什么不同"></a>JSX 和 Render 函数有什么不同</h2><p>除了写法不一样外，没什么不同，属性都是遵循 Vue 文档上的。</p>
+<p>我们来使用 JSX 语法，看看怎么使用，这里玩过 React 的同学估计都会使用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	<span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> &#123;</span><br><span class="line">			<span class="attr">name</span>: <span class="string">&quot;前端娱乐圈&quot;</span>,</span><br><span class="line">			<span class="attr">dataList</span>: &#123;</span><br><span class="line">				<span class="attr">title</span>: <span class="string">&quot;前端娱乐圈&quot;</span>,</span><br><span class="line">				<span class="attr">href</span>: <span class="string">&quot;www.baidu.com&quot;</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">    <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onClick</span>=<span class="string">&#123;this.xxx&#125;</span> &#123;<span class="attr">...</span>&#123;<span class="attr">attrs:</span> <span class="attr">this.dataList</span>&#125;&#125;&gt;</span>&#123; this.name &#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p><strong>如果你的项目是<code>Webpack</code>搭建，babel@6 的情况</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i @babel/core @vue/babel-preset-jsx babel-loader</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>根目录<code>.babelrc</code>文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;plugins&quot;: [&quot;transform-vue-jsx&quot;]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>webpack.config.js</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /\.js/,</span><br><span class="line">    use: &quot;babel-loader&quot;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果你的项目是<code>Webpack</code>搭建，babel@7 的情况</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i @babel/core @vue/babel-preset-jsx babel-loader @vue/babel-preset-jsx @vue/babel-helper-vue-jsx-merge-props</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>根目录<code>.babelrc</code>文件</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/vuejs/jsx">文档说明 babel7 兼容 JSX 问题</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;presets&quot;: [&quot;@vue/babel-preset-jsx&quot;]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>webpack.config.js</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /\.js/,</span><br><span class="line">    use: &quot;babel-loader&quot;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果你的项目是<code>Vue-cli</code></strong></p>
+<p>最新版本的 cli 是会默认支持 JSX 语法的，如果你的版本较老请跟上面一样的配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i @vue/babel-preset-jsx @vue/babel-helper-vue-jsx-merge-props</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>babel.config.js</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  presets: [</span><br><span class="line">    &#x27;@vue/cli-plugin-babel/preset&#x27;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>–</p>
+<hr>
+<p>原文地址 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6977237451660066853?utm_source=gold_browser_extension">juejin.cn</a><br>参考<br>–</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sansan_7957/article/details/83014838">blog.csdn.net&#x2F;sansan_7957…</a></p>
+<p><a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/render-function.html#%E5%9F%BA%E7%A1%80">cn.vuejs.org&#x2F;v2&#x2F;guide&#x2F;re…</a></p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2021/06/23/css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96-0/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            css的GPU动画优化
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2021/06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            使用css的GPU动画优化
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

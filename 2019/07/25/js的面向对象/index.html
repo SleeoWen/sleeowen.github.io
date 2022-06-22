@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>js的面向对象 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="javascript, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="类和实例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js的面向对象">
+<meta property="og:url" content="https://sleeowen.github.io/2019/07/25/js%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="类和实例">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-25T10:54:57.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.215Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        js的面向对象
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/07/" class="post-meta__date button">2019-07-25</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="类和实例"><a href="#类和实例" class="headerlink" title="类和实例"></a>类和实例</h2><span id="more"></span>
+
+<h3 id="类的声明"><a href="#类的声明" class="headerlink" title="类的声明"></a>类的声明</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类的声明</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Animal</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;animal&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// es6中的声明</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Animals</span> &#123;</span><br><span class="line">	<span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;animal&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="类的实例化"><a href="#类的实例化" class="headerlink" title="类的实例化"></a>类的实例化</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">// 实例化类</span></span><br><span class="line">   <span class="comment">//在没有参数时，构造函数的括号可以省略</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Animal</span>(), <span class="keyword">new</span> <span class="title class_">Animals</span>());</span><br></pre></td></tr></table></figure>
+<h2 id="类和继承"><a href="#类和继承" class="headerlink" title="类和继承"></a>类和继承</h2><h3 id="使用构造函数进行继承"><a href="#使用构造函数进行继承" class="headerlink" title="使用构造函数进行继承"></a>使用构造函数进行继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//	使用构造函数进行继承（es5）</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Parent1</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;name&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Parent1</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">say</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;say&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 这种方式不会继承父类原型对象上的方法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Child1</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">Parent1</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>); <span class="comment">// apply;</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">type</span> = <span class="string">&#x27;chilid1&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Child1</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>这种方式不会继承父类原型对象上的方法</strong></p>
+<h3 id="借助原型链实现继承"><a href="#借助原型链实现继承" class="headerlink" title="借助原型链实现继承"></a>借助原型链实现继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//	借助原型链实现继承</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Parent2</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;name2&#x27;</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">play</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Child2</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">type</span> = <span class="string">&#x27;chilid2&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Child2</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Parent2</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Child2</span>());</span><br><span class="line"><span class="keyword">var</span> s1 = <span class="keyword">new</span> <span class="title class_">Child2</span>();</span><br><span class="line"><span class="keyword">var</span> s2 = <span class="keyword">new</span> <span class="title class_">Child2</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s1.<span class="property">play</span>, s2.<span class="property">play</span>);	<span class="comment">//[1,2,3] [1,2,3]</span></span><br><span class="line">s1.<span class="property">play</span>.<span class="title function_">push</span>(<span class="number">4</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s1.<span class="property">play</span>, s2.<span class="property">play</span>);	<span class="comment">//[1,2,3,4] [1,2,3,4]</span></span><br></pre></td></tr></table></figure>
+<p><strong>多个实例化对象，共用一个原型链，修改对象中原型链上的属性，会导致其他对象的原型链上的属性也发生变化。</strong></p>
+<h3 id="组合方式"><a href="#组合方式" class="headerlink" title="组合方式"></a>组合方式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 组合方式</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Parent3</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;name3&#x27;</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">play</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Child3</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">Parent3</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">type</span> = <span class="string">&#x27;chilid3&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Child3</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Parent3</span>();</span><br><span class="line"><span class="keyword">var</span> s3 = <span class="keyword">new</span> <span class="title class_">Child3</span>();</span><br><span class="line"><span class="keyword">var</span> s4 = <span class="keyword">new</span> <span class="title class_">Child3</span>();</span><br><span class="line">s3.<span class="property">play</span>.<span class="title function_">push</span>(<span class="number">4</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s3.<span class="property">play</span>, s4.<span class="property">play</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>有缺点，父类的构造函数执行了两次。</strong></p>
+<h3 id="组合继承的优化1"><a href="#组合继承的优化1" class="headerlink" title="组合继承的优化1"></a>组合继承的优化1</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Parent4</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;4&#x27;</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">play</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Child4</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">Parent4</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">type</span> = <span class="string">&#x27;chilid4&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Child4</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Parent4</span>.<span class="property"><span class="keyword">prototype</span></span>;</span><br><span class="line"><span class="keyword">var</span> s5 = <span class="keyword">new</span> <span class="title class_">Child4</span>();</span><br><span class="line"><span class="keyword">var</span> s6 = <span class="keyword">new</span> <span class="title class_">Child4</span>();</span><br><span class="line">s5.<span class="property">play</span>.<span class="title function_">push</span>(<span class="number">4</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s5.<span class="property">play</span>, s6.<span class="property">play</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s5 <span class="keyword">instanceof</span> <span class="title class_">Child4</span>, s5 <span class="keyword">instanceof</span> <span class="title class_">Parent4</span>);	<span class="comment">// true true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s5.<span class="property">constructor</span>);	<span class="comment">// Parent4</span></span><br><span class="line"><span class="comment">// 因为子类的prototype就是父类的实例，他的constructor是从父类直接拿过来的</span></span><br></pre></td></tr></table></figure>
+<p>父类只在子类实例化时执行一次，将父类的prototype赋给子类。</p>
+<h3 id="组合继承的优化2"><a href="#组合继承的优化2" class="headerlink" title="组合继承的优化2"></a>组合继承的优化2</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Parent5</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;5&#x27;</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">play</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Child5</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">Parent5</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">type</span> = <span class="string">&#x27;chilid5&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Child5</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Parent5</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line"><span class="title class_">Child5</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> = <span class="title class_">Child5</span>;</span><br><span class="line"><span class="keyword">var</span> s5 = <span class="keyword">new</span> <span class="title class_">Child5</span>();</span><br><span class="line"><span class="keyword">var</span> s6 = <span class="keyword">new</span> <span class="title class_">Child5</span>();</span><br><span class="line">s5.<span class="property">play</span>.<span class="title function_">push</span>(<span class="number">4</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s5.<span class="property">play</span>, s6.<span class="property">play</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s5 <span class="keyword">instanceof</span> <span class="title class_">Child5</span>, s5 <span class="keyword">instanceof</span> <span class="title class_">Parent5</span>); <span class="comment">// true true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s5.<span class="property">constructor</span>); <span class="comment">// Child5</span></span><br></pre></td></tr></table></figure>
+<h3 id="ES6的继承"><a href="#ES6的继承" class="headerlink" title="ES6的继承"></a>ES6的继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// es6继承</span></span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="comment">//构造函数，里面写上对象的属性</span></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">props</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">name</span> = props.<span class="property">name</span> || <span class="string">&#x27;Unknown&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//方法写在后面</span></span><br><span class="line">    <span class="title function_">eat</span>(<span class="params"></span>) &#123;<span class="comment">//父类共有的方法</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span> + <span class="string">&quot; will eat pests.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//class继承</span></span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">Bird</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span> &#123;</span><br><span class="line">    <span class="comment">//构造函数</span></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">props,myAttribute</span>) &#123;<span class="comment">//props是继承过来的属性，myAttribute是自己的属性</span></span><br><span class="line">      <span class="comment">//调用实现父类的构造函数</span></span><br><span class="line">      <span class="variable language_">super</span>(props)<span class="comment">//相当于获得父类的this指向</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">type</span> = props.<span class="property">type</span> || <span class="string">&quot;Unknown&quot;</span>;<span class="comment">//父类的属性，也可写在父类中</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">attr</span> = myAttribute;<span class="comment">//自己的私有属性</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">fly</span>(<span class="params"></span>) &#123;<span class="comment">//自己私有的方法</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span> + <span class="string">&quot; are friendly to people.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">myattr</span>(<span class="params"></span>) &#123;<span class="comment">//自己私有的方法</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">type</span>+<span class="string">&#x27;---&#x27;</span>+<span class="variable language_">this</span>.<span class="property">attr</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过new实例化</span></span><br><span class="line">  <span class="keyword">var</span> myBird = <span class="keyword">new</span> <span class="title class_">Bird</span>(&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;小燕子&#x27;</span>,</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;Egg animal&#x27;</span><span class="comment">//卵生动物</span></span><br><span class="line">  &#125;,<span class="string">&#x27;Bird class&#x27;</span>)</span><br><span class="line">  myBird.<span class="title function_">eat</span>()</span><br><span class="line">  myBird.<span class="title function_">fly</span>()</span><br><span class="line">  myBird.<span class="title function_">myattr</span>()</span><br></pre></td></tr></table></figure>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/08/19/js%E6%A0%88/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            js栈
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            原型链
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

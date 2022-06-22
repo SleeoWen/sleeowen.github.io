@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>meta标签使用总结 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="html, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="Meta对象Meta 对象代表 HTML 的 一个  元素。  元素可提供有关某个 HTML 元素的元信息 (meta-information)，比如描述、针对搜索引擎的关键词以及刷新频率。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="meta标签使用总结">
+<meta property="og:url" content="https://sleeowen.github.io/2019/03/02/meta%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="Meta对象Meta 对象代表 HTML 的 一个  元素。  元素可提供有关某个 HTML 元素的元信息 (meta-information)，比如描述、针对搜索引擎的关键词以及刷新频率。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-03-02T00:06:54.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.216Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="html">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        meta标签使用总结
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/03/" class="post-meta__date button">2019-03-02</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="Meta对象"><a href="#Meta对象" class="headerlink" title="Meta对象"></a>Meta对象</h2><p>Meta 对象代表 HTML 的 一个 <meta> 元素。</p>
+<meta> 元素可提供有关某个 HTML 元素的元信息 (meta-information)，比如描述、针对搜索引擎的关键词以及刷新频率。
+<span id="more"></span>
+## meta对象的属性
+
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>content</td>
+<td>设置或返回 <meta> 元素的 content 属性的值。</td>
+</tr>
+<tr>
+<td>httpEquiv</td>
+<td>把 content 属性连接到一个 HTTP 头部。</td>
+</tr>
+<tr>
+<td>name</td>
+<td>把 content 属性连接到某个名称。</td>
+</tr>
+<tr>
+<td>scheme</td>
+<td>设置或返回用于解释 content 属性的值的格式。</td>
+</tr>
+</tbody></table>
+<p>常用的包括 http-equiv搭配content和name搭配content两种。</p>
+<h2 id="name"><a href="#name" class="headerlink" title="name"></a>name</h2><h3 id="name可用参数有这些："><a href="#name可用参数有这些：" class="headerlink" title="name可用参数有这些："></a><strong>name可用参数有这些：</strong></h3><h3 id="keywords-关键字"><a href="#keywords-关键字" class="headerlink" title="keywords(关键字)"></a>keywords(关键字)</h3><p>说明：用于告诉搜索引擎，你网页的关键字</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;前端,js,css&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="description-网站内容的描述"><a href="#description-网站内容的描述" class="headerlink" title="description(网站内容的描述)"></a>description(网站内容的描述)</h3><p>说明：用于告诉搜索引擎，你网站的主要内容  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;一个前端网站&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="viewport-移动端的窗口"><a href="#viewport-移动端的窗口" class="headerlink" title="viewport(移动端的窗口)"></a>viewport(移动端的窗口)</h3><p>说明：在用bootstrap,AmazeUI等框架时候都有用过viewport。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="robots-定义搜索引擎爬虫的索引方式"><a href="#robots-定义搜索引擎爬虫的索引方式" class="headerlink" title="robots(定义搜索引擎爬虫的索引方式)"></a>robots(定义搜索引擎爬虫的索引方式)</h3><p>说明：robots用来告诉爬虫哪些页面需要索引，哪些页面不需要索引。content的参数有all,none,index,noindex,follow,nofollow。默认是all。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;robots&quot;</span> <span class="attr">content</span>=<span class="string">&quot;none&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>具体参数如下：</p>
+<ol>
+<li>none : 搜索引擎将忽略此网页，等价于noindex，nofollow。</li>
+<li>noindex : 搜索引擎不索引此网页。</li>
+<li>nofollow: 搜索引擎不继续通过此网页的链接索引搜索其它的网页。</li>
+<li>all : 搜索引擎将索引此网页与继续通过此网页的链接索引，等价于index，follow。</li>
+<li>index : 搜索引擎索引此网页。</li>
+<li>follow : 搜索引擎继续通过此网页的链接索引搜索其它的网页。</li>
+</ol>
+<h3 id="author-作者"><a href="#author-作者" class="headerlink" title="author(作者)"></a>author(作者)</h3><p>说明：用于标注网页作者</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;author&quot;</span> <span class="attr">content</span>=<span class="string">&quot;xxx&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="generator-网页制作软件"><a href="#generator-网页制作软件" class="headerlink" title="generator(网页制作软件)"></a>generator(网页制作软件)</h3><p>说明：用于标明网页是什么软件做的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;generator&quot;</span> <span class="attr">content</span>=<span class="string">&quot;Sublime Text3&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="copyright-版权"><a href="#copyright-版权" class="headerlink" title="copyright(版权)"></a>copyright(版权)</h3><p>说明：用于标注版权信息</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;copyright&quot;</span> <span class="attr">content</span>=<span class="string">&quot;xxx&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="revisit-after-搜索引擎爬虫重访时间"><a href="#revisit-after-搜索引擎爬虫重访时间" class="headerlink" title="revisit-after(搜索引擎爬虫重访时间)"></a>revisit-after(搜索引擎爬虫重访时间)</h3><p>说明：如果页面不是经常更新，为了减轻搜索引擎爬虫对服务器带来的压力，可以设置一个爬虫的重访时间。如果重访时间过短，爬虫将按它们定义的默认时间来访问。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;revisit-after&quot;</span> <span class="attr">content</span>=<span class="string">&quot;7 days&quot;</span> &gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="renderer-双核浏览器渲染方式"><a href="#renderer-双核浏览器渲染方式" class="headerlink" title="renderer(双核浏览器渲染方式)"></a>renderer(双核浏览器渲染方式)</h3><p>说明：renderer是为双核浏览器准备的，用于指定双核浏览器默认以何种方式渲染页面。比如说360浏览器。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;renderer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;webkit&quot;</span>&gt;</span> //默认webkit内核</span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;renderer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie-comp&quot;</span>&gt;</span> //默认IE兼容模式</span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;renderer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie-stand&quot;</span>&gt;</span> //默认IE标准模式</span><br></pre></td></tr></table></figure>
+<h2 id="http-equiv"><a href="#http-equiv" class="headerlink" title="http-equiv"></a>http-equiv</h2><h3 id="content-Type-设定网页字符集-推荐使用HTML5的方式"><a href="#content-Type-设定网页字符集-推荐使用HTML5的方式" class="headerlink" title="content-Type(设定网页字符集)(推荐使用HTML5的方式)"></a>content-Type(设定网页字符集)(推荐使用HTML5的方式)</h3><p>说明：用于设定网页字符集，便于浏览器解析与渲染页面举例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html;charset=utf-8&quot;</span>&gt;</span>  //旧的HTML，不推荐</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span> //HTML5设定网页字符集的方式，推荐使用UTF-8</span><br></pre></td></tr></table></figure>
+<h3 id="X-UA-Compatible-浏览器采取何种版本渲染当前页面"><a href="#X-UA-Compatible-浏览器采取何种版本渲染当前页面" class="headerlink" title="X-UA-Compatible(浏览器采取何种版本渲染当前页面)"></a>X-UA-Compatible(浏览器采取何种版本渲染当前页面)</h3><p>说明：用于告知浏览器以何种版本来渲染页面。（一般都设置为最新模式，在各大框架中这个设置也很常见。）举例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge,chrome=1&quot;</span>/&gt;</span> //指定IE和Chrome使用最新版本渲染当前页面</span><br></pre></td></tr></table></figure>
+<h3 id="cache-control-指定请求和响应遵循的缓存机制"><a href="#cache-control-指定请求和响应遵循的缓存机制" class="headerlink" title="cache-control(指定请求和响应遵循的缓存机制)"></a>cache-control(指定请求和响应遵循的缓存机制)</h3><p>说明：指导浏览器如何缓存某个响应以及缓存多长时间。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;cache-control&quot;</span> <span class="attr">content</span>=<span class="string">&quot;no-cache&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>共有以下几种用法：</p>
+<ol>
+<li><p>no-cache: 先发送请求，与服务器确认该资源是否被更改，如果未被更改，则使用缓存。</p>
+</li>
+<li><p>no-store: 不允许缓存，每次都要去服务器上，下载完整的响应。（安全措施）</p>
+</li>
+<li><p>public : 缓存所有响应，但并非必须。因为max-age也可以做到相同效果</p>
+</li>
+<li><p>private : 只为单个用户缓存，因此不允许任何中继进行缓存。（比如说CDN就不允许缓存private的响应）</p>
+</li>
+<li><p>maxage : 表示当前请求开始，该响应在多久内能被缓存和重用，而不去服务器重新请求。例如：max-age&#x3D;60表示响应可以再缓存和重用 60 秒。<br>用法2.(禁止百度自动转码)<br>说明：用于禁止当前页面在移动端浏览时，被百度自动转码。虽然百度的本意是好的，但是转码效果很多时候却不尽人意。所以可以在head中加入例子中的那句话，就可以避免百度自动转码了。举例：</p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Cache-Control&quot;</span> <span class="attr">content</span>=<span class="string">&quot;no-siteapp&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="expires-网页到期时间"><a href="#expires-网页到期时间" class="headerlink" title="expires(网页到期时间)"></a>expires(网页到期时间)</h3><p>说明:用于设定网页的到期时间，过期后网页必须到服务器上重新传输。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;expires&quot;</span> <span class="attr">content</span>=<span class="string">&quot;Sunday 26 October 2016 01:00 GMT&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="refresh-自动刷新并指向某页面"><a href="#refresh-自动刷新并指向某页面" class="headerlink" title="refresh(自动刷新并指向某页面)"></a>refresh(自动刷新并指向某页面)</h3><p>说明：网页将在设定的时间内，自动刷新并调向设定的网址。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;refresh&quot;</span> <span class="attr">content</span>=<span class="string">&quot;2；URL=http://www.baidu.com/&quot;</span>&gt;</span> //意思是2秒后跳转向baidu</span><br></pre></td></tr></table></figure>
+<h3 id="Set-Cookie-cookie设定"><a href="#Set-Cookie-cookie设定" class="headerlink" title="Set-Cookie(cookie设定)"></a>Set-Cookie(cookie设定)</h3><p>说明：如果网页过期。那么这个网页存在本地的cookies也会被自动删除。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;set-cookie&quot;</span> <span class="attr">content</span>=<span class="string">&quot;runoobcookie=myContent;expires=Fri, 30 Dec 2015 12:00:00 GMT; path=http://www.runoob.com&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/html/" class="post-tags__link button"># html</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/03/22/webp%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            webp在项目中的应用
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/02/21/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94DNS%E9%A2%84%E8%A7%A3%E6%9E%90/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            前端性能优化——DNS预解析
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

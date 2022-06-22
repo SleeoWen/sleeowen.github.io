@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Archive: 2020/4 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="个人的学习经历">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SleeoWen-Blog">
+<meta property="og:url" content="https://sleeowen.github.io/archives/2020/04/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="个人的学习经历">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="js,ts,web,h5">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+    <div class="cover">
+        <div class="cover__logo">
+            
+                <h1>Demo</h1>
+            
+        </div>
+        
+        
+            <div class="cover__intro">
+                <p>Hi, nice to meet you!</p>
+ 
+            </div>
+        
+    </div>
+
+            
+<main class='main'>
+    
+		
+    <div class="post-list">
+        
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        webpack中module,chunk和bundle的区别是什么
+    </h2>
+    
+        <p>首先我们在 src 目录下写我们的业务代码，引入 index.js、utils.js、common.js 和 index.css 这 4 个文件，目录结构如下：</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/04/" class="post-meta__date button">2020-04-30</a>
+    
+ 
+</div>
+<div class="post-entry__tags"></div> 
+<a href="/2020/04/30/webpack%E4%B8%ADmodule-chunk%E5%92%8Cbundle%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88/" class="post-entry__link">webpack中module,chunk和bundle的区别是什么</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        webpack动态懒加载
+    </h2>
+    
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>起因是因为一个基于 vue-cli3.0 的项目突然反馈 vendor 包过大，为了减少用户的白屏时间开始做优化。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/04/" class="post-meta__date button">2020-04-24</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/webpack/" class="post-tags__link button"># webpack</a></div> 
+<a href="/2020/04/24/webpack%E5%8A%A8%E6%80%81%E6%87%92%E5%8A%A0%E8%BD%BD/" class="post-entry__link">webpack动态懒加载</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        webpack配置
+    </h2>
+    
+        <h2 id="多入口配置"><a href="#多入口配置" class="headerlink" title="多入口配置"></a>多入口配置</h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/04/" class="post-meta__date button">2020-04-17</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/webpack/" class="post-tags__link button"># webpack</a></div> 
+<a href="/2020/04/17/webpack%E9%85%8D%E7%BD%AE/" class="post-entry__link">webpack配置</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        webpack相关问题
+    </h2>
+    
+        <p>随着现代前端开发的复杂度和规模越来越庞大，已经不能抛开工程化来独立开发了，如 react 的 jsx 代码必须编译后才能在浏览器中使用；又如 sass 和 less 的代码浏览器也是不支持的。 而如果摒弃了这些开发框架，那么开发的效率将大幅下降。在众多前端工程化工具中，webpack 脱颖而出成为了当今最流行的前端构建工具。 然而大多数的使用者都只是单纯的会使用，而并不知道其深层的原理。希望通过以下的面试题总结可以帮助大家温故知新、查缺补漏，知其然而又知其所以然。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/04/" class="post-meta__date button">2020-04-11</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/webpack/" class="post-tags__link button"># webpack</a></div> 
+<a href="/2020/04/11/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" class="post-entry__link">webpack相关问题</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        ES6中的Proxy、Reflect以及Vue3.0中的应用原理
+    </h2>
+    
+        <h2 id="使用Object-defineProperty的一些劣势："><a href="#使用Object-defineProperty的一些劣势：" class="headerlink" title="使用Object.defineProperty的一些劣势："></a>使用<code>Object.defineProperty</code>的一些劣势：</h2><ol>
+<li><code>Object.defineProperty</code>监听的是对象的属性，如果对象比较复杂，需要逐个深层遍历他的属性来实现监听，耗费性能</li>
+<li><code>Object.defineProperty</code>无法监听数组的变化，使 Vue 不得不对数组做了额外的 hack。</li>
+</ol>
+<p>相比之下<code>Proxy</code>就更强大，接下来我们就来了解他。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/04/" class="post-meta__date button">2020-04-02</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
+<a href="/2020/04/02/ES6%E4%B8%AD%E7%9A%84Proxy%E3%80%81Reflect%E4%BB%A5%E5%8F%8AVue3-0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%8E%9F%E7%90%86/" class="post-entry__link">ES6中的Proxy、Reflect以及Vue3.0中的应用原理</a>
+                </div>
+            
+        
+    </div>
+    
+
+
+	
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

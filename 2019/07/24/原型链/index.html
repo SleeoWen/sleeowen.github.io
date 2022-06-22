@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>原型链 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="javascript, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="原型链的介绍什么是原型？js中，任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。 什么是原型链？  原型链的核心就是依赖对象的_proto_的指向，当自身不存在的属性时，就一层层的扒出创建对象的构造函数，直至到Object">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原型链">
+<meta property="og:url" content="https://sleeowen.github.io/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="原型链的介绍什么是原型？js中，任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。 什么是原型链？  原型链的核心就是依赖对象的_proto_的指向，当自身不存在的属性时，就一层层的扒出创建对象的构造函数，直至到Object">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sleeowen.github.io/yuanxing.png">
+<meta property="og:image" content="https://sleeowen.github.io/gouzao.png">
+<meta property="article:published_time" content="2019-07-24T08:19:43.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.225Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sleeowen.github.io/yuanxing.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        原型链
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/07/" class="post-meta__date button">2019-07-24</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="原型链的介绍"><a href="#原型链的介绍" class="headerlink" title="原型链的介绍"></a>原型链的介绍</h2><h3 id="什么是原型？"><a href="#什么是原型？" class="headerlink" title="什么是原型？"></a>什么是原型？</h3><p>js中，任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。</p>
+<h3 id="什么是原型链？"><a href="#什么是原型链？" class="headerlink" title="什么是原型链？"></a>什么是原型链？</h3><p>  原型链的核心就是依赖对象的_proto_的指向，当自身不存在的属性时，就一层层的扒出创建对象的构造函数，直至到Object时，就没有_proto_指向了。</p>
+<span id="more"></span>
+<h2 id="创建对象的方法"><a href="#创建对象的方法" class="headerlink" title="创建对象的方法"></a>创建对象的方法</h2><ol>
+<li>字面量<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123; <span class="attr">name</span>: <span class="string">&#x27;demo&#x27;</span> &#125;;</span><br></pre></td></tr></table></figure></li>
+<li>字面量（使用了Object的构造方法）<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="title class_">Object</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;demo&#x27;</span> &#125;);</span><br></pre></td></tr></table></figure></li>
+<li>构造函数<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;demo&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> <span class="title function_">func</span>();</span><br></pre></td></tr></table></figure></li>
+<li>Object.create<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> demo = &#123; <span class="attr">name</span>: <span class="string">&#x27;demo&#x27;</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> d = <span class="title class_">Object</span>.<span class="title function_">create</span>(demo);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="创建对象的过程"><a href="#创建对象的过程" class="headerlink" title="创建对象的过程"></a>创建对象的过程</h3><p><strong>首先，当我们声明一个function关键字的方法时，会为这个方法添加一个prototype属性，指向默认的原型对象，并且此prototype的constructor属性也指向方法对象。此二个属性会在创建对象时被对象的属性引用。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Hello</span>.<span class="property"><span class="keyword">prototype</span></span>); <span class="comment">// Object &#123;&#125; -- &gt; 内部的constructor 指向Hello方法</span></span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Hello</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span>); <span class="comment">// function Hello()&#123;&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>我们如果用Hello创建一个对象h，看这个对象有什么属性。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   <span class="variable language_">console</span>.<span class="title function_">log</span>(h.<span class="property">constructor</span>); <span class="comment">// function Hello()&#123;&#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="title function_">getPrototypeOf</span>(h)==<span class="title class_">Hello</span>.<span class="property"><span class="keyword">prototype</span></span>); <span class="comment">// true  备注：getPrototypeOf是获取_proto_</span></span><br></pre></td></tr></table></figure>
+<p> 我们惊喜的发现，new出来的对象，它的constructor指向了方法对象，它的_proto_和prototype相等。</p>
+<p>  即new一个对象，它的_proto_属性指向了方法的prototype属性，并且constructor指向了prototype的constructor属性。</p>
+<h3 id="创建对象的过程-1"><a href="#创建对象的过程-1" class="headerlink" title="创建对象的过程"></a>创建对象的过程</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Hehe</span>(<span class="params">name</span>) &#123;</span><br><span class="line">		<span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> h = <span class="keyword">new</span> <span class="title class_">Hehe</span>(<span class="string">&quot;笑你妹&quot;</span>);</span><br><span class="line">	<span class="comment">//伪代码:</span></span><br><span class="line">	<span class="keyword">function</span> <span class="title function_">newObj</span>(<span class="params">name</span>)&#123;</span><br><span class="line">		 <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">		 obj.<span class="property">__proto__</span> = <span class="title class_">Hehe</span>.<span class="property"><span class="keyword">prototype</span></span>; </span><br><span class="line">		 obj.<span class="property">constructor</span> = <span class="title class_">Hehe</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span>;</span><br><span class="line">		 <span class="keyword">var</span> result = <span class="title class_">Hehe</span>.<span class="title function_">call</span>(obj, name);</span><br><span class="line">		 <span class="keyword">return</span> <span class="keyword">typeof</span> result===<span class="string">&#x27;object&#x27;</span>&amp;&amp; result!=<span class="literal">null</span> ? result : obj;  <span class="comment">//当无返回对象或默认时返回obj。</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> hh = <span class="title function_">newObj</span>(<span class="string">&quot;笑你妹&quot;</span>);</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(hh);</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(h);</span><br><span class="line">	<span class="comment">//虽然hh!=h,但是可以看到这个hh就和h的结构一样了。</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>过程：先创建一个空对象，设置一个_proto_指向方法的原型，设置constructor，用新对象做this指向方法，返回新对象。</strong></p>
+<h2 id="原型以及原型链关系"><a href="#原型以及原型链关系" class="headerlink" title="原型以及原型链关系"></a>原型以及原型链关系</h2><p><img src="/yuanxing.png" alt="image"></p>
+<p><img src="/gouzao.png" alt="image"></p>
+<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><blockquote>
+<p>任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> p = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line">	<span class="comment">//方法才有prototype,普通对象无prototype</span></span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>); <span class="comment">// Object&#123;&#125; </span></span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(p.<span class="property"><span class="keyword">prototype</span></span>); <span class="comment">// undifined</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//任何对象都是有构造函数的,Person这种方法的构造函数是Function。</span></span><br><span class="line">	<span class="comment">//备注:constructor很容易被改变，一般不用它，此处只是打印下列对象的构造函数是什么。</span></span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(p.<span class="property">constructor</span>); <span class="comment">//function Person()&#123;&#125;  </span></span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Person</span>.<span class="property">constructor</span>); <span class="comment">//function Function()&#123;&#125; </span></span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(&#123;&#125;.<span class="property">constructor</span>); <span class="comment">// function Object()&#123;&#125;</span></span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="property">constructor</span>); <span class="comment">// function Function() &#123;&#125;</span></span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>([].<span class="property">constructor</span>);  <span class="comment">//function Array()&#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><blockquote>
+<p> 用function声明的都是函数，而如果直接调用的话，那么Person()就是一个普通函数，只有用函数new产生对象时，这个函数才是new出来对象的构造函数。</p>
+</blockquote>
+<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><blockquote>
+<p>原型链的核心就是依赖对象的_proto_的指向，当自身不存在的属性时，就一层层的扒出创建对象的构造函数，直至到Object时，就没有_proto_指向了。</p>
+</blockquote>
+<p>属性搜索原则：</p>
+<ol>
+<li>当访问一个对象的成员的时候，会现在自身找有没有,如果找到直接使用。</li>
+<li>如果没有找到，则去原型链指向的对象的构造函数的prototype中找，找到直接使用，没找到就返回undifined或报错。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name</span>)&#123;</span><br><span class="line">           <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line">    <span class="comment">//p ---&gt; Person.prototype ---&gt;Object.prototype----&gt;null</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//原型继承的基本案例</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//1.直接替换原型对象 </span></span><br><span class="line"><span class="keyword">var</span> parent = &#123;</span><br><span class="line">	sayHello : <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;方式1：替换原型对象&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span> = parent;</span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;张三&quot;</span>, <span class="number">50</span>);</span><br><span class="line">p.<span class="title function_">sayHello</span>();</span><br><span class="line"><span class="comment">//2.混入式原型继承</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;.............混入式原型继承..............&quot;</span>);</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Student</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> parent2 = &#123;</span><br><span class="line">	sayHello : <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;方式2：原型继承之混入式加载成员&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> ( <span class="keyword">var</span> k <span class="keyword">in</span> parent2) &#123;</span><br><span class="line">	<span class="title class_">Student</span>.<span class="property"><span class="keyword">prototype</span></span>[k] = parent2[k];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;张三&quot;</span>, <span class="number">50</span>);</span><br><span class="line">p.<span class="title function_">sayHello</span>();</span><br></pre></td></tr></table></figure>
+<h3 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h3><p><strong>instanceof运算符用来判断一个构造函数的prototype属性所指向的对象是否存在另外一个要检测对象的原型链上</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c; <span class="comment">// function &#123;name: &quot;demo&quot;&#125;</span></span><br><span class="line">c <span class="keyword">instanceof</span> <span class="title class_">Object</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>为什么会是true呢？？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   c; <span class="comment">// function &#123;name: &quot;demo&quot;&#125;</span></span><br><span class="line">c <span class="keyword">instanceof</span> func; <span class="comment">// true</span></span><br><span class="line">c.<span class="property">__proto__</span> === func.<span class="property"><span class="keyword">prototype</span></span>; <span class="comment">// true</span></span><br><span class="line">func.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">__proto__</span> === <span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>; <span class="comment">// true</span></span><br><span class="line">c <span class="keyword">instanceof</span> <span class="title class_">Object</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p><strong>所以，instanceof不能用来判断对象的类型！！！</strong>  </p>
+<p>那么我们用什么来判断对象的类型呢？</p>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   c.<span class="property">__proto__</span>.<span class="property">constructor</span>===func <span class="comment">// true</span></span><br><span class="line">c.<span class="property">__proto__</span>.<span class="property">constructor</span>===<span class="title class_">Object</span> <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h2 id="new-运算符"><a href="#new-运算符" class="headerlink" title="new 运算符"></a>new 运算符</h2><p>当我们用new运算符new一个构造函数产生一个实例时，比如说： var obj &#x3D; new Func 时，其背后的步骤是这样的：</p>
+<ol>
+<li>创建一个继承自 Func.prototype 的新对象；</li>
+<li>执行构造函数 Func ，执行的时候，相应的传参会被传入，同时上下文(this)会被指定为第一步创建的新实例；</li>
+<li>如果构造函数返回了一个“对象”,那么这个对象会取代步骤1中new出来的实例被返回。如果构造函数没有返回对象,那么new出来的结果为步骤1创建的对象。</li>
+</ol>
+<p><strong>注意：new Func 等同于new Func()，只能用在不传递任何参数的情况。</strong></p>
+<h3 id="new的模拟实现"><a href="#new的模拟实现" class="headerlink" title="new的模拟实现"></a>new的模拟实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//new运算符原理实现</span></span><br><span class="line"><span class="keyword">var</span> new1 = <span class="keyword">function</span>(<span class="params">fun</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> newObj = <span class="title class_">Object</span>.<span class="title function_">create</span>(fun.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line">    <span class="keyword">var</span> returnObj = fun.<span class="title function_">call</span>(newObj);</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> returnObj === <span class="string">&#x27;object&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> returnObj</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> newObj</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中  var newObj  &#x3D; Object.create(fun.prototype)  的意思是：创建一个新对象newObj，并让<code>newObj.__proto__ </code>指向 fun，即  <code>newObj.__proto__=== fun </code>返回true。<br><strong>方法的使用</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> strObj = <span class="title function_">new1</span>(<span class="title class_">String</span>);</span><br><span class="line"><span class="title function_">alert</span>(strObj <span class="keyword">instanceof</span> <span class="title class_">String</span>); <span class="comment">//true</span></span><br><span class="line"><span class="title function_">alert</span>(strObj.<span class="property">__proto__</span>.<span class="property">constructor</span> === <span class="title class_">String</span>); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p><strong>可以看到，new1函数的运行效果和new运算符是一样的。我们继续给String的原型上添加一个方法，看看new1函数得到的strObj能否继承到这个方法：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">String</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">defineByN</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;我是自定义方法&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">strObj.<span class="title function_">defineByN</span>();  <span class="comment">//弹出“我是自定义方法”</span></span><br></pre></td></tr></table></figure>
+<p>可以看到new1函数得到的strObj继承了到这个方法。</p>
+<h2 id="问题：为什么Object-create创建的对象和其他几种不一样呢？"><a href="#问题：为什么Object-create创建的对象和其他几种不一样呢？" class="headerlink" title="问题：为什么Object.create创建的对象和其他几种不一样呢？"></a>问题：为什么Object.create创建的对象和其他几种不一样呢？</h2><p>因为使用原型链进行的创造对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d.__proto__===demo; // true</span><br></pre></td></tr></table></figure>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/07/25/js%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            js的面向对象
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/07/02/HTTP%E5%8D%8F%E8%AE%AE/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            HTTP协议
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

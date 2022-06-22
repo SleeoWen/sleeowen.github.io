@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Event事件常见应用 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="html, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="Event 对象W3C的说法是： Event 对象代表事件的状态，比如事件在其中发生的元素、键盘按键的状态、鼠标的位置、鼠标按钮的状态。 事件通常与函数结合使用，函数不会在事件发生前被执行！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Event事件常见应用">
+<meta property="og:url" content="https://sleeowen.github.io/2019/06/25/Event%E4%BA%8B%E4%BB%B6%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="Event 对象W3C的说法是： Event 对象代表事件的状态，比如事件在其中发生的元素、键盘按键的状态、鼠标的位置、鼠标按钮的状态。 事件通常与函数结合使用，函数不会在事件发生前被执行！">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-25T09:20:41.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.156Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="html">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Event事件常见应用
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/06/" class="post-meta__date button">2019-06-25</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="Event-对象"><a href="#Event-对象" class="headerlink" title="Event 对象"></a>Event 对象</h2><p>W3C的说法是：</p>
+<p>Event 对象代表事件的状态，比如事件在其中发生的元素、键盘按键的状态、鼠标的位置、鼠标按钮的状态。</p>
+<p>事件通常与函数结合使用，函数不会在事件发生前被执行！</p>
+<span id="more"></span>
+<h2 id="几种常见事件"><a href="#几种常见事件" class="headerlink" title="几种常见事件"></a>几种常见事件</h2><p><strong>event.preventDefault()</strong> :阻止默认事件  </p>
+<p><strong>event.stopPropagation()</strong>:阻止冒泡  </p>
+<p><strong>event.stopImmediatePropagation()</strong>:按优先级阻止执行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">            <span class="selector-tag">p</span> &#123; <span class="attribute">height</span>: <span class="number">30px</span>; <span class="attribute">width</span>: <span class="number">150px</span>; <span class="attribute">background-color</span>: <span class="number">#ccf</span>; &#125;</span></span><br><span class="line"><span class="language-css">            <span class="selector-tag">div</span> &#123;<span class="attribute">height</span>: <span class="number">30px</span>; <span class="attribute">width</span>: <span class="number">150px</span>; <span class="attribute">background-color</span>: <span class="number">#cfc</span>; &#125;</span></span><br><span class="line"><span class="language-css">        </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>paragraph<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">const</span> p = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;p&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">            p.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">              <span class="title function_">alert</span>(<span class="string">&quot;我是p元素上被绑定的第一个监听函数&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            p.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">              <span class="title function_">alert</span>(<span class="string">&quot;我是p元素上被绑定的第二个监听函数&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">              event.<span class="title function_">stopImmediatePropagation</span>();</span></span><br><span class="line"><span class="language-javascript">              <span class="comment">// 执行stopImmediatePropagation方法,阻止click事件冒泡,并且阻止p元素上绑定的其他click事件的事件监听函数的执行.</span></span></span><br><span class="line"><span class="language-javascript">            &#125;, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            p.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>,<span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">              <span class="title function_">alert</span>(<span class="string">&quot;我是p元素上被绑定的第三个监听函数&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">              <span class="comment">// 该监听函数排在上个函数后面，该函数不会被执行</span></span></span><br><span class="line"><span class="language-javascript">            &#125;, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;div&quot;</span>).<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">              <span class="title function_">alert</span>(<span class="string">&quot;我是div元素,我是p元素的上层元素&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">              <span class="comment">// p元素的click事件没有向上冒泡，该函数不会被执行</span></span></span><br><span class="line"><span class="language-javascript">            &#125;, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">        </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>event.currentTarget</strong>:当前绑定的事件（父级元素）</p>
+<p><strong>event.target</strong>:绑定的事件</p>
+<p>以上两者主要用于事件委托中。<br><strong>事件委托就是利用冒泡的原理，将事件加到 父元素 或 祖先元素上，触发执行效果。</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">&quot;myLinks&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">&quot;goSomewhere&quot;</span>&gt;</span>Go somewhere<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">&quot;doSomething&quot;</span>&gt;</span>Do something<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">&quot;sayHi&quot;</span>&gt;</span>Say hi<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>正常情况下添加点击事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> item1 = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;goSomewhere&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> item2 = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;doSomething&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> item3 = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;sayHi&quot;</span>);</span><br><span class="line"> </span><br><span class="line">    item1.<span class="property">onclick</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">      location.<span class="property">href</span> = <span class="string">&quot;http://www.baidu.com&quot;</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    item2.<span class="property">onclick</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">document</span>.<span class="property">title</span> = <span class="string">&quot;事件委托&quot;</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    item3.<span class="property">onclick</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="title function_">alert</span>(<span class="string">&quot;hi&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>使用事件委托</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="keyword">function</span> (<span class="params">event</span>) &#123;</span><br><span class="line">     <span class="keyword">var</span> target = event.<span class="property">target</span>;</span><br><span class="line">     <span class="keyword">switch</span> (target.<span class="property">id</span>) &#123;</span><br><span class="line">       <span class="keyword">case</span> <span class="string">&quot;doSomething&quot;</span>:</span><br><span class="line">         <span class="variable language_">document</span>.<span class="property">title</span> = <span class="string">&quot;事件委托&quot;</span>;</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">case</span> <span class="string">&quot;goSomewhere&quot;</span>:</span><br><span class="line">         location.<span class="property">href</span> = <span class="string">&quot;http://www.baidu.com&quot;</span>;</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">case</span> <span class="string">&quot;sayHi&quot;</span>: <span class="title function_">alert</span>(<span class="string">&quot;hi&quot;</span>);</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> eventCus = <span class="keyword">new</span> <span class="title class_">Event</span>(<span class="string">&#x27;custome&#x27;</span>);</span><br><span class="line">ev.<span class="title function_">addEventListener</span>(<span class="string">&#x27;custome&#x27;</span>,<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;自定义事件&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">ev.<span class="title function_">dispatchEvent</span>(eve);</span><br></pre></td></tr></table></figure>
+<p>自定义事件也可以使用<code>customEvent</code></p>
+<p>区别在于能够传递数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createEvent</span>(<span class="params">params, eventName = <span class="string">&#x27;mock-event&#x27;</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">CustomEvent</span>(eventName, &#123; <span class="attr">detail</span>: params &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> event = <span class="title function_">createEvent</span>(&#123; <span class="attr">id</span>: <span class="string">&#x27;0010&#x27;</span> &#125;);</span><br></pre></td></tr></table></figure>
+<p>这里值得注意，需要把想要传递的参数包裹在一个包含detail属性的对象，否则传递的参数不会被挂载？（这里不太确定，我试过传id和params都不会生效）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;mock-event&#x27;</span>, <span class="function">(<span class="params">&#123; detail: &#123; id &#125; &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">           <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;id&#x27;</span>,id) <span class="comment">// 会在控制台打印0010</span></span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="DOM事件流的补充"><a href="#DOM事件流的补充" class="headerlink" title="DOM事件流的补充"></a>DOM事件流的补充</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>DOM事件流<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;ev&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">				<span class="selector-id">#ev</span> &#123;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">width</span>: <span class="number">300px</span>;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">background-color</span>: red;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">color</span>: <span class="number">#fff</span>;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">line-height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">				&#125;</span></span><br><span class="line"><span class="language-css">			</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">			目标元素</span><br><span class="line">		<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">			<span class="keyword">var</span> ev = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;ev&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">			<span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(</span></span><br><span class="line"><span class="language-javascript">				<span class="string">&#x27;click&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">				<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">					<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;window捕获阶段&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">				&#125;,</span></span><br><span class="line"><span class="language-javascript">				<span class="literal">true</span></span></span><br><span class="line"><span class="language-javascript">			);</span></span><br><span class="line"><span class="language-javascript">			<span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(</span></span><br><span class="line"><span class="language-javascript">				<span class="string">&#x27;click&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">				<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">					<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;doc捕获阶段&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">				&#125;,</span></span><br><span class="line"><span class="language-javascript">				<span class="literal">true</span></span></span><br><span class="line"><span class="language-javascript">			);</span></span><br><span class="line"><span class="language-javascript">			<span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="title function_">addEventListener</span>(</span></span><br><span class="line"><span class="language-javascript">				<span class="string">&#x27;click&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">				<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">					<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;html捕获阶段&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">				&#125;,</span></span><br><span class="line"><span class="language-javascript">				<span class="literal">true</span></span></span><br><span class="line"><span class="language-javascript">			);</span></span><br><span class="line"><span class="language-javascript">			<span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">addEventListener</span>(</span></span><br><span class="line"><span class="language-javascript">				<span class="string">&#x27;click&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">				<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">					<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;body捕获阶段&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">				&#125;,</span></span><br><span class="line"><span class="language-javascript">				<span class="literal">true</span></span></span><br><span class="line"><span class="language-javascript">			);</span></span><br><span class="line"><span class="language-javascript">			ev.<span class="title function_">addEventListener</span>(</span></span><br><span class="line"><span class="language-javascript">				<span class="string">&#x27;click&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">				<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">					<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;div捕获阶段&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">				&#125;,</span></span><br><span class="line"><span class="language-javascript">				<span class="literal">true</span></span></span><br><span class="line"><span class="language-javascript">            );</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> eve=<span class="keyword">new</span> <span class="title class_">Event</span>(<span class="string">&#x27;test&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">            ev.<span class="title function_">addEventListener</span>(<span class="string">&#x27;test&#x27;</span>,<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;自定义事件&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;);</span></span><br><span class="line"><span class="language-javascript">            ev.<span class="title function_">dispatchEvent</span>(eve);</span></span><br><span class="line"><span class="language-javascript">		</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/html/" class="post-tags__link button"># html</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/07/02/HTTP%E5%8D%8F%E8%AE%AE/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            HTTP协议
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/06/11/DOM%E4%BA%8B%E4%BB%B6%E6%B5%81/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            DOM事件流
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

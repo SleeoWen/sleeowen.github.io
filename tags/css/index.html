@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Tag: css | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="个人的学习经历">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SleeoWen-Blog">
+<meta property="og:url" content="https://sleeowen.github.io/tags/css/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="个人的学习经历">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="js,ts,web,h5">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+    <div class="cover">
+        <div class="cover__logo">
+            
+                <h1>Demo</h1>
+            
+        </div>
+        
+        
+            <div class="cover__intro">
+                <p>Hi, nice to meet you!</p>
+ 
+            </div>
+        
+    </div>
+
+            
+
+    
+        <main class="main">
+            
+    <div class="post-list">
+        
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        css的GPU动画优化
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2021/06/" class="post-meta__date button">2021-06-23</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/css/" class="post-tags__link button"># css</a></div> 
+<a href="/2021/06/23/css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96-0/" class="post-entry__link">css的GPU动画优化</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        使用css的GPU动画优化
+    </h2>
+    
+        <blockquote>
+<p>相信不少人在做移动端动画的时候遇到了卡顿的问题，这篇文章尝试从浏览器渲染的角度；一点一点告诉你动画优化的原理及其技巧，作为你工作中优化动画的参考。文末有优化技巧的总结。</p>
+</blockquote>
+<p>相信不少人在做移动端动画的时候遇到了卡顿的问题，这篇文章尝试从浏览器渲染的角度；一点一点告诉你动画优化的原理及其技巧，作为你工作中优化动画的参考。文末有优化技巧的总结。</p>
+<p>因为 GPU 合成没有官方规范，每个浏览器的问题和解决方式也不同；所以文章内容仅供参考。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2021/06/" class="post-meta__date button">2021-06-01</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/css/" class="post-tags__link button"># css</a></div> 
+<a href="/2021/06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/" class="post-entry__link">使用css的GPU动画优化</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        Animation
+    </h2>
+    
+        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在 web 应用中，前端同学在实现动画效果时往往常用的几种方案：</p>
+<ol>
+<li>css3 transition &#x2F; animation - 实现过渡动画</li>
+<li>setInterval &#x2F; setTimeout - 通过设置一个间隔时间来不断的改变图像的位置</li>
+<li>requestAnimationFrame - 通过一个回调函数来改变图像位置，由系统来决定这个回调函数的执行时机，比定时修改的性能更好，不存在失帧现象
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/10/" class="post-meta__date button">2020-10-30</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/css/" class="post-tags__link button"># css</a></div> 
+<a href="/2020/10/30/Animation/" class="post-entry__link">Animation</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        flex布局
+    </h2>
+    
+        <p>现在让我们深入了解 Flexbox 的缩放 – 以及如何利用它来构建漂亮的自适应布局。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/09/" class="post-meta__date button">2020-09-18</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/css/" class="post-tags__link button"># css</a></div> 
+<a href="/2020/09/18/flex%E5%B8%83%E5%B1%80/" class="post-entry__link">flex布局</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        css之BFC
+    </h2>
+    
+        <h2 id="BFC定义"><a href="#BFC定义" class="headerlink" title="BFC定义"></a>BFC定义</h2><p><strong>BFC(Block formatting context)直译为”块级格式化上下文”。它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干。</strong></p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2019/05/" class="post-meta__date button">2019-05-03</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/css/" class="post-tags__link button"># css</a></div> 
+<a href="/2019/05/03/css%E4%B9%8BBFC/" class="post-entry__link">css之BFC</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        css盒子模型
+    </h2>
+    
+        <h2 id="css-盒子模型"><a href="#css-盒子模型" class="headerlink" title="css 盒子模型"></a>css 盒子模型</h2><p>css 盒子模型包含标准模型和 IE 模型</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2019/05/" class="post-meta__date button">2019-05-01</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/css/" class="post-tags__link button"># css</a></div> 
+<a href="/2019/05/01/css%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B/" class="post-entry__link">css盒子模型</a>
+                </div>
+            
+        
+    </div>
+    
+
+
+        </main>
+    
+
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Tag: Promise | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="个人的学习经历">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SleeoWen-Blog">
+<meta property="og:url" content="https://sleeowen.github.io/tags/Promise/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="个人的学习经历">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="js,ts,web,h5">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+    <div class="cover">
+        <div class="cover__logo">
+            
+                <h1>Demo</h1>
+            
+        </div>
+        
+        
+            <div class="cover__intro">
+                <p>Hi, nice to meet you!</p>
+ 
+            </div>
+        
+    </div>
+
+            
+
+    
+        <main class="main">
+            
+    <div class="post-list">
+        
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        从一道让我失眠的Promise面试题开始，深入分析Promise实现细节
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2021/03/" class="post-meta__date button">2021-03-31</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/Promise/" class="post-tags__link button"># Promise</a></div> 
+<a href="/2021/03/31/%E4%BB%8E%E4%B8%80%E9%81%93%E8%AE%A9%E6%88%91%E5%A4%B1%E7%9C%A0%E7%9A%84Promise%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90Promise%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82/" class="post-entry__link">从一道让我失眠的Promise面试题开始，深入分析Promise实现细节</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        promise.all和promise.race
+    </h2>
+    
+        <h2 id="Promise-all和Promise-race的功能"><a href="#Promise-all和Promise-race的功能" class="headerlink" title="Promise.all和Promise.race的功能"></a>Promise.all和Promise.race的功能</h2><h3 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all"></a>Promise.all</h3><p><strong>Promise.all可以将多个Promise实例包装成一个新的Promise实例。同时，成功和失败的返回值是不同的，成功的时候返回的是一个结果数组，而失败的时候则返回最先被reject失败状态的值。</strong></p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2019/02/" class="post-meta__date button">2019-02-17</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/Promise/" class="post-tags__link button"># Promise</a></div> 
+<a href="/2019/02/17/promose-all%E5%92%8Cpromise-race/" class="post-entry__link">promise.all和promise.race</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        Promise原理和实现
+    </h2>
+    
+        <h3 id="什么是Promise"><a href="#什么是Promise" class="headerlink" title="什么是Promise"></a>什么是Promise</h3><p>Promise 对象用于表示一个异步操作的最终完成 (或失败), 及其结果值.</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2019/02/" class="post-meta__date button">2019-02-05</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/Promise/" class="post-tags__link button"># Promise</a></div> 
+<a href="/2019/02/05/promise%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" class="post-entry__link">Promise原理和实现</a>
+                </div>
+            
+        
+    </div>
+    
+
+
+        </main>
+    
+
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

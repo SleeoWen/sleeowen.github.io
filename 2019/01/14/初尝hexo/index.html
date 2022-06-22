@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>初次使用hexo | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="hexo, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="偶然间发现了hexo这个博客搭建工具，于是决定将使用多年的云笔记的内容搬迁至这个博客上，分享我的搬迁经历以及踩过的坑吧~。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初次使用hexo">
+<meta property="og:url" content="https://sleeowen.github.io/2019/01/14/%E5%88%9D%E5%B0%9Dhexo/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="偶然间发现了hexo这个博客搭建工具，于是决定将使用多年的云笔记的内容搬迁至这个博客上，分享我的搬迁经历以及踩过的坑吧~。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-01-14T01:57:01.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.224Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        初次使用hexo
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/01/" class="post-meta__date button">2019-01-14</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p>偶然间发现了hexo这个博客搭建工具，于是决定将使用多年的云笔记的内容搬迁至这个博客上，分享我的搬迁经历以及踩过的坑吧~。</p>
+<span id="more"></span>
+
+<h2 id="我们开始吧"><a href="#我们开始吧" class="headerlink" title="我们开始吧"></a>我们开始吧</h2><h3 id="新建仓库"><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h3><p>在github新建仓库，如果想要部署在github上，要仓库名为 &#x3D;&#x3D;<user-name>.github.io&#x3D;&#x3D; 而不是user-name ，其中 &#x3D;&#x3D;<user-name>&#x3D;&#x3D; 是你 &#x3D;&#x3D;github&#x3D;&#x3D; 的昵称，要是问为什么，都是眼泪的教训。</p>
+<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo</span><br></pre></td></tr></table></figure>
+<h3 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h3><p>初始化命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+<p>大功告成，访问 &#x3D;&#x3D;localhost:4000&#x3D;&#x3D; 我们就能看到建的博客的效果了！</p>
+<h3 id="将Hexo部署到GitHub-Pages上"><a href="#将Hexo部署到GitHub-Pages上" class="headerlink" title="将Hexo部署到GitHub Pages上"></a>将Hexo部署到GitHub Pages上</h3><ol>
+<li>将<a target="_blank" rel="noopener" href="https://github.com/marketplace/travis-ci">Travis CI</a> 添加到你的 GitHub 账户中。</li>
+<li>前往 GitHub 的 <a target="_blank" rel="noopener" href="https://github.com/settings/installations">Applications settings</a>，配置 Travis CI 权限，使其能够访问你的 repository。</li>
+<li>你应该会被重定向到 Travis CI 的页面。如果没有，请 <a target="_blank" rel="noopener" href="https://travis-ci.com/">手动前往</a>。</li>
+<li>在浏览器新建一个标签页，前往 GitHub <a target="_blank" rel="noopener" href="https://github.com/settings/tokens">新建 Personal Access Token</a> ，只勾选 repo 的权限并生成一个新的 Token。Token 生成后请复制并保存好。</li>
+<li>回到 Travis CI，前往你的 repository 的设置页面，在 <strong>Environment Variables</strong> 下新建一个环境变量，<strong>Name</strong> 为 GH_TOKEN，<strong>Value</strong> 为刚才你在 GitHub 生成的 Token。确保 <strong>DISPLAY VALUE IN BUILD LOG</strong> 保持 <strong>不被勾选</strong> 避免你的 Token 泄漏。点击 Add 保存。</li>
+<li>在你的 Hexo 站点文件夹中新建一个 &#x3D;&#x3D;.travis.yml&#x3D;&#x3D; 文件：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sudo: false</span><br><span class="line">language: node_js</span><br><span class="line">node_js:</span><br><span class="line">  - 10 # use nodejs v10 LTS</span><br><span class="line">cache: npm</span><br><span class="line">branches:</span><br><span class="line">  only:</span><br><span class="line">    - master # build master branch only</span><br><span class="line">script:</span><br><span class="line">  - hexo generate # generate static files</span><br><span class="line">deploy:</span><br><span class="line">  provider: pages</span><br><span class="line">  skip-cleanup: true</span><br><span class="line">  github-token: $GH_TOKEN</span><br><span class="line">  keep-history: true</span><br><span class="line">  on:</span><br><span class="line">    branch: master</span><br><span class="line">  local-dir: public</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li><p>将.travis.yml 推送到 repository 中。Travis CI 应该会自动开始运行，并将生成的文件推送到同一 repository 下的 gh-pages 分支下</p>
+</li>
+<li><p>在GitHub中前往你的repository 的设置页面，修改 GitHub Pages 的部署分支为 gh-pages。</p>
+</li>
+<li><p>完成以上步骤，我们就能在<user-name>.github.io上看到自己建设的博客了。</p>
+</li>
+</ol>
+<h3 id="其他配置项"><a href="#其他配置项" class="headerlink" title="其他配置项"></a>其他配置项</h3><p>请参考<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs">hexo文档</a>。</p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/hexo/" class="post-tags__link button"># hexo</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/02/05/promise%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            Promise原理和实现
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

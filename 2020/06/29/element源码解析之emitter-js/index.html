@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>element源码解析之emitter.js | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="element, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="打开 emitter.js，发现该 js 是提供方法给其他组件做混入使用的。他对外有 dispatch 和 broadcast 两个接口，从命名和参数等方面，这两个方法应该大致是用来处理一些各层级之间事件的，也就是通信。我们先来看下 dispatch 方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="element源码解析之emitter.js">
+<meta property="og:url" content="https://sleeowen.github.io/2020/06/29/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bemitter-js/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="打开 emitter.js，发现该 js 是提供方法给其他组件做混入使用的。他对外有 dispatch 和 broadcast 两个接口，从命名和参数等方面，这两个方法应该大致是用来处理一些各层级之间事件的，也就是通信。我们先来看下 dispatch 方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-29T07:31:45.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.166Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="element">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        element源码解析之emitter.js
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2020/06/" class="post-meta__date button">2020-06-29</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p>打开 emitter.js，发现该 js 是提供方法给其他组件做混入使用的。他对外有 dispatch 和 broadcast 两个接口，从命名和参数等方面，这两个方法应该大致是用来处理一些各层级之间事件的，也就是通信。我们先来看下 dispatch 方法。</p>
+<span id="more"></span>
+<h3 id="一、dispatch"><a href="#一、dispatch" class="headerlink" title="一、dispatch"></a>一、dispatch</h3><p>dispatch 方法有三个参数，</p>
+<ul>
+<li>componentName，表示组件名称，用于匹配正确到正确的组件名。</li>
+<li>eventName，事件名，需要触发的事件</li>
+<li>params，参数，触发时带入的参数</li>
+</ul>
+<p>前两行，用于查找到当前元素的父组件，如果没有就使用根节点，并取父组件的组件名用于后期匹配。</p>
+<p>紧接着的是一个 while 循环，用于循环父组件，直到找到或者到达根元素，匹配不到。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (parent &amp;&amp; (!name || name !== componentName)) &#123;</span><br><span class="line">    parent = parent.<span class="property">$parent</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (parent) &#123;</span><br><span class="line">        name = parent.<span class="property">$options</span>.<span class="property">componentName</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>循环过程中不断记录组件名，用于判断是否找到。</p>
+<p>最后一部分是，当有匹配到的父组件时，就去触发父组件的对应的事件函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (parent) &#123;</span><br><span class="line">    parent.<span class="property">$emit</span>.<span class="title function_">apply</span>(parent,[eventName].<span class="title function_">concat</span>(params));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来看下 broadcast 函数。</p>
+<h3 id="二、broadcast"><a href="#二、broadcast" class="headerlink" title="二、broadcast"></a>二、broadcast</h3><p>将 emitter 内部定义的一个 broadcast 函数利用 call 改变 this 指向。</p>
+<p>broadcast 内直接对子组件进行遍历，当匹配到对应的组件名时，则去触发对应子组件的对应事件。如果没有，则递归继续查找子组件。</p>
+<p>注：我们会发现每条向下传播的线路只要触发了一次对应的事件，就不会再向下传递了。</p>
+<h3 id="三、源码"><a href="#三、源码" class="headerlink" title="三、源码"></a>三、源码</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">broadcast</span>(<span class="params">componentName, eventName, params</span>) &#123;</span><br><span class="line">  <span class="comment">// 开始遍历子组件</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">$children</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">child</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> name = child.<span class="property">$options</span>.<span class="property">componentName</span>;</span><br><span class="line">    <span class="comment">// 匹配子组件的name</span></span><br><span class="line">    <span class="keyword">if</span> (name === componentName) &#123;</span><br><span class="line">      <span class="comment">// 匹配到时，子组件触发对应的事件</span></span><br><span class="line">      <span class="comment">// 匹配到一个就over了，该子元素的子元素就忽略了</span></span><br><span class="line">      child.<span class="property">$emit</span>.<span class="title function_">apply</span>(child, [eventName].<span class="title function_">concat</span>(params));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 继续查找该子组件的子元素</span></span><br><span class="line">      broadcast.<span class="title function_">apply</span>(child, [componentName, eventName].<span class="title function_">concat</span>([params]));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">dispatch</span>(<span class="params">componentName, eventName, params</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> parent = <span class="variable language_">this</span>.<span class="property">$parent</span> || <span class="variable language_">this</span>.<span class="property">$root</span>;</span><br><span class="line">      <span class="keyword">var</span> name = parent.<span class="property">$options</span>.<span class="property">componentName</span>;</span><br><span class="line">      <span class="comment">// 遍历父组件，查找并匹配name，直到找到对应的父组件或无</span></span><br><span class="line">      <span class="keyword">while</span> (parent &amp;&amp; (!name || name !== componentName)) &#123;</span><br><span class="line">        parent = parent.<span class="property">$parent</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (parent) &#123;</span><br><span class="line">          <span class="comment">// 匹配到，则修改name，用于判断并推出循环</span></span><br><span class="line">          name = parent.<span class="property">$options</span>.<span class="property">componentName</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (parent) &#123;</span><br><span class="line">        <span class="comment">// 有对应的父组件，则去触发对应的事件</span></span><br><span class="line">        parent.<span class="property">$emit</span>.<span class="title function_">apply</span>(parent, [eventName].<span class="title function_">concat</span>(params));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">broadcast</span>(<span class="params">componentName, eventName, params</span>) &#123;</span><br><span class="line">      <span class="comment">// 调用broadcast函数，需要纠正this，因为broadcast函数的this并不指向调用者</span></span><br><span class="line">      broadcast.<span class="title function_">call</span>(<span class="variable language_">this</span>, componentName, eventName, params);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>带注释的源码：<a target="_blank" rel="noopener" href="https://github.com/2fps/demo/blob/master/view/2019/00/element-ui%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/emitter.js">emitter.js</a>。</p>
+<p>element-ui 中的事件传播就是这样的了，让我想到了 angular 中的 $broadcast 和 $emit 事件。</p>
+<p> 原文地址 <a target="_blank" rel="noopener" href="https://www.jb51.cc/webfrontend/454354.html">www.jb51.cc</a></p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/element/" class="post-tags__link button"># element</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2020/07/01/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bcheckbox/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            element源码解析之checkbox
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2020/06/15/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            for循环全家桶
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

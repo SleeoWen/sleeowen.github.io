@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>css盒子模型 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="css, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="css 盒子模型css 盒子模型包含标准模型和 IE 模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css盒子模型">
+<meta property="og:url" content="https://sleeowen.github.io/2019/05/01/css%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="css 盒子模型css 盒子模型包含标准模型和 IE 模型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sleeowen.github.io/biaozhun.jpg">
+<meta property="og:image" content="https://sleeowen.github.io/ie.jpg">
+<meta property="article:published_time" content="2019-05-01T02:15:02.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.165Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sleeowen.github.io/biaozhun.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        css盒子模型
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/05/" class="post-meta__date button">2019-05-01</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="css-盒子模型"><a href="#css-盒子模型" class="headerlink" title="css 盒子模型"></a>css 盒子模型</h2><p>css 盒子模型包含标准模型和 IE 模型</p>
+<span id="more"></span>
+
+<h3 id="标准模型"><a href="#标准模型" class="headerlink" title="标准模型"></a>标准模型</h3><p><img src="/biaozhun.jpg" alt="yasuo"></p>
+<h4 id="盒子的组成"><a href="#盒子的组成" class="headerlink" title="盒子的组成"></a>盒子的组成</h4><p>一个盒子由外到内可以分成四个部分：margin（外边距）、border（边框）、padding（内边距）、content（内容）。会发现 margin、border、padding 是 CSS 属性，因此可以通过这三个属性来控制盒子的这三个部分。而 content 则是 HTML 元素的内容。</p>
+<h4 id="盒子的大小"><a href="#盒子的大小" class="headerlink" title="盒子的大小"></a>盒子的大小</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">盒子的宽度 = width + padding-left + padding-right + border-left + border-right + margin-left + margin-right</span><br><span class="line"></span><br><span class="line">盒子的高度 = height + padding-top + padding-bottom + border-top + border-bottom + margin-top + margin-bottom</span><br></pre></td></tr></table></figure>
+
+<h3 id="IE-模型"><a href="#IE-模型" class="headerlink" title="IE 模型"></a>IE 模型</h3><p><img src="/ie.jpg" alt="yasuo"></p>
+<h3 id="用-css-如何设置两种模型"><a href="#用-css-如何设置两种模型" class="headerlink" title="用 css 如何设置两种模型"></a>用 css 如何设置两种模型</h3><p>标准模型：box-sizing:content-box<br>ie 模型：box-sizing:border-box</p>
+<h3 id="JS-获取盒子模型的宽高"><a href="#JS-获取盒子模型的宽高" class="headerlink" title="JS 获取盒子模型的宽高"></a>JS 获取盒子模型的宽高</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dom.style.width/height(只能获取内嵌)</span><br><span class="line">dom.currentStyle.width/height（只有IE支持）</span><br><span class="line">window.getComputedStyle(dom).width/height(火狐谷歌)</span><br><span class="line">dom.getBoundClientRect().width/height (获取展示dom的位置的方法)</span><br></pre></td></tr></table></figure>
+
+<h3 id="边距重叠"><a href="#边距重叠" class="headerlink" title="边距重叠"></a>边距重叠</h3><h4 id="父子元素边距重叠"><a href="#父子元素边距重叠" class="headerlink" title="父子元素边距重叠"></a>父子元素边距重叠</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>css盒子模型<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">style</span> <span class="attr">media</span>=<span class="string">&quot;screen&quot;</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">			<span class="selector-tag">html</span> * &#123;</span></span><br><span class="line"><span class="language-css">				<span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">				<span class="attribute">padding</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">			&#125;</span></span><br><span class="line"><span class="language-css">		</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">&quot;sec&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">style</span> <span class="attr">media</span>=<span class="string">&quot;screen&quot;</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">				<span class="selector-id">#sec</span> &#123;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">background</span>: <span class="number">#f00</span>;</span></span><br><span class="line"><span class="language-css">					<span class="comment">/* overflow: hidden; */</span></span></span><br><span class="line"><span class="language-css">				&#125;</span></span><br><span class="line"><span class="language-css">				<span class="selector-class">.child</span> &#123;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">margin-top</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">background</span>: yellow;</span></span><br><span class="line"><span class="language-css">				&#125;</span></span><br><span class="line"><span class="language-css">			</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">&quot;child&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/css/" class="post-tags__link button"># css</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/05/03/css%E4%B9%8BBFC/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            css之BFC
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/04/19/%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            页面布局
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

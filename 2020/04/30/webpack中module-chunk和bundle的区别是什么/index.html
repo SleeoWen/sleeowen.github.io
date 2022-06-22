@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>webpack中module,chunk和bundle的区别是什么 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="首先我们在 src 目录下写我们的业务代码，引入 index.js、utils.js、common.js 和 index.css 这 4 个文件，目录结构如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack中module,chunk和bundle的区别是什么">
+<meta property="og:url" content="https://sleeowen.github.io/2020/04/30/webpack%E4%B8%ADmodule-chunk%E5%92%8Cbundle%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="首先我们在 src 目录下写我们的业务代码，引入 index.js、utils.js、common.js 和 index.css 这 4 个文件，目录结构如下：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sleeowen.github.io/module1.jpg">
+<meta property="og:image" content="https://sleeowen.github.io/module2.jpg">
+<meta property="article:published_time" content="2020-04-30T07:29:21.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.217Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="js,ts,web,h5">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sleeowen.github.io/module1.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        webpack中module,chunk和bundle的区别是什么
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2020/04/" class="post-meta__date button">2020-04-30</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p>首先我们在 src 目录下写我们的业务代码，引入 index.js、utils.js、common.js 和 index.css 这 4 个文件，目录结构如下：</p>
+<span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">src/</span><br><span class="line">├── index.css</span><br><span class="line">├── index.html # 这个是 HTML 模板代码</span><br><span class="line">├── index.js</span><br><span class="line">├── common.js</span><br><span class="line">└── utils.js</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>index.css 写一点儿简单的样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>utils.js 文件写个求平方的工具函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">square</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> x * x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>common.js 文件写个 log 工具函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">log</span>: <span class="function">(<span class="params">msg</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello &#x27;</span>, msg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>index.js 文件做一些简单的修改，引入 css 文件和 common.js：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.css&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> &#123; log &#125; = <span class="built_in">require</span>(<span class="string">&#x27;./common&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">log</span>(<span class="string">&#x27;webpack&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>webpack 的配置如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    entry<span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        index<span class="punctuation">:</span> <span class="string">&quot;../src/index.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">        utils<span class="punctuation">:</span> &#x27;../src/utils.js&#x27;<span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    output<span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        filename<span class="punctuation">:</span> <span class="string">&quot;[name].bundle.js&quot;</span><span class="punctuation">,</span> <span class="comment">// 输出 index.js 和 utils.js</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    module<span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        rules<span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="punctuation">&#123;</span></span><br><span class="line">                test<span class="punctuation">:</span> /\.css$/<span class="punctuation">,</span></span><br><span class="line">                use<span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                    MiniCssExtractPlugin.loader<span class="punctuation">,</span> <span class="comment">// 创建一个 link 标签</span></span><br><span class="line">                    &#x27;css-loader&#x27;<span class="punctuation">,</span> <span class="comment">// css-loader 负责解析 CSS 代码, 处理 CSS 中的依赖</span></span><br><span class="line">                <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">    plugins<span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="comment">// 用 MiniCssExtractPlugin 抽离出 css 文件，以 link 标签的形式引入样式文件</span></span><br><span class="line">        new MiniCssExtractPlugin(<span class="punctuation">&#123;</span></span><br><span class="line">            filename<span class="punctuation">:</span> &#x27;index.bundle.css&#x27; <span class="comment">// 输出的 css 文件名为 index.css</span></span><br><span class="line">        <span class="punctuation">&#125;</span>)<span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们运行一下 webpack，看一下打包的结果：</p>
+<p><img src="/module1.jpg" alt="image"></p>
+<p>我们可以看出，index.css 和 common.js 在 index.js 中被引入，打包生成的 index.bundle.css 和 index.bundle.js 都属于 chunk 0，utils.js 因为是独立打包的，它生成的 utils.bundle.js 属于 chunk 1。</p>
+<p>感觉还有些绕？我做了一张图，你肯定一看就懂：</p>
+<p><img src="/module2.jpg" alt="image"></p>
+<p>看这个图就很明白了：</p>
+<ol>
+<li>对于一份同逻辑的代码，当我们手写下一个一个的文件，它们无论是 ESM 还是 commonJS 或是 AMD，他们都是 <strong>module</strong> ；</li>
+<li>当我们写的 module 源文件传到 webpack 进行打包时，webpack 会根据文件引用关系生成 <strong>chunk</strong> 文件，webpack 会对这个 chunk 文件进行一些操作；</li>
+<li>webpack 处理好 chunk 文件后，最后会输出 <strong>bundle</strong> 文件，这个 bundle 文件包含了经过加载和编译的最终源文件，所以它可以直接在浏览器中运行。</li>
+</ol>
+<p>一般来说一个 chunk 对应一个 bundle，比如上图中的 <code>utils.js -&gt; chunks 1 -&gt; utils.bundle.js</code>；但也有例外，比如说上图中，我就用 <code>MiniCssExtractPlugin</code> 从 chunks 0 中抽离出了 <code>index.bundle.css</code> 文件。</p>
+<h3 id="一句话总结："><a href="#一句话总结：" class="headerlink" title="一句话总结："></a>一句话总结：</h3><p><code>module</code>，<code>chunk</code> 和 <code>bundle</code> 其实就是同一份逻辑代码在不同转换场景下的取了三个名字：</p>
+<p>我们直接写出来的是 module，webpack 处理时是 chunk，最后生成浏览器可以直接运行的 bundle。</p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2020/05/01/js%E6%9F%AF%E9%87%8C%E5%8C%96/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            js柯里化
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2020/04/24/webpack%E5%8A%A8%E6%80%81%E6%87%92%E5%8A%A0%E8%BD%BD/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            webpack动态懒加载
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

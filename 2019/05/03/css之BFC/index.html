@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>css之BFC | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="css, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="BFC定义BFC(Block formatting context)直译为”块级格式化上下文”。它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css之BFC">
+<meta property="og:url" content="https://sleeowen.github.io/2019/05/03/css%E4%B9%8BBFC/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="BFC定义BFC(Block formatting context)直译为”块级格式化上下文”。它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sleeowen.github.io/wubfc.png">
+<meta property="og:image" content="https://sleeowen.github.io/bfc.png">
+<meta property="og:image" content="https://sleeowen.github.io/margin.png">
+<meta property="og:image" content="https://sleeowen.github.io/float.png">
+<meta property="article:published_time" content="2019-05-03T10:36:09.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.164Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sleeowen.github.io/wubfc.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        css之BFC
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/05/" class="post-meta__date button">2019-05-03</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="BFC定义"><a href="#BFC定义" class="headerlink" title="BFC定义"></a>BFC定义</h2><p><strong>BFC(Block formatting context)直译为”块级格式化上下文”。它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干。</strong></p>
+<span id="more"></span>
+<h3 id="Box：css布局的基本单位"><a href="#Box：css布局的基本单位" class="headerlink" title="Box：css布局的基本单位"></a>Box：css布局的基本单位</h3><p>Box 是 CSS 布局的对象和基本单位， 直观点来说，就是一个页面是由很多个 Box 组成的。元素的类型和 display 属性，决定了这个 Box 的类型。 不同类型的 Box， 会参与不同的 Formatting Context（一个决定如何渲染文档的容器），因此Box内的元素会以不同的方式渲染。让我们看看有哪些盒子：</p>
+<ul>
+<li>block-level box:display 属性为 block, list-item, table 的元素，会生成 block-level box。并且参与 block fomatting context；</li>
+<li>inline-level box:display 属性为 inline, inline-block, inline-table 的元素，会生成 inline-level box。并且参与 inline formatting context；</li>
+<li>run-in box: css3</li>
+</ul>
+<h3 id="Formatting-Context"><a href="#Formatting-Context" class="headerlink" title="Formatting Context"></a>Formatting Context</h3><p>Formatting context 是 W3C CSS2.1 规范中的一个概念。它是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用。最常见的 Formatting context 有 Block fomatting context (简称BFC)和 Inline formatting context (简称IFC)。</p>
+<blockquote>
+<p>BFC是一个独立的布局环境，其中的元素布局是不受外界的影响，并且在一个BFC中，块盒与行盒（行盒由一行中所有的内联元素所组成）都会垂直的沿着其父元素的边框排列。</p>
+</blockquote>
+<h2 id="BFC的布局规则"><a href="#BFC的布局规则" class="headerlink" title="BFC的布局规则"></a>BFC的布局规则</h2><ol>
+<li>内部的Box会在垂直方向，一个接一个地放置。</li>
+<li>Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠。</li>
+<li>每个盒子（块盒与行盒）的margin box的左边，与包含块border box的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。</li>
+<li>BFC的区域不会与float box重叠。</li>
+<li>BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。</li>
+<li>计算BFC的高度时，浮动元素也参与计算。</li>
+</ol>
+<h2 id="如何创建BFC"><a href="#如何创建BFC" class="headerlink" title="如何创建BFC"></a>如何创建BFC</h2><ol>
+<li>float的值不是none。</li>
+<li>position的值不是static或者relative。</li>
+<li>display的值是inline-block、table-cell、flex、table-caption或者inline-flex</li>
+<li>overflow的值不是visible</li>
+</ol>
+<h2 id="BFC的作用"><a href="#BFC的作用" class="headerlink" title="BFC的作用"></a>BFC的作用</h2><ol>
+<li>利用BFC避免margin重叠。</li>
+<li>自适应两栏布局。</li>
+<li>清除浮动。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。</p>
+</blockquote>
+<p>因为BFC内部的元素和外部的元素绝对不会互相影响，因此， 当BFC外部存在浮动时，它不应该影响BFC内部Box的布局，BFC会通过变窄，而不与浮动有重叠。同样的，当BFC内部有浮动时，为了不影响外部元素的布局，BFC计算高度时会包括浮动的高度。避免margin重叠也是这样的一个道理。</p>
+<h2 id="代码展示"><a href="#代码展示" class="headerlink" title="代码展示"></a>代码展示</h2><h3 id="在无BFC时候"><a href="#在无BFC时候" class="headerlink" title="在无BFC时候"></a>在无BFC时候</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>css盒子模型<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">style</span> <span class="attr">media</span>=<span class="string">&quot;screen&quot;</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">			<span class="selector-tag">html</span> * &#123;</span></span><br><span class="line"><span class="language-css">				<span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">				<span class="attribute">padding</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">			&#125;</span></span><br><span class="line"><span class="language-css">		</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- &lt;section id=&quot;sec&quot;&gt;</span></span><br><span class="line"><span class="comment">			&lt;style media=&quot;screen&quot;&gt;</span></span><br><span class="line"><span class="comment">				#sec &#123;</span></span><br><span class="line"><span class="comment">					background: #f00;</span></span><br><span class="line"><span class="comment">					/* overflow: hidden; */</span></span><br><span class="line"><span class="comment">				&#125;</span></span><br><span class="line"><span class="comment">				.child &#123;</span></span><br><span class="line"><span class="comment">					height: 100px;</span></span><br><span class="line"><span class="comment">					margin-top: 10px;</span></span><br><span class="line"><span class="comment">					background: yellow;</span></span><br><span class="line"><span class="comment">				&#125;</span></span><br><span class="line"><span class="comment">			&lt;/style&gt;</span></span><br><span class="line"><span class="comment">			&lt;article class=&quot;child&quot;&gt;&lt;/article&gt;</span></span><br><span class="line"><span class="comment">        &lt;/section&gt; --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">&quot;margin&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">				<span class="selector-id">#margin</span> &#123;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">background</span>: pink;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="language-css">				&#125;</span></span><br><span class="line"><span class="language-css">				<span class="selector-id">#margin</span> &gt; <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">margin</span>: <span class="number">5px</span> auto <span class="number">25px</span>;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">background</span>: blue;</span></span><br><span class="line"><span class="language-css">				&#125;</span></span><br><span class="line"><span class="language-css">			</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span>2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span>3<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/wubfc.png" alt="yasuo"></p>
+<h3 id="使用BFC"><a href="#使用BFC" class="headerlink" title="使用BFC"></a>使用BFC</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">&quot;margin&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">				<span class="selector-id">#margin</span> &#123;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">background</span>: pink;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="language-css">				&#125;</span></span><br><span class="line"><span class="language-css">				<span class="selector-id">#margin</span> &gt; <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">margin</span>: <span class="number">5px</span> auto <span class="number">25px</span>;</span></span><br><span class="line"><span class="language-css">					<span class="attribute">background</span>: blue;</span></span><br><span class="line"><span class="language-css">				&#125;</span></span><br><span class="line"><span class="language-css">			</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;overflow: hidden;&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span>3<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/bfc.png" alt="yasuo"></p>
+<h3 id="不与float重叠"><a href="#不与float重叠" class="headerlink" title="不与float重叠"></a>不与float重叠</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">&quot;layout&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">style</span> <span class="attr">media</span>&quot;<span class="attr">screen</span>&quot;&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">              <span class="selector-id">#layout</span>&#123;</span></span><br><span class="line"><span class="language-css">                  <span class="attribute">background</span>: red;</span></span><br><span class="line"><span class="language-css">              &#125;</span></span><br><span class="line"><span class="language-css">              <span class="selector-id">#layout</span> <span class="selector-class">.left</span>&#123;</span></span><br><span class="line"><span class="language-css">                  <span class="attribute">float</span>: left;</span></span><br><span class="line"><span class="language-css">                  <span class="attribute">width</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">                  <span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">                  <span class="attribute">background</span>: pink;</span></span><br><span class="line"><span class="language-css">              &#125;</span></span><br><span class="line"><span class="language-css">              <span class="selector-id">#layout</span> <span class="selector-class">.right</span>&#123;</span></span><br><span class="line"><span class="language-css">                  <span class="attribute">height</span>: <span class="number">110px</span>;</span></span><br><span class="line"><span class="language-css">                  <span class="attribute">background</span>: blue;</span></span><br><span class="line"><span class="language-css">                  <span class="attribute">overflow</span>: auto;</span></span><br><span class="line"><span class="language-css">              &#125;</span></span><br><span class="line"><span class="language-css">          </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/margin.png" alt="yasuo"></p>
+<h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- BFC子元素即使是float，也会参与高度计算 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">&quot;float&quot;</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">style</span> <span class="attr">media</span>=<span class="string">&quot;screen&quot;</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">               <span class="selector-id">#float</span>&#123;</span></span><br><span class="line"><span class="language-css">                   <span class="attribute">background</span>: red;</span></span><br><span class="line"><span class="language-css">                   <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="language-css">               &#125;</span></span><br><span class="line"><span class="language-css">               <span class="selector-id">#float</span> <span class="selector-class">.float</span>&#123;</span></span><br><span class="line"><span class="language-css">                   <span class="attribute">float</span>: left;</span></span><br><span class="line"><span class="language-css">                   <span class="attribute">font-size</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="language-css">               &#125;</span></span><br><span class="line"><span class="language-css">           </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;float&quot;</span>&gt;</span></span><br><span class="line">               我是浮动元素</span><br><span class="line">           <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/float.png" alt="yasuo"></p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/css/" class="post-tags__link button"># css</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/06/01/DOM%E7%BA%A7%E5%88%AB%E4%B8%8EDOM%E4%BA%8B%E4%BB%B6/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            DOM级别与DOM事件
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/05/01/css%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            css盒子模型
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

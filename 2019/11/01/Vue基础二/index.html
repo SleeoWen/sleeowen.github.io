@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Vue基础二 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="Vue, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="循环渲染">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue基础二">
+<meta property="og:url" content="https://sleeowen.github.io/2019/11/01/Vue%E5%9F%BA%E7%A1%80%E4%BA%8C/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="循环渲染">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-01T09:50:02.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.163Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Vue基础二
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/11/" class="post-meta__date button">2019-11-01</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="循环渲染"><a href="#循环渲染" class="headerlink" title="循环渲染"></a>循环渲染</h2><span id="more"></span>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>遍历数组<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;(item, index) in listArr&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span></span><br><span class="line">                &#123;&#123;index&#125;&#125; - &#123;&#123;item.id&#125;&#125; - &#123;&#123;item.title&#125;&#125;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>遍历对象<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> &gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;(val, key, index) in listObj&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">                &#123;&#123;index&#125;&#125; - &#123;&#123;key&#125;&#125; -  &#123;&#123;val.title&#125;&#125;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">flag</span>: <span class="literal">false</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">listArr</span>: [</span></span><br><span class="line"><span class="language-javascript">                &#123; <span class="attr">id</span>: <span class="string">&#x27;a&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;标题1&#x27;</span> &#125;, <span class="comment">// 数据结构中，最好有 id ，方便使用 key</span></span></span><br><span class="line"><span class="language-javascript">                &#123; <span class="attr">id</span>: <span class="string">&#x27;b&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;标题2&#x27;</span> &#125;,</span></span><br><span class="line"><span class="language-javascript">                &#123; <span class="attr">id</span>: <span class="string">&#x27;c&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;标题3&#x27;</span> &#125;</span></span><br><span class="line"><span class="language-javascript">            ],</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">listObj</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">a</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;标题1&#x27;</span> &#125;,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">b</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;标题2&#x27;</span> &#125;,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">c</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;标题3&#x27;</span> &#125;,</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>v-for不光能遍历数组，也可以遍历对象</li>
+<li>v-for和v-if不能同时使用</li>
+</ul>
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;num&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;increment1&quot;</span>&gt;</span>+1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;increment2(2, $event)&quot;</span>&gt;</span>+2<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">num</span>: <span class="number">0</span></span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">increment1</span>(<span class="params">event</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// eslint-disable-next-line</span></span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;event&#x27;</span>, event, event.<span class="property">__proto__</span>.<span class="property">constructor</span>) <span class="comment">// 是原生的 event 对象</span></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// eslint-disable-next-line</span></span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>)</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// eslint-disable-next-line</span></span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">currentTarget</span>) <span class="comment">// 注意，事件是被注册到当前元素的，和 React 不一样</span></span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">this</span>.<span class="property">num</span>++</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 1. event 是原生的</span></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 2. 事件被挂载到当前元素</span></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 和 DOM 事件一样</span></span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">increment2</span>(<span class="params">val, event</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// eslint-disable-next-line</span></span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>)</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">this</span>.<span class="property">num</span> = <span class="variable language_">this</span>.<span class="property">num</span> + val</span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">loadHandler</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// do some thing</span></span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;load&#x27;</span>, <span class="variable language_">this</span>.<span class="property">loadHandler</span>)</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">beforeDestroy</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">//【注意】用 vue 绑定的事件，组建销毁时会自动被解绑</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 自己绑定的事件，需要自己销毁！！！</span></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="title function_">removeEventListener</span>(<span class="string">&#x27;load&#x27;</span>, <span class="variable language_">this</span>.<span class="property">loadHandler</span>)</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>输入框: &#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model.trim</span>=<span class="string">&quot;name&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model.lazy</span>=<span class="string">&quot;name&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model.number</span>=<span class="string">&quot;age&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>多行文本: &#123;&#123;desc&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">v-model</span>=<span class="string">&quot;desc&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 注意，&lt;textarea&gt;&#123;&#123;desc&#125;&#125;&lt;/textarea&gt; 是不允许的！！！ --&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>复选框 &#123;&#123;checked&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;checked&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>多个复选框 &#123;&#123;checkedNames&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;jack&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Jack&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;checkedNames&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;jack&quot;</span>&gt;</span>Jack<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;john&quot;</span> <span class="attr">value</span>=<span class="string">&quot;John&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;checkedNames&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;john&quot;</span>&gt;</span>John<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;mike&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Mike&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;checkedNames&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;mike&quot;</span>&gt;</span>Mike<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>单选 &#123;&#123;gender&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">id</span>=<span class="string">&quot;male&quot;</span> <span class="attr">value</span>=<span class="string">&quot;male&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;gender&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;male&quot;</span>&gt;</span>男<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">id</span>=<span class="string">&quot;female&quot;</span> <span class="attr">value</span>=<span class="string">&quot;female&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;gender&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;female&quot;</span>&gt;</span>女<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>下拉列表选择 &#123;&#123;selected&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">select</span> <span class="attr">v-model</span>=<span class="string">&quot;selected&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">option</span> <span class="attr">disabled</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span>&gt;</span>请选择<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">option</span>&gt;</span>A<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">option</span>&gt;</span>B<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">option</span>&gt;</span>C<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>下拉列表选择（多选） &#123;&#123;selectedList&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">select</span> <span class="attr">v-model</span>=<span class="string">&quot;selectedList&quot;</span> <span class="attr">multiple</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">option</span> <span class="attr">disabled</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span>&gt;</span>请选择<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">option</span>&gt;</span>A<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">option</span>&gt;</span>B<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">option</span>&gt;</span>C<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">name</span>: <span class="string">&#x27;双越&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">age</span>: <span class="number">18</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">desc</span>: <span class="string">&#x27;自我介绍&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="attr">checked</span>: <span class="literal">true</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">checkedNames</span>: [],</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="attr">selected</span>: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">selectedList</span>: []</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/11/11/Vue%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            Vue组件通讯
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/10/21/%E5%89%8D%E7%AB%AF%E9%94%99%E8%AF%AF%E7%9B%91%E6%8E%A7/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            前端错误监控
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

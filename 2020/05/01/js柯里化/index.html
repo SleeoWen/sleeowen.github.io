@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>js柯里化 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="javascript, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="前言我们在各种算法题以及技术文档中经常会看到柯里化这个词，那么，柯里化到底是什么？它在 js 中如何运用？对我们的编程有什么作用？都 9102 年了，如果你还不知道这些，那么你在面试过程中很可能会被面试官 diss🙄">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js柯里化">
+<meta property="og:url" content="https://sleeowen.github.io/2020/05/01/js%E6%9F%AF%E9%87%8C%E5%8C%96/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="前言我们在各种算法题以及技术文档中经常会看到柯里化这个词，那么，柯里化到底是什么？它在 js 中如何运用？对我们的编程有什么作用？都 9102 年了，如果你还不知道这些，那么你在面试过程中很可能会被面试官 diss🙄">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-01T08:21:12.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.215Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        js柯里化
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2020/05/" class="post-meta__date button">2020-05-01</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我们在各种算法题以及技术文档中经常会看到柯里化这个词，那么，柯里化到底是什么？它在 js 中如何运用？对我们的编程有什么作用？都 9102 年了，如果你还不知道这些，那么你在面试过程中很可能会被面试官 diss🙄</p>
+<span id="more"></span>
+<hr>
+<h3 id="什么是柯里化（Currying）"><a href="#什么是柯里化（Currying）" class="headerlink" title="什么是柯里化（Currying）"></a>什么是柯里化（Currying）</h3><p><em>维基百科</em>的<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://zh.wikipedia.org/wiki/%25E6%259F%25AF%25E9%2587%258C%25E5%258C%2596">解释</a>是：把接收多个参数的函数变换成接收一个单一参数（最初函数的第一个参数）的函数，并返回接受剩余的参数而且返回结果的新函数的技术。其由数学家 Haskell Brooks Curry 提出，并以 curry 命名。</p>
+<p>简单的说，柯里化函数持续地返回一个新函数直到所有的参数用尽为止。这些参数全部保持 “活着” 的状态（通过闭包），然后当柯里化链中的最后一个函数被返回和执行时会全部被用来执行。</p>
+<p>这和<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://react.docschina.org/docs/higher-order-components.html">高阶组件</a>（Higher-order functions）如出一辙。前者返回一个新函数，后者返回一个新组件。</p>
+<h3 id="举个简单的栗子"><a href="#举个简单的栗子" class="headerlink" title="举个简单的栗子"></a>举个简单的栗子</h3><p>本例使用到的部分 ES6 知识：<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=http://es6.ruanyifeng.com/%23docs/let">const</a>，<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=http://es6.ruanyifeng.com/%23docs/function">arrow function</a>。不了解的同学可先行查看。<br>写一个计算三个参数相乘的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">multiply</span> (a, b, c) &#123;</span><br><span class="line">  <span class="keyword">return</span> a * b * c</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">multiply</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这是我们第一反应写出来的 demo，也是看起来最简单的实现方法。再来创建一个柯里化版本的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">multiply</span> (a) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">b</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">c</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> a * b * c</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">multiply</span>(<span class="number">1</span>)(<span class="number">2</span>)(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里我们将 multiply(1，2，3) 调用变成了 multiply (1) (2) (3) 调用。<br>单独一个函数被转换成了一系列函数。为了得到数字 1、2、3 相乘的结果，这些数字被一个接一个地传递，每个数字预填了下一个函数内联调用。</p>
+<p>我们把 multiply (1) (2) (3) 分割一下来帮助理解：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mul1 = <span class="title function_">multiply</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> mul2 = <span class="title function_">mul1</span>(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">const</span> result = <span class="title function_">mul2</span>(<span class="number">3</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br></pre></td></tr></table></figure>
+
+<p>当 mul2 使用 3 作为参数调用时，它一起使用了之前已拿到的参数 a&#x3D;1 和 b&#x3D;2 进行运算并返回结果 6。</p>
+<p>作为一个嵌套函数，mul2 能够访问到外部的两个函数 multiply 和 mul1 的作用域。这就是为什么 mul2 能利用定义在已经‘离场’的函数中的参数来进行乘法操作的原因。即使这些函数早已返回并且从内存中垃圾回收了，但其变量仍然保持‘活着’(<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/00143449934543461c9d5dfeeb848f5b72bd012e1113d15000">闭包</a>)。你可以看到 3 个数字每次只有 1 个提供给函数，并且同一时间里一个新函数会被返回，直到所有的数字用尽为止。</p>
+<p><strong>柯里化背后的逻辑就是获取一个函数并派生出一个返回特殊函数的函数</strong>，它实际上是一种思想，或者说是一种程序设计模式。</p>
+<h3 id="柯里化的应用"><a href="#柯里化的应用" class="headerlink" title="柯里化的应用"></a>柯里化的应用</h3><h4 id="1-编写可以轻松复用和配置的小代码块，就像我们使用-npm-一样："><a href="#1-编写可以轻松复用和配置的小代码块，就像我们使用-npm-一样：" class="headerlink" title="1. 编写可以轻松复用和配置的小代码块，就像我们使用 npm 一样："></a>1. 编写可以轻松复用和配置的小代码块，就像我们使用 npm 一样：</h4><p>举个例子，你有一家商店，然后你想给你的优惠顾客 10% 的折扣：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">discount</span> (price, discount) &#123;</span><br><span class="line">  <span class="keyword">return</span> price * discount</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> price = <span class="title function_">discount</span>(<span class="number">500</span>, <span class="number">0.1</span>) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> price = <span class="title function_">discount</span>(<span class="number">1500</span>, <span class="number">0.1</span>) </span><br><span class="line"><span class="keyword">const</span> price = <span class="title function_">discount</span>(<span class="number">2000</span>, <span class="number">0.1</span>) </span><br><span class="line"><span class="keyword">const</span> price = <span class="title function_">discount</span>(<span class="number">50</span>, <span class="number">0.1</span>) </span><br><span class="line"><span class="keyword">const</span> price = <span class="title function_">discount</span>(<span class="number">300</span>, <span class="number">0.1</span>) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">discount</span> (discount) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">price</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> price * discount</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> tenPercentDiscount = <span class="title function_">discount</span>(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">tenPercentDiscount</span>(<span class="number">500</span>) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> twentyPercentDiscount = <span class="title function_">discount</span>(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">twentyPercentDiscount</span>(<span class="number">500</span>) </span><br><span class="line"><span class="title function_">twentyPercentDiscount</span>(<span class="number">3000</span>) </span><br><span class="line"><span class="title function_">twentyPercentDiscount</span>(<span class="number">80000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这个例子说明，使用柯里化思想能让我们在遇到只能确定一个参数而无法确定另一个参数时，代码设计编的变得更方便与高效，达到提升性能的目的。</p>
+<h4 id="2-避免频繁调用具有相同参数的函数："><a href="#2-避免频繁调用具有相同参数的函数：" class="headerlink" title="2. 避免频繁调用具有相同参数的函数："></a>2. 避免频繁调用具有相同参数的函数：</h4><p>比如我们有个用来计算体积的函数:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">volume</span> (l, w, h) &#123;</span><br><span class="line">  <span class="keyword">return</span> l * w * h</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">volume</span>(<span class="number">200</span>, <span class="number">30</span>, <span class="number">100</span>) </span><br><span class="line"><span class="title function_">volume</span>(<span class="number">32</span>, <span class="number">45</span>, <span class="number">100</span>) </span><br><span class="line"><span class="title function_">volume</span>(<span class="number">2322</span>, <span class="number">232</span>, <span class="number">100</span>) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">volume</span> (h) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">w</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">l</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> l * w * h</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> hCylinderHeight = <span class="title function_">volume</span>(<span class="number">100</span>)</span><br><span class="line"><span class="title function_">hCylinderHeight</span>(<span class="number">200</span>)(<span class="number">30</span>) </span><br><span class="line"><span class="title function_">hCylinderHeight</span>(<span class="number">2322</span>)(<span class="number">232</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="通用的柯里函数"><a href="#通用的柯里函数" class="headerlink" title="通用的柯里函数"></a>通用的柯里函数</h3><p>让我们建立一个函数来接受任何函数并且返回柯里化版本的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">curry</span> (fn, ...args) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">..._args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn</span>(...args, ..._args)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在这里做了什么？我们的 curry 函数接受一个我们想要柯里化的函数（fn）和一个变量（…args）。这里的 rest 操作符用来将参数聚集成一个…args。接下来我们返回一个函数，该函数将其余参数收集为…<em>args。此函数通过 spread 运算符将… args 和…</em> args 作为参数解构传入来调用原始函数 fn，然后将值返回给用户。</p>
+<p>让我们使用我们的 curry 函数用之前的例子来创建一个特殊的函数（一个专门用来计算 100m 长度的物品体积）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">volume</span> (l, h, w) &#123;</span><br><span class="line">  <span class="keyword">return</span> l * h * w</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> hCy = <span class="title function_">curry</span>(volume, <span class="number">100</span>)</span><br><span class="line"><span class="title function_">hCy</span>(<span class="number">200</span>, <span class="number">900</span>) </span><br><span class="line"><span class="title function_">hCy</span>(<span class="number">70</span>, <span class="number">60</span>)</span><br></pre></td></tr></table></figure>
+
+<p>将类似回调函数的参数传入柯里化函数，能使复杂的问题变得简单！</p>
+<h3 id="使用递归实现-curry-函数"><a href="#使用递归实现-curry-函数" class="headerlink" title="使用递归实现 curry 函数"></a>使用递归实现 curry 函数</h3><p>JS 柯里化作为函数式编程的重要一环，频繁在算法题中出现。以上的通用柯里化函数还不够完善，我们希望只给 curry 函数传递一个 fn 就能达到目的，现在我们使用递归来实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">curry</span> (fn) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">c</span> = (<span class="params">...args</span>) =&gt; (args.<span class="property">length</span> === fn.<span class="property">length</span>) ?</span><br><span class="line">          <span class="title function_">fn</span>(...args) : <span class="function">(<span class="params">..._args</span>) =&gt;</span> <span class="title function_">c</span>(...args, ..._args)</span><br><span class="line">  <span class="keyword">return</span> c</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该方法几乎为最简洁、代码行数最少的实现方法了。<br>首先我们能确定，实现柯里化的核心就是要确定传入参数的个数，并通通取到。<br>其次，我们得知道，<code>fn.length</code>为 fn 函数接受的参数个数，那么该实现方法就能解读为：<br><strong>不断递归获取传入参数，直到取到的参数个数等于 fn 的参数个数为止，最终将获取到的所有参数传给 fn 并返回执行结果</strong>。</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>柯里化作为一种重要的程序思想，已经广为应用，它使我们应对复杂问题时能提升效率，增强可读性。希望读者都能体会这种思想并运用于实践，相信在提升技术的路上能越走越远，成为一名优秀的工程师！</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7fa99a4bee8b">原文地址</a></p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2020/05/03/tree-shaking/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            tree-shaking
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2020/04/30/webpack%E4%B8%ADmodule-chunk%E5%92%8Cbundle%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            webpack中module,chunk和bundle的区别是什么
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>ES6中的Proxy、Reflect以及Vue3.0中的应用原理 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="Vue, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="使用Object.defineProperty的一些劣势： Object.defineProperty监听的是对象的属性，如果对象比较复杂，需要逐个深层遍历他的属性来实现监听，耗费性能 Object.defineProperty无法监听数组的变化，使 Vue 不得不对数组做了额外的 hack。  相比之下Proxy就更强大，接下来我们就来了解他。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6中的Proxy、Reflect以及Vue3.0中的应用原理">
+<meta property="og:url" content="https://sleeowen.github.io/2020/04/02/ES6%E4%B8%AD%E7%9A%84Proxy%E3%80%81Reflect%E4%BB%A5%E5%8F%8AVue3-0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="使用Object.defineProperty的一些劣势： Object.defineProperty监听的是对象的属性，如果对象比较复杂，需要逐个深层遍历他的属性来实现监听，耗费性能 Object.defineProperty无法监听数组的变化，使 Vue 不得不对数组做了额外的 hack。  相比之下Proxy就更强大，接下来我们就来了解他。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-01T17:18:35.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.156Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        ES6中的Proxy、Reflect以及Vue3.0中的应用原理
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2020/04/" class="post-meta__date button">2020-04-02</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="使用Object-defineProperty的一些劣势："><a href="#使用Object-defineProperty的一些劣势：" class="headerlink" title="使用Object.defineProperty的一些劣势："></a>使用<code>Object.defineProperty</code>的一些劣势：</h2><ol>
+<li><code>Object.defineProperty</code>监听的是对象的属性，如果对象比较复杂，需要逐个深层遍历他的属性来实现监听，耗费性能</li>
+<li><code>Object.defineProperty</code>无法监听数组的变化，使 Vue 不得不对数组做了额外的 hack。</li>
+</ol>
+<p>相比之下<code>Proxy</code>就更强大，接下来我们就来了解他。</p>
+<span id="more"></span>
+<p>参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy">MDN-Proxy</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect">MDN-Reflect</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5acd0c8a6fb9a028da7cdfaf#heading-3">面试官: 实现双向绑定 Proxy 比 defineproperty 优劣如何?</a></li>
+</ul>
+<h3 id="Proxy-简介"><a href="#Proxy-简介" class="headerlink" title="Proxy 简介"></a>Proxy 简介</h3><p>MDN 上是这么描述的——Proxy对象用于定义基本操作的自定义行为（如属性查找，赋值，枚举，函数调用等）。</p>
+<p>官方的描述总是言简意赅，以至于不明觉厉…</p>
+<p>其实就是在对目标对象的操作之前提供了拦截，可以对外界的操作进行过滤和改写，修改某些操作的默认行为，这样我们可以不直接操作对象本身，而是通过操作对象的代理对象来间接来操作对象，达到预期的目的~</p>
+<blockquote>
+<p>Proxy 对象用于定义基本操作的自定义行为（如属性查找，赋值，枚举，函数调用等）。使用方法如下：</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 语法</span></span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="title class_">Proxy</span>(target, handler);</span><br><span class="line"><span class="comment">// 用例</span></span><br><span class="line"><span class="keyword">let</span> p = &#123;<span class="attr">a</span>: <span class="number">1</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> proxyP = <span class="keyword">new</span> <span class="title class_">Proxy</span>(p, &#123;</span><br><span class="line">	<span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="comment">// 获取proxyP对象属性时的自定义逻辑</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="title function_">set</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="comment">// 设置proxyP对象属性时的自定义逻辑</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上边的代码中：</p>
+<ul>
+<li>target：用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。</li>
+<li>handler：一个对象，其属性是当执行一个操作时定义代理的行为的函数。</li>
+<li>p&#x2F;proxyP：是一个被代理后的新对象, 它拥有 target 的一切属性和方法. 只不过其行为和结果是在 handler 中自定义的.</li>
+</ul>
+<blockquote>
+<p>这里重点说一下<code>handler</code>：<code>handler</code>本身就是 ES6 所新设计的一个对象. 它的作用就是用来自定义代理对象的各种可代理操作。它本身一共有 13 中方法, 每种方法都可以代理一种操作，常用的几种方法如下:</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在定义代理对象某个属性时的属性描述时触发该操作，比如在执行 Object.defineProperty(proxy, &quot;foo&quot;, &#123;&#125;) 时。</span></span><br><span class="line">handler.<span class="title function_">defineProperty</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在判断代理对象是否拥有某个属性时触发该操作，比如在执行 &quot;foo&quot; in proxy 时。</span></span><br><span class="line">handler.<span class="title function_">has</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在读取代理对象的某个属性时触发该操作，比如在执行 proxy.foo 时。</span></span><br><span class="line">handler.<span class="title function_">get</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在给代理对象的某个属性赋值时触发该操作，比如在执行 proxy.foo = 1 时。</span></span><br><span class="line">handler.<span class="title function_">set</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在删除代理对象的某个属性时触发该操作，比如在执行 delete proxy.foo 时。</span></span><br><span class="line">handler.<span class="title function_">deleteProperty</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在获取代理对象的所有属性键时触发该操作，比如在执行 Object.getOwnPropertyNames(proxy) 时。</span></span><br><span class="line">handler.<span class="title function_">ownKeys</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在调用一个目标对象为函数的代理对象时触发该操作，比如在执行 proxy() 时。</span></span><br><span class="line">handler.<span class="title function_">apply</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在给一个目标对象为构造函数的代理对象构造实例时触发该操作，比如在执行new proxy() 时。</span></span><br><span class="line">handler.<span class="title function_">construct</span>()</span><br></pre></td></tr></table></figure>
+
+<p>Proxy 对于代理模式 Proxy 的作用主要体现在三个方面:</p>
+<ol>
+<li>拦截和监视外部对对象的访问</li>
+<li>降低函数或类的复杂度</li>
+<li>在复杂操作前对操作进行校验或对所需资源进行管理</li>
+</ol>
+<h3 id="Proxy-在-Vue3-0-中的应用原理"><a href="#Proxy-在-Vue3-0-中的应用原理" class="headerlink" title="Proxy 在 Vue3.0 中的应用原理"></a>Proxy 在 Vue3.0 中的应用原理</h3><p>上边已经说过了<code>Object.defineProperty</code>的劣势。相应的<code>Proxy</code>的优势就很明显了：</p>
+<ul>
+<li>Proxy 可以直接监听对象而非属性</li>
+<li>Proxy 可以直接监听数组的变化</li>
+<li>Proxy 有 13 中拦截方法，功能更强大。</li>
+</ul>
+<p>Proxy 的劣势： 兼容性问题, 而且无法用 polyfill 磨平, 因此 Vue 要到 3.0 版本才能用 Proxy 重写。</p>
+<p>简单例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> input = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;input&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> p = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;p&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> obj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> newObj = <span class="keyword">new</span> <span class="title class_">Proxy</span>(obj, &#123;</span><br><span class="line">  <span class="attr">get</span>: <span class="keyword">function</span>(<span class="params">target, key, receiver</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`getting <span class="subst">$&#123;key&#125;</span>!`</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">get</span>(target, key, receiver);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">set</span>: <span class="keyword">function</span>(<span class="params">target, key, value, receiver</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(target, key, value, receiver);</span><br><span class="line">    <span class="keyword">if</span> (key === <span class="string">&#x27;text&#x27;</span>) &#123;</span><br><span class="line">      input.<span class="property">value</span> = value;</span><br><span class="line">      p.<span class="property">innerHTML</span> = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">set</span>(target, key, value, receiver);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">input.<span class="title function_">addEventListener</span>(<span class="string">&#x27;keyup&#x27;</span>, <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">  newObj.<span class="property">text</span> = e.<span class="property">target</span>.<span class="property">value</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reflect"><a href="#Reflect" class="headerlink" title="Reflect"></a>Reflect</h3><blockquote>
+<p>Reflect 是一个内置的对象，它提供拦截 JavaScript 操作的方法。这些方法与处理器对象的方法相同。Reflect 不是一个函数对象，因此它是不可构造 (即不可<code>new Reflect</code>) 的。</p>
+</blockquote>
+<p><code>Reflect</code>对象的方法与<code>Proxy</code>对象的方法一一对应，只要是<code>Proxy</code>对象的方法，就能在<code>Reflect</code>对象上找到对应的方法。这就让<code>Proxy</code>对象可以方便地调用对应的 Reflect 方法，完成默认行为，作为修改行为的基础。也就是说，不管<code>Proxy</code>怎么修改默认行为，你总可以在<code>Reflect</code>上获取默认行为。</p>
+<p><strong>也就是说，Reflect.fn 表示 handler 中的 fn 的默认行为。</strong></p>
+<p>这里我们看两段代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里是get/set方法打印log之后，再执行默认行为</span></span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="title class_">Proxy</span>(&#123;&#125;, &#123;</span><br><span class="line">  <span class="attr">get</span>: <span class="keyword">function</span> (<span class="params">target, key, receiver</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`getting <span class="subst">$&#123;key&#125;</span>!`</span>);</span><br><span class="line">    <span class="comment">// 在浏览器console中，get方法会默认打印出值</span></span><br><span class="line">    <span class="comment">// 如果没有Reflect.get执行默认行为，就无法正确打印出值，而会打印undefined</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">get</span>(target, key, receiver);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">set</span>: <span class="keyword">function</span> (<span class="params">target, key, value, receiver</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`setting <span class="subst">$&#123;key&#125;</span>!`</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">set</span>(target, key, value, receiver);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里是先执行默认的set确保默认行为执行，set成功之后在打印log，然后返回</span></span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="title class_">Proxy</span>(&#123;&#125;, &#123;</span><br><span class="line">  <span class="attr">set</span>: <span class="keyword">function</span>(<span class="params">target, name, value, receiver</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> success = <span class="title class_">Reflect</span>.<span class="title function_">set</span>(target,name, value, receiver);</span><br><span class="line">    <span class="keyword">if</span> (success) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;property &#x27;</span> + name + <span class="string">&#x27; on &#x27;</span> + target + <span class="string">&#x27; set to &#x27;</span> + value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> success;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Creabine/article/details/87811207">原文地址 </a></p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2020/04/11/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            webpack相关问题
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2020/03/22/%E8%B7%AF%E7%94%B1%E5%8E%9F%E7%90%86/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            路由原理
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>vue兄弟组件间传数据的方法-事件 | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="Vue, js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="vm.$on(event, callback)vue API">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue兄弟组件间传数据的方法-事件">
+<meta property="og:url" content="https://sleeowen.github.io/2020/07/20/vue%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95-%E4%BA%8B%E4%BB%B6/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="vm.$on(event, callback)vue API">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-20T11:45:53.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:37:25.216Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="this.media='all'">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        vue兄弟组件间传数据的方法-事件
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2020/07/" class="post-meta__date button">2020-07-20</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="vm-on-event-callback-vue-API"><a href="#vm-on-event-callback-vue-API" class="headerlink" title="vm.$on(event, callback)vue API"></a>vm.$on(event, callback)<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/api/#vm-on">vue API</a></h2><span id="more"></span>
+<p><strong>用法：</strong> 监听当前实例上的自定义事件。事件可以由 <code>vm.$emit</code> 触发。回调函数会接收所有传入事件触发函数的额外参数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vm.$on(<span class="string">&#x27;test&#x27;</span>, <span class="keyword">function</span> (<span class="params">msg</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(msg)</span><br><span class="line">&#125;)</span><br><span class="line">vm.$emit(<span class="string">&#x27;test&#x27;</span>, <span class="string">&#x27;hi&#x27;</span>)</span><br><span class="line"><span class="comment">// =&gt; &quot;hi&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="vm-once-event-callback-vue-API"><a href="#vm-once-event-callback-vue-API" class="headerlink" title="vm.$once(event, callback) vue API"></a>vm.$once(event, callback) <a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/api/#vm-once">vue API</a></h2><p><strong>用法：</strong> 监听一个自定义事件，但是只触发一次。一旦触发之后，监听器就会被移除。</p>
+<h2 id="vm-off-event-callback-vue-API"><a href="#vm-off-event-callback-vue-API" class="headerlink" title="vm.$off([event, callback] ) vue API"></a>vm.$off([event, callback] ) <a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/api/#vm-off">vue API</a></h2><p><strong>用法：</strong></p>
+<ul>
+<li>移除自定义事件监听器。<ol>
+<li><p>如果没有提供参数，则移除所有的事件监听器；</p>
+</li>
+<li><p>如果只提供了事件，则移除该事件所有的监听器；</p>
+</li>
+<li><p>如果同时提供了事件与回调，则只移除这个回调的监听器。</p>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="vm-emit-eventName-…args-vue-API"><a href="#vm-emit-eventName-…args-vue-API" class="headerlink" title="vm.$emit(eventName, […args] ) vue API"></a>vm.$emit(eventName, […args] ) <a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/api/#vm-emit">vue API</a></h2><p><strong>用法：</strong> 触发当前实例上的事件。附加参数都会传给监听器回调。<br>示例：只配合一个事件名使用 $emit：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">welcome-button</span> <span class="attr">v-on:welcome</span>=<span class="string">&quot;sayHi&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">welcome-button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">Vue.component(&#x27;welcome-button&#x27;, &#123;</span><br><span class="line">  template: `</span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">&quot;$emit(&#x27;welcome&#x27;)&quot;</span>&gt;</span></span><br><span class="line">      Click me to be welcomed</span><br><span class="line">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  `</span><br><span class="line">&#125;)</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &#x27;#emit-example-simple&#x27;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    sayHi: function () &#123;</span><br><span class="line">      alert(&#x27;Hi!&#x27;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>配合额外的参数使用 <code>$emit</code>：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">					<span class="comment">&lt;!-- 添加事件侦听器  --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">magic-eight-ball</span> <span class="attr">v-on:give-advice</span>=<span class="string">&quot;showAdvice&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">magic-eight-ball</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">Vue.component(&#x27;magic-eight-ball&#x27;, &#123;</span><br><span class="line">  data: function () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      possibleAdvice: [&#x27;Yes&#x27;, &#x27;No&#x27;, &#x27;Maybe&#x27;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    giveAdvice: function () &#123;</span><br><span class="line">    	//根据数组长度 随机取数</span><br><span class="line">      var randomAdviceIndex = Math.floor(Math.random() * this.possibleAdvice.length)</span><br><span class="line">      	//触发示例事件  从数组中随机取一元素传参</span><br><span class="line">      this.$emit(&#x27;give-advice&#x27;, this.possibleAdvice[randomAdviceIndex])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  template: `</span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">&quot;giveAdvice&quot;</span>&gt;</span></span><br><span class="line">      Click me for advice</span><br><span class="line">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  `</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &#x27;#emit-example-argument&#x27;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    showAdvice: function (advice) &#123;</span><br><span class="line">      alert(advice)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="兄弟组件传数据"><a href="#兄弟组件传数据" class="headerlink" title="兄弟组件传数据"></a>兄弟组件传数据</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> &gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>兄弟组件数据交互<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&#x27;handle&#x27;</span>&gt;</span>销毁事件<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">aaa</span>&gt;</span><span class="tag">&lt;/<span class="name">aaa</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">bbb</span>&gt;</span><span class="tag">&lt;/<span class="name">bbb</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/vue.js&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">			<span class="comment">// 提供事件中心</span></span></span><br><span class="line"><span class="language-javascript">			<span class="keyword">var</span> hub=<span class="keyword">new</span> <span class="title class_">Vue</span>();</span></span><br><span class="line"><span class="language-javascript">			</span></span><br><span class="line"><span class="language-javascript">			<span class="comment">// 组件  aaa</span></span></span><br><span class="line"><span class="language-javascript">			<span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;aaa&#x27;</span>,&#123;</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">data</span>:<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">					<span class="keyword">return</span>&#123;</span></span><br><span class="line"><span class="language-javascript">						<span class="attr">content</span>:<span class="string">&#x27;这里是a&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">						<span class="attr">txt</span>:<span class="string">&#x27;我是a被给到兄弟的数据~~~&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">						<span class="attr">test</span>:<span class="string">&#x27;这里的数据会变化的！！！&#x27;</span></span></span><br><span class="line"><span class="language-javascript">					&#125;</span></span><br><span class="line"><span class="language-javascript">				&#125;,</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">template</span>:<span class="string">&quot;&lt;div&gt;\</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">					&lt;p&gt;&#123;&#123;content&#125;&#125;&lt;/p&gt;\</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">					&lt;p&gt;&#123;&#123;test&#125;&#125;&lt;/p&gt;\</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">					&lt;button @click=&#x27;changes&#x27;&gt;数据给b&lt;/button&gt;\</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">				&lt;/div&gt;&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">methods</span>:&#123;</span></span><br><span class="line"><span class="language-javascript">					<span class="attr">changes</span>:<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">						hub.$emit(<span class="string">&#x27;aaaData&#x27;</span>,<span class="variable language_">this</span>.<span class="property">txt</span>);</span></span><br><span class="line"><span class="language-javascript">					&#125;</span></span><br><span class="line"><span class="language-javascript">				&#125;,</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">mounted</span>:<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">					hub.$on(<span class="string">&#x27;bbbData&#x27;</span>,<span class="function">(<span class="params">val</span>)=&gt;</span>&#123;</span></span><br><span class="line"><span class="language-javascript">						<span class="variable language_">this</span>.<span class="property">test</span>=val;</span></span><br><span class="line"><span class="language-javascript">					&#125;);</span></span><br><span class="line"><span class="language-javascript">				&#125;</span></span><br><span class="line"><span class="language-javascript">			&#125;);</span></span><br><span class="line"><span class="language-javascript">			<span class="comment">// 组件  bbb</span></span></span><br><span class="line"><span class="language-javascript">			<span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;bbb&#x27;</span>,&#123;</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">data</span>:<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">					<span class="keyword">return</span>&#123;</span></span><br><span class="line"><span class="language-javascript">						<span class="attr">content</span>:<span class="string">&#x27;这里是b&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">						<span class="attr">txt</span>:<span class="string">&#x27;我是b给到a兄弟下的数据&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">						<span class="attr">test</span>:<span class="string">&#x27;这里的数据会变化的！！！&#x27;</span></span></span><br><span class="line"><span class="language-javascript">					&#125;</span></span><br><span class="line"><span class="language-javascript">				&#125;,</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">template</span>:<span class="string">&quot;&lt;div&gt;\</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">					&lt;p&gt;&#123;&#123;content&#125;&#125;&lt;/p&gt;\</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">					&lt;p&gt;&#123;&#123;test&#125;&#125;&lt;/p&gt;\</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">					&lt;button @click=&#x27;changes&#x27;&gt;数据给a&lt;/button&gt;\</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">				&lt;/div&gt;&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">methods</span>:&#123;</span></span><br><span class="line"><span class="language-javascript">					<span class="title function_">changes</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">						hub.$emit(<span class="string">&#x27;bbbData&#x27;</span>,<span class="variable language_">this</span>.<span class="property">txt</span>);</span></span><br><span class="line"><span class="language-javascript">					&#125;</span></span><br><span class="line"><span class="language-javascript">				&#125;,</span></span><br><span class="line"><span class="language-javascript">				<span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">					hub.$on(<span class="string">&#x27;aaaData&#x27;</span>,<span class="function">(<span class="params">val</span>)=&gt;</span>&#123;</span></span><br><span class="line"><span class="language-javascript">						<span class="variable language_">this</span>.<span class="property">test</span>=val;</span></span><br><span class="line"><span class="language-javascript">					&#125;)</span></span><br><span class="line"><span class="language-javascript">				&#125;</span></span><br><span class="line"><span class="language-javascript">			&#125;)</span></span><br><span class="line"><span class="language-javascript">			<span class="comment">// 实例化 Vue</span></span></span><br><span class="line"><span class="language-javascript">			<span class="keyword">var</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">el</span>: <span class="string">&quot;#app&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">data</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">					</span></span><br><span class="line"><span class="language-javascript">				&#125;,</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">					<span class="comment">//移除自定义事件监听器。</span></span></span><br><span class="line"><span class="language-javascript">					<span class="title function_">handle</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">						hub.$off(<span class="string">&#x27;aaaData&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">						hub.$off(<span class="string">&#x27;bbbData&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">					&#125;</span></span><br><span class="line"><span class="language-javascript">				&#125;</span></span><br><span class="line"><span class="language-javascript">			&#125;);</span></span><br><span class="line"><span class="language-javascript">		</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2022-06-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2020/07/22/vue%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7%EF%BC%88%E4%B8%80%EF%BC%89/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            vue开发技巧（一）
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2020/07/12/Vue%E7%9A%84Render%E5%87%BD%E6%95%B0/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Vue的Render函数
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

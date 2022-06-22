@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Tag: javascript | SleeoWen-Blog</title>
+
+
+    <meta name="keywords" content="js,ts,web,h5">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="个人的学习经历">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SleeoWen-Blog">
+<meta property="og:url" content="https://sleeowen.github.io/tags/javascript/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="个人的学习经历">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="js,ts,web,h5">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Demo</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+    <div class="cover">
+        <div class="cover__logo">
+            
+                <h1>Demo</h1>
+            
+        </div>
+        
+        
+            <div class="cover__intro">
+                <p>Hi, nice to meet you!</p>
+ 
+            </div>
+        
+    </div>
+
+            
+
+    
+        <main class="main">
+            
+    <div class="post-list">
+        
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        如何让函数只被执行一次
+    </h2>
+    
+        <blockquote>
+<p>实现函数只执行一次的核心思想非常的简单：「通过记录是否被执行的状态，来决定函数是否需要被调用」。接下来讨论一些常用的实现方式。</p>
+</blockquote>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2021/07/" class="post-meta__date button">2021-07-07</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+<a href="/2021/07/07/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%87%BD%E6%95%B0%E5%8F%AA%E8%A2%AB%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1/" class="post-entry__link">如何让函数只被执行一次</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        深入理解洋葱模型中间件机制
+    </h2>
+    
+        <p>本文来由，希望可以剖析中间件的组合原理，从而帮助大家更加理解洋葱模型。<br>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/10/" class="post-meta__date button">2020-10-27</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+<a href="/2020/10/27/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B4%8B%E8%91%B1%E6%A8%A1%E5%9E%8B%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%9C%BA%E5%88%B6/" class="post-entry__link">深入理解洋葱模型中间件机制</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        前端状态管理
+    </h2>
+    
+        <p>随着 <strong>React</strong> 和 <strong>Vue</strong> 等异步框架的广泛运用，前端状态管理器逐渐成为前端开发比不可少话题。形如 <strong>React</strong> 有倍受欢迎的 <strong>Redux</strong>，再如 <strong>Vue</strong> 标配的状态管理器 <strong>Vuex</strong>，都是业内相对成熟的状态管理器，那么我们接下来就用原生 javascript 来实现一个状态管理器。</p>
+<p>主要包含两个方面：第一是<strong>发布订阅</strong>，第二是<strong>状态管理</strong>。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/10/" class="post-meta__date button">2020-10-26</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+<a href="/2020/10/26/%E5%89%8D%E7%AB%AF%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" class="post-entry__link">前端状态管理</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        for循环全家桶
+    </h2>
+    
+        <p>抵达战场的 5 方势力分别是<code>for</code> , <code>foreach</code> , <code>map</code> , <code>for...in</code> , <code>for...of</code></p>
+<h2 id="自我介绍环节"><a href="#自我介绍环节" class="headerlink" title="自我介绍环节"></a>自我介绍环节</h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/06/" class="post-meta__date button">2020-06-15</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+<a href="/2020/06/15/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/" class="post-entry__link">for循环全家桶</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        实现call
+    </h2>
+    
+        <h3 id="call"><a href="#call" class="headerlink" title="call"></a>call</h3><blockquote>
+<p>call() 方法在使用一个指定的 this 值和若干个指定的参数值的前提下调用某个函数或方法。<br>举个栗子：<br>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/05/" class="post-meta__date button">2020-05-21</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+<a href="/2020/05/21/%E5%AE%9E%E7%8E%B0call/" class="post-entry__link">实现call</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        call、apply、bind
+    </h2>
+    
+        <p>bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。<br>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/05/" class="post-meta__date button">2020-05-20</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+<a href="/2020/05/20/call%E3%80%81apply%E3%80%81bind/" class="post-entry__link">call、apply、bind</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        AMD、CMD、CommonJS、ES6Module的区别
+    </h2>
+    
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>回想起之前的一次面试， 第一轮面试官问我 AMD 和 CMD 的区别，我只回答说 AMD 是提前加载，CMD 是按需加载。第二轮面试官又问了我 CommonJS 和 ES6 Module 的区别，emmm…，我大致回答说新的比旧的好~~，虽然面试官并没有说什么，不过显然这样的答案并不是有助于面试、有助于自己的技术积累的。</p>
+<p>所以有必要进行一次梳理，以便更清晰地了解它们的特点及差异。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/05/" class="post-meta__date button">2020-05-11</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+<a href="/2020/05/11/AMD%E3%80%81CMD%E3%80%81CommonJS%E3%80%81ES6Module%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-entry__link">AMD、CMD、CommonJS、ES6Module的区别</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        js柯里化
+    </h2>
+    
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我们在各种算法题以及技术文档中经常会看到柯里化这个词，那么，柯里化到底是什么？它在 js 中如何运用？对我们的编程有什么作用？都 9102 年了，如果你还不知道这些，那么你在面试过程中很可能会被面试官 diss🙄</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2020/05/" class="post-meta__date button">2020-05-01</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+<a href="/2020/05/01/js%E6%9F%AF%E9%87%8C%E5%8C%96/" class="post-entry__link">js柯里化</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        事件循环EventLoop
+    </h2>
+    
+        <h2 id="什么是Event-Loop"><a href="#什么是Event-Loop" class="headerlink" title="什么是Event Loop"></a>什么是Event Loop</h2><p><strong>event loop是一个执行模型，在不同的地方有不同的实现。浏览器和NodeJS基于不同的技术实现了各自的Event Loop。</strong></p>
+<ul>
+<li>浏览器的Event Loop是在html5的规范中明确定义。</li>
+<li>NodeJS的Event Loop是基于libuv实现的。可以参考Node的官方文档以及libuv的官方文档。</li>
+<li>libuv已经对Event Loop做出了实现，而HTML5规范中只是定义了浏览器中Event Loop的模型，具体的实现留给了浏览器厂商。
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2019/10/" class="post-meta__date button">2019-10-07</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+<a href="/2019/10/07/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AFEventLoop/" class="post-entry__link">事件循环EventLoop</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        js栈
+    </h2>
+    
+        <h2 id="什么是堆栈"><a href="#什么是堆栈" class="headerlink" title="什么是堆栈"></a>什么是堆栈</h2><p>栈，又叫堆栈，是和列表类似的一种数据结构，但是却更高效，因为栈内的元素只能通过列表的一端访问，称为栈顶，数据只能在栈顶添加或删除，遵循 先入后出(LIFO，last-in-first-out) 的原则，普遍运用于计算机的方方面面。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2019/08/" class="post-meta__date button">2019-08-19</a>
+    
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
+<a href="/2019/08/19/js%E6%A0%88/" class="post-entry__link">js栈</a>
+                </div>
+            
+        
+    </div>
+    
+        <div class="nav">
+            <div class="nav__prev">
+                
+            </div>
+            <div class="nav__next">
+                
+                    <a href="/tags/javascript/page/2/" class="nav__link">
+                        <div>
+                            <div class="nav__label">
+                                Next
+                            </div>
+                            <div class="nav__title">
+                                Page 2
+                            </div>
+                        </div>
+                        <div>
+                            <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                        </div>
+                    </a>
+                
+            </div>
+        </div>
+    
+
+
+        </main>
+    
+
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
