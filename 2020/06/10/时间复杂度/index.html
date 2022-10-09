@@ -1,0 +1,535 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://sleeowen.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Blog" href="https://sleeowen.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Blog" href="https://sleeowen.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="算法" />
+
+
+<link rel="canonical" href="https://sleeowen.github.io/2020/06/10/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/">
+
+
+
+  <title>
+时间复杂度 |
+Sleeo = Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">时间复杂度
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2020-06-10 15:38:01">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2020-06-10T15:38:01+08:00">2020-06-10</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sleeo</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipey0a334j20zk0m8qpt.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclize41wj20zk0m87gk.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclh0m9pdj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giph4fomxoj20zk0m8axp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeu1usa7j20zk0m8b29.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://sleeowen.github.io/2020/06/10/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/img.png">
+    <meta itemprop="name" content="Sleeo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <p>我们假设计算机运行一行基础代码需要执行一次运算。</p>
+ <span id="more"></span>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int <span class="title function_">aFunc</span>(<span class="params"><span class="keyword">void</span></span>) &#123;</span><br><span class="line">    <span class="title function_">printf</span>(<span class="string">&quot;Hello, World!\n&quot;</span>);      </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么上面这个方法需要执行 2 次运算</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int <span class="title function_">aFunc</span>(<span class="params">int n</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i&lt;n; i++) &#123;         </span><br><span class="line">        <span class="title function_">printf</span>(<span class="string">&quot;Hello, World!\n&quot;</span>);      </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法需要 (n + 1 + n + 1) = 2n + 2 次运算。</p>
+<p>我们把 算法需要执行的运算次数 用 输入大小 n 的函数 表示，即 T (n) 。<br>
+此时为了 估算算法需要的运行时间 和 简化算法分析，我们引入时间复杂度的概念。</p>
+<p>定义：存在常数 c 和函数 f (N)，使得当 N &gt;= c 时 T (N) &lt;= f (N)，表示为 T (n) = O (f (n)) 。</p>
+<p>当 N &gt;= 2 的时候，f (n) = n^2 总是大于 T (n) = n + 2 的，于是我们说 f (n) 的增长速度是大于或者等于 T (n) 的，也说 f (n) 是 T (n) 的上界，可以表示为 T (n) = O (f (n))。</p>
+<p>因为 f (n) 的增长速度是大于或者等于 T (n) 的，即 T (n) = O (f (n))，所以我们可以用 f (n) 的增长速度来度量 T (n) 的增长速度，所以我们说这个算法的时间复杂度是 O (f (n))。</p>
+<p><strong>算法的时间复杂度，用来度量算法的运行时间，记作: T (n) = O (f (n))。它表示随着 输入大小 n 的增大，算法执行需要的时间的增长速度可以用 f (n) 来描述。</strong></p>
+<p>显然如果 T (n) = n^2，那么 T (n) = O (n^2)，T (n) = O (n^3)，T (n) = O (n^4) 都是成立的，但是因为第一个 f (n) 的增长速度与 T (n) 是最接近的，所以第一个是最好的选择，所以我们说这个算法的复杂度是 O (n^2) 。</p>
+<p>那么当我们拿到算法的执行次数函数 T (n) 之后怎么得到算法的时间复杂度呢？</p>
+<ol>
+<li>我们知道常数项对函数的增长速度影响并不大，所以当 T (n) = c，c 为一个常数的时候，我们说这个算法的时间复杂度为 O (1)；如果 T (n) 不等于一个常数项时，直接将常数项省略。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">比如</span><br><span class="line">第一个 Hello, World 的例子中 T(n) = 2，所以我们说那个函数(算法)的时间复杂度为 O(1)。</span><br><span class="line">T(n) = n + 29，此时时间复杂度为 O(n)。</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>我们知道高次项对于函数的增长速度的影响是最大的。n^3 的增长速度是远超 n^2 的，同时 n^2 的增长速度是远超 n 的。 同时因为要求的精度不高，所以我们直接忽略低此项。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">比如</span><br><span class="line">T(n) = n^3 + n^2 + 29，此时时间复杂度为 O(n^3)。</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>因为函数的阶数对函数的增长速度的影响是最显著的，所以我们忽略与最高阶相乘的常数。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">比如</span><br><span class="line">T(n) = 3n^3，此时时间复杂度为 O(n^3)。</span><br></pre></td></tr></table></figure>
+<p><strong>综合起来：如果一个算法的执行次数是 T (n)，那么只保留最高次项，同时忽略最高项的系数后得到函数 f (n)，此时算法的时间复杂度就是 O (f (n))。为了方便描述，下文称此为 大 O 推导法。</strong></p>
+<p>由此可见，由执行次数 T (n) 得到时间复杂度并不困难，很多时候困难的是从算法通过分析和数学运算得到 T (n)。对此，提供下列四个便利的法则，这些法则都是可以简单推导出来的，总结出来以便提高效率。</p>
+<ol>
+<li>对于一个循环，假设循环体的时间复杂度为 O (n)，循环次数为 m，则这个<br>
+循环的时间复杂度为 O (n×m)。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">aFunc</span>(<span class="params">int n</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; n; i++) &#123;         </span><br><span class="line">        <span class="title function_">printf</span>(<span class="string">&quot;Hello, World!\n&quot;</span>);      </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时时间复杂度为 O (n × 1)，即 O (n)。</p>
+<ol start="2">
+<li>对于多个循环，假设循环体的时间复杂度为 O (n)，各个循环的循环次数分别是 a, b, c…，则这个循环的时间复杂度为 O (n×a×b×c…)。分析的时候应该由里向外分析这些循环。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">aFunc</span>(<span class="params">int n</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; n; i++) &#123;         </span><br><span class="line">        <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; n; j++) &#123;       </span><br><span class="line">            <span class="title function_">printf</span>(<span class="string">&quot;Hello, World!\n&quot;</span>);      </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时时间复杂度为 O (n × n × 1)，即 O (n^2)。</p>
+<ol start="3">
+<li>对于顺序执行的语句或者算法，总的时间复杂度等于其中最大的时间复杂度。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">aFunc</span>(<span class="params">int n</span>) &#123;</span><br><span class="line">    <span class="comment">// 第一部分时间复杂度为 O(n^2)</span></span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="title function_">printf</span>(<span class="string">&quot;Hello, World!\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 第二部分时间复杂度为 O(n)</span></span><br><span class="line">    <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">        <span class="title function_">printf</span>(<span class="string">&quot;Hello, World!\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时时间复杂度为 max (O (n^2), O (n))，即 O (n^2)。</p>
+<ol start="4">
+<li>对于条件判断语句，总的时间复杂度等于其中 时间复杂度最大的路径 的时间复杂度。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">aFunc</span>(<span class="params">int n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 第一条路径时间复杂度为 O(n^2)</span></span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="title function_">printf</span>(<span class="string">&quot;输入数据大于等于零\n&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 第二条路径时间复杂度为 O(n)</span></span><br><span class="line">        <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="title function_">printf</span>(<span class="string">&quot;输入数据小于零\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时时间复杂度为 max (O (n^2), O (n))，即 O (n^2)。</p>
+<p><strong>时间复杂度分析的基本策略是：从内向外分析，从最深层开始分析。如果遇到函数调用，要深入函数进行分析。</strong></p>
+<p>最后，我们来练习一下</p>
+<p>一。基础题<br>
+求该方法的时间复杂度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">aFunc</span>(<span class="params">int n</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (int j = i; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="title function_">printf</span>(<span class="string">&quot;Hello World\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考答案：<br>
+当 i = 0 时，内循环执行 n 次运算，当 i = 1 时，内循环执行 n - 1 次运算…… 当 i = n - 1 时，内循环执行 1 次运算。<br>
+所以，执行次数 T (n) = n + (n - 1) + (n - 2)……+ 1 = n (n + 1) / 2 = n^2 / 2 + n / 2。<br>
+根据上文说的 大 O 推导法 可以知道，此时时间复杂度为 O (n^2)。</p>
+<p>二。进阶题<br>
+求该方法的时间复杂度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">aFunc</span>(<span class="params">int n</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">2</span>; i &lt; n; i++) &#123;</span><br><span class="line">        i *= <span class="number">2</span>;</span><br><span class="line">        <span class="title function_">printf</span>(<span class="string">&quot;%i\n&quot;</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考答案：<br>
+假设循环次数为 t，则循环条件满足 2^t &lt; n。<br>
+可以得出，执行次数 t = log (2)(n)，即 T (n) = log (2)(n)，可见时间复杂度为 O (log (2)(n))，即 O (log n)。</p>
+<p>三。再次进阶<br>
+求该方法的时间复杂度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">long <span class="title function_">aFunc</span>(<span class="params">int n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">aFunc</span>(n - <span class="number">1</span>) + <span class="title function_">aFunc</span>(n - <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考答案：<br>
+显然运行次数，T (0) = T (1) = 1，同时 T (n) = T (n - 1) + T (n - 2) + 1，这里的 1 是其中的加法算一次执行。<br>
+显然 T (n) = T (n - 1) + T (n - 2) 是一个<span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTYlOTYlOTAlRTYlQjMlQTIlRTklODIlQTMlRTUlQTUlOTElRTYlOTUlQjAlRTUlODglOTc=">斐波那契数列</span>，通过归纳证明法可以证明，当 n &gt;= 1 时 T (n) &lt; (5/3)^n，同时当 n &gt; 4 时 T (n) &gt;= (3/2)^n。<br>
+所以该方法的时间复杂度可以表示为 O ((5/3)^n)，简化后为 O (2^n)。<br>
+可见这个方法所需的运行时间是以指数的速度增长的。如果大家感兴趣，可以试下分别用 1，10，100 的输入大小来测试下算法的运行时间，相信大家会感受到时间复杂度的无穷魅力。</p>
+
+      <div class="tags">
+          <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="ic i-tag"></i> 算法</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2022-06-22 15:37:25" itemprop="dateModified" datetime="2022-06-22T15:37:25+08:00">2022-06-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>Sleeo <i class="ic i-at"><em>@</em></i>Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://sleeowen.github.io/2020/06/10/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/" title="时间复杂度">https://sleeowen.github.io/2020/06/10/时间复杂度/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2020/05/30/%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giph4lm9i7j20zk0m84qp.jpg" title="手撕代码">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>手撕代码</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2020/06/15/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeu7txpzj20zk0m81kx.jpg" title="for循环全家桶">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>for循环全家桶</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Sleeo"
+      data-src="/images/img.png">
+  <p class="name" itemprop="name">Sleeo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">71</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2020/05/30/%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2020/06/15/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/07/02/HTTP%E5%8D%8F%E8%AE%AE/" title="HTTP协议">HTTP协议</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/11/AMD%E3%80%81CMD%E3%80%81CommonJS%E3%80%81ES6Module%E7%9A%84%E5%8C%BA%E5%88%AB/" title="AMD、CMD、CommonJS、ES6Module的区别">AMD、CMD、CommonJS、ES6Module的区别</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/04/01/vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%BB%A5%E5%8F%8AnextTick%E5%BA%94%E7%94%A8/" title="vue生命周期以及nextTick应用">vue生命周期以及nextTick应用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/08/10/node%E6%A1%86%E6%9E%B6%E7%AE%80%E5%8D%95%E5%AF%B9%E6%AF%94/" title="node框架简单对比">node框架简单对比</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2021/07/09/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/" title="性能优化总结">性能优化总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/07/01/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bcheckbox/" title="element源码解析之checkbox">element源码解析之checkbox</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/10/27/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B4%8B%E8%91%B1%E6%A8%A1%E5%9E%8B%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%9C%BA%E5%88%B6/" title="深入理解洋葱模型中间件机制">深入理解洋葱模型中间件机制</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/06/15/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/" title="for循环全家桶">for循环全家桶</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/06/10/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/" title="时间复杂度">时间复杂度</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/09/27/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%87%E7%A8%8B/" title="浏览器渲染原理与过程">浏览器渲染原理与过程</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sleeo @ Sleeo</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="站点总字数">403k 字</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:06</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2020/06/10/时间复杂度/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,512 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://sleeowen.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Blog" href="https://sleeowen.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Blog" href="https://sleeowen.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="html" />
+
+
+<link rel="canonical" href="https://sleeowen.github.io/2019/03/22/webp%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">
+
+
+
+  <title>
+webp在项目中的应用 |
+Sleeo = Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">webp在项目中的应用
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2019-03-22 11:11:26">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2019-03-22T11:11:26+08:00">2019-03-22</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sleeo</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciub8ja1j20zk0m81ky.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeyvx1d4j20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giph4baakhj20zk0m8h5q.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclx6phq6j20zk0m8e36.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipet4bz0yj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://sleeowen.github.io/2019/03/22/webp%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/img.png">
+    <meta itemprop="name" content="Sleeo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="什么是webp"><a class="markdownIt-Anchor" href="#什么是webp">#</a> 什么是 webp？</h2>
+<p>WebP 格式，谷歌开发的一种旨在加快图片加载速度的图片格式。图片压缩体积大约只有 JPEG 的 2/3，并能节省大量的服务器宽带资源和数据空间。</p>
+<span id="more"></span>
+<h2 id="为什么要用webp"><a class="markdownIt-Anchor" href="#为什么要用webp">#</a> 为什么要用 webp</h2>
+<ol>
+<li>减小图片加载资源的大小、节省用户流量资源</li>
+<li>降低服务器流量资源</li>
+</ol>
+<h3 id="压缩率"><a class="markdownIt-Anchor" href="#压缩率">#</a> 压缩率</h3>
+<p><img data-src="yasuo.webp" alt="yasuo"></p>
+<h2 id="webp兼容性情况"><a class="markdownIt-Anchor" href="#webp兼容性情况">#</a> webp 兼容性情况</h2>
+<p><img data-src="jianrong.webp" alt="yasuo"><br>
+ 结果：谷歌全面支持、安卓浏览器从 4.2 开始支持。那么在页面中对于安卓用户中图片资源加载大小会有大幅度下降。</p>
+<h2 id="webp在各大网站的使用"><a class="markdownIt-Anchor" href="#webp在各大网站的使用">#</a> webp 在各大网站的使用</h2>
+<p>淘宝中大量使用 webp。<br>
+<img data-src="taobao.webp" alt="yasuo"><br>
+ 各大 cdn 也是支持 webp 图片格式输出。</p>
+<h2 id="项目中的实践"><a class="markdownIt-Anchor" href="#项目中的实践">#</a> 项目中的实践</h2>
+<p><img data-src="liucheng.webp" alt="yasuo"></p>
+<h3 id="技术实现"><a class="markdownIt-Anchor" href="#技术实现">#</a> 技术实现</h3>
+<h4 id="webp兼容性如何检测"><a class="markdownIt-Anchor" href="#webp兼容性如何检测">#</a> webp 兼容性如何检测？</h4>
+<ol>
+<li>通过 js 浏览器端判断是否支持 webp</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">check_webp_feature</span>(<span class="params">feature, callback</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> kTestImages = &#123;</span><br><span class="line">        <span class="attr">lossy</span>: <span class="string">&quot;UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA&quot;</span>,</span><br><span class="line">        <span class="attr">lossless</span>: <span class="string">&quot;UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==&quot;</span>,</span><br><span class="line">        <span class="attr">alpha</span>: <span class="string">&quot;UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==&quot;</span>,</span><br><span class="line">        <span class="attr">animation</span>: <span class="string">&quot;UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA&quot;</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> img = <span class="keyword">new</span> <span class="title class_">Image</span>();</span><br><span class="line">    img.<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> result = (img.<span class="property">width</span> &gt; <span class="number">0</span>) &amp;&amp; (img.<span class="property">height</span> &gt; <span class="number">0</span>);</span><br><span class="line">        <span class="title function_">callback</span>(feature, result);</span><br><span class="line">    &#125;;</span><br><span class="line">    img.<span class="property">onerror</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">callback</span>(feature, <span class="literal">false</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    img.<span class="property">src</span> = <span class="string">&quot;data:image/webp;base64,&quot;</span> + kTestImages[feature];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>浏览器向服务端发起请求的时候 accept 会带上 image/webp 信息，在服务端判断是否支持 webp。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">map $http_accept $webp_suffix &#123;</span><br><span class="line">        <span class="keyword">default</span>   <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="string">&quot;~*webp&quot;</span>  <span class="string">&quot;.webp&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过 nginx 中 map 方法，查找是否有 webp 字段，如果有设置 $webp_suffix 为.webp 值。通过该值就可以来判断是否支持 webp。如果支持写入 cookie，前端通过检测 cookie 做判断，是否加载 webp 图片。</p>
+<p>nginx 中设置 cookie 代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">  <span class="keyword">if</span> ($webp_suffix ~* webp) &#123;</span><br><span class="line">    add_header Set-Cookie <span class="string">&#x27;webpAvaile=true; path= /; expires=3153600&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="在开发中使用"><a class="markdownIt-Anchor" href="#在开发中使用">#</a> 在开发中使用</h3>
+<h4 id="sass中使用"><a class="markdownIt-Anchor" href="#sass中使用">#</a> sass 中使用</h4>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@mixin</span> webpbg(<span class="variable">$url</span>) &#123;</span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="variable">$url</span>);</span><br><span class="line">    <span class="keyword">@at-root</span> .webpa &amp; &#123;</span><br><span class="line">        <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="variable">$url</span>+<span class="string">&#x27;.webp&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>scss 文件使用</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@include</span> webpbg(<span class="string">&#x27;../image/header.jpg&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="html中使用"><a class="markdownIt-Anchor" href="#html中使用">#</a> html 中使用</h4>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">picture</span> <span class="attr">class</span>=<span class="string">&quot;img&quot;</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">class</span>=<span class="string">&quot;img&quot;</span> <span class="attr">srcset</span>=<span class="string">&quot;images/banner.jpg.webp&quot;</span> <span class="attr">type</span>=<span class="string">&quot;image/webp&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;img&quot;</span> <span class="attr">id</span>=<span class="string">&quot;headImg&quot;</span> <span class="attr">src</span>=<span class="string">&quot;images/banner.jpg&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="生成webp资源"><a class="markdownIt-Anchor" href="#生成webp资源">#</a> 生成 webp 资源</h4>
+<p>使用 webpack 的 loader</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> imagemin = <span class="built_in">require</span>(<span class="string">&#x27;imagemin&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> imageminWebp = <span class="built_in">require</span>(<span class="string">&#x27;imagemin-webp&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> loaderUtils = <span class="built_in">require</span>(<span class="string">&#x27;loader-utils&#x27;</span>);</span><br><span class="line"> </span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span> (<span class="params">content</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">cacheable</span> &amp;&amp; <span class="variable language_">this</span>.<span class="title function_">cacheable</span>();</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">emitFile</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;emitFile is required from module system&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> callback = <span class="variable language_">this</span>.<span class="title function_">async</span>();</span><br><span class="line">    <span class="keyword">var</span> options = loaderUtils.<span class="title function_">getOptions</span>(<span class="variable language_">this</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 写入原文件</span></span><br><span class="line">    <span class="keyword">var</span> url = loaderUtils.<span class="title function_">interpolateName</span>(<span class="variable language_">this</span>, options.<span class="property">name</span> || <span class="string">&quot;[hash].[ext]&quot;</span>, &#123;</span><br><span class="line">        <span class="attr">content</span>: content,</span><br><span class="line">        <span class="attr">regExp</span>: options.<span class="property">regExp</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">emitFile</span>(url, content);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 如果源文件比较小，则没必要转换为webp格式的图片，直接使用callback传递给下一个loader处理</span></span><br><span class="line">    <span class="keyword">var</span> limit;</span><br><span class="line">    <span class="keyword">if</span> (options.<span class="property">limit</span>) &#123;</span><br><span class="line">        limit = <span class="built_in">parseInt</span>(options.<span class="property">limit</span>, <span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (limit &lt;= <span class="number">0</span> || content.<span class="property">length</span> &lt; limit) &#123;</span><br><span class="line">        <span class="title function_">callback</span>(<span class="literal">null</span>, &#123; <span class="attr">buffer</span>: content, url &#125;)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 根据options内容生成webpOptions</span></span><br><span class="line">    <span class="keyword">var</span> webpOptions = &#123;</span><br><span class="line">        <span class="attr">preset</span>: options.<span class="property">preset</span> || <span class="string">&#x27;default&#x27;</span>,</span><br><span class="line">        <span class="attr">quality</span>: options.<span class="property">quality</span> || <span class="number">75</span>,</span><br><span class="line">        <span class="attr">alphaQuality</span>: options.<span class="property">alphaQuality</span> || <span class="number">100</span>,</span><br><span class="line">        <span class="attr">method</span>: options.<span class="property">method</span> || <span class="number">1</span>,</span><br><span class="line">        <span class="attr">sns</span>: options.<span class="property">sns</span> || <span class="number">80</span>,</span><br><span class="line">        <span class="attr">autoFilter</span>: options.<span class="property">autoFilter</span> || <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">sharpness</span>: options.<span class="property">sharpness</span> || <span class="number">0</span>,</span><br><span class="line">        <span class="attr">lossless</span>: options.<span class="property">lossless</span> || <span class="literal">false</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">if</span> (options.<span class="property">size</span>) &#123;</span><br><span class="line">        webpOptions.<span class="property">size</span> = options.<span class="property">size</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (options.<span class="property">filter</span>) &#123;</span><br><span class="line">        webpOptions.<span class="property">filter</span> = options.<span class="property">filter</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 生成的webp图片的名称为原图片的名称后面追加.webp,</span></span><br><span class="line">    <span class="comment">// 例如：xxx.jpg.webp, 方便在css预处理器中的使用</span></span><br><span class="line">    <span class="keyword">var</span> webpUrl = url + <span class="string">&#x27;.webp&#x27;</span>;</span><br><span class="line">    <span class="comment">// 原图片异步转换为webp的图片</span></span><br><span class="line">    imagemin.<span class="title function_">buffer</span>(content, &#123; <span class="attr">plugins</span>: [<span class="title function_">imageminWebp</span>(webpOptions)] &#125;).<span class="title function_">then</span>(<span class="function"><span class="params">file</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 写入webp图片并调用callback</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">emitFile</span>(webpUrl, file);</span><br><span class="line">        <span class="comment">// 传递给svg-placrholder-loader，继续处理成placeholder</span></span><br><span class="line">        <span class="title function_">callback</span>(<span class="literal">null</span>, &#123; <span class="attr">buffer</span>: content, url, webpUrl &#125;);</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/* 如果要单独使用的话，可以使用该注释部分的代码</span></span><br><span class="line"><span class="comment">        const exportJson = &#x27;module.exports = &#123; &#x27; +</span></span><br><span class="line"><span class="comment">            &#x27;&quot;originSrc&quot;: __webpack_public_path__ + &quot;&#x27; + url +</span></span><br><span class="line"><span class="comment">            &#x27;&quot; , &quot;webpSrc&quot;: __webpack_public_path__ + &quot;&#x27; + webpUrl +</span></span><br><span class="line"><span class="comment">            &#x27;&quot;&#x27; +</span></span><br><span class="line"><span class="comment">            &#x27; &#125;;&#x27;;</span></span><br><span class="line"><span class="comment">        callback(null, exportJson);   </span></span><br><span class="line"><span class="comment">        */</span>  </span><br><span class="line">    &#125;).<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">callback</span>(err);</span><br><span class="line">    &#125;);</span><br><span class="line"> </span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 要求webpack传入原始的buffer，方便处理图片</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span>.<span class="property">raw</span> = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<p>nginx 生成<br>
+实现过程，对支持 webp 的请求设置 cookies。利用 nginx 检测图片请求是否存在，如果不存在通过 lua 调用 imageMagic 创建 webp 图片并返回。需要注意的是 nginx 需要安装 lua 支持的模块。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">user  root; # nginx 用户权限 执行lua创建图片命令需要读写权限</span><br><span class="line"># ...</span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       <span class="number">80</span>;</span><br><span class="line">        server_name  webp.leewr.com;</span><br><span class="line">        root         /home/leewr/mono/app/<span class="keyword">public</span>/december;</span><br><span class="line">        location / &#123;</span><br><span class="line">            <span class="keyword">if</span> ($webp_suffix ~* webp) &#123;</span><br><span class="line">                add_header Set-Cookie <span class="string">&#x27;webpAvaile=true; path= /;&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        location ~* ^(.+\.(jpg|png|jpeg|gif))(.webp)$ &#123; # 正则匹配图片 paht/name.jpg.webp 格式的图片请求</span><br><span class="line">            <span class="keyword">if</span> (!-f $request_filename) &#123; # 如果图片不存在</span><br><span class="line">                access_log /usr/local/nginx/logs/december.log main; # 设置日志文件</span><br><span class="line">                set $request_filepath /home/leewr/mono/app/<span class="keyword">public</span>/december/$<span class="number">1</span>; # 图片真实路径变量</span><br><span class="line">                set $ext $<span class="number">3</span>; # 设置图片扩展名$ext变量</span><br><span class="line">                content_by_lua_file lua/webp.lua; # 调用nginx/lua目录下的webp.lua文件</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面看 lua, lua 中代码非常简单。定义 command 命令，调用系统 os.execute (command) 执行 convert 图片转换命令。convert 是 ImageMagic 的命令。… lua 中字符串连接。ngx.var.ext 是 nginx 中定义的变量。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">local</span> command</span><br><span class="line">command = <span class="string">&quot;convert &quot;</span> ..ngx.var.request_filepath.. <span class="string">&quot; &quot;</span> ..ngx.var.request_filepath..ngx.var.ext</span><br><span class="line">os.execute(command)</span><br><span class="line">ngx.exec(ngx.var.request_uri)</span><br></pre></td></tr></table></figure>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC83M2NhOWU4Yjk4NmE=">原文地址</span></p>
+
+      <div class="tags">
+          <a href="/tags/html/" rel="tag"><i class="ic i-tag"></i> html</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2022-06-22 15:37:25" itemprop="dateModified" datetime="2022-06-22T15:37:25+08:00">2022-06-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>Sleeo <i class="ic i-at"><em>@</em></i>Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://sleeowen.github.io/2019/03/22/webp%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="webp在项目中的应用">https://sleeowen.github.io/2019/03/22/webp在项目中的应用/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2019/03/02/meta%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipewkhf1zj20zk0m81kx.jpg" title="meta标签使用总结">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>meta标签使用总结</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2019/04/01/vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%BB%A5%E5%8F%8AnextTick%E5%BA%94%E7%94%A8/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicitzannuj20zk0m8b29.jpg" title="vue生命周期以及nextTick应用">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>vue生命周期以及nextTick应用</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFwebp"><span class="toc-number">1.</span> <span class="toc-text"> 什么是 webp？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8webp"><span class="toc-number">2.</span> <span class="toc-text"> 为什么要用 webp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E7%8E%87"><span class="toc-number">2.1.</span> <span class="toc-text"> 压缩率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webp%E5%85%BC%E5%AE%B9%E6%80%A7%E6%83%85%E5%86%B5"><span class="toc-number">3.</span> <span class="toc-text"> webp 兼容性情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webp%E5%9C%A8%E5%90%84%E5%A4%A7%E7%BD%91%E7%AB%99%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text"> webp 在各大网站的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5"><span class="toc-number">5.</span> <span class="toc-text"> 项目中的实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.1.</span> <span class="toc-text"> 技术实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#webp%E5%85%BC%E5%AE%B9%E6%80%A7%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B"><span class="toc-number">5.1.1.</span> <span class="toc-text"> webp 兼容性如何检测？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E5%BC%80%E5%8F%91%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="toc-number">5.2.</span> <span class="toc-text"> 在开发中使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#sass%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="toc-number">5.2.1.</span> <span class="toc-text"> sass 中使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#html%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="toc-number">5.2.2.</span> <span class="toc-text"> html 中使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90webp%E8%B5%84%E6%BA%90"><span class="toc-number">5.2.3.</span> <span class="toc-text"> 生成 webp 资源</span></a></li></ol></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Sleeo"
+      data-src="/images/img.png">
+  <p class="name" itemprop="name">Sleeo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">71</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2019/03/02/meta%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2019/04/01/vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%BB%A5%E5%8F%8AnextTick%E5%BA%94%E7%94%A8/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/06/11/DOM%E4%BA%8B%E4%BB%B6%E6%B5%81/" title="DOM事件流">DOM事件流</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/09/27/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%87%E7%A8%8B/" title="浏览器渲染原理与过程">浏览器渲染原理与过程</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/11/AMD%E3%80%81CMD%E3%80%81CommonJS%E3%80%81ES6Module%E7%9A%84%E5%8C%BA%E5%88%AB/" title="AMD、CMD、CommonJS、ES6Module的区别">AMD、CMD、CommonJS、ES6Module的区别</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/11/11/Vue%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF/" title="Vue组件通讯">Vue组件通讯</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/04/07/%E5%87%BD%E6%95%B0%E7%9A%84%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81/" title="函数的防抖和节流">函数的防抖和节流</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/08/22/%E9%80%9A%E4%BF%A1%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" title="通信相关问题">通信相关问题</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/03/22/webp%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="webp在项目中的应用">webp在项目中的应用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/10/30/Animation/" title="Animation">Animation</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/10/11/%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" title="页面性能优化">页面性能优化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/07/%E7%AE%97%E6%B3%95%E9%AB%98%E9%A2%91%E9%97%AE%E9%A2%98/" title="算法高频问题">算法高频问题</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sleeo @ Sleeo</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="站点总字数">403k 字</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:06</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2019/03/22/webp在项目中的应用/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

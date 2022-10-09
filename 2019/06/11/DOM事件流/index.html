@@ -1,0 +1,596 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://sleeowen.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Blog" href="https://sleeowen.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Blog" href="https://sleeowen.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="html" />
+
+
+<link rel="canonical" href="https://sleeowen.github.io/2019/06/11/DOM%E4%BA%8B%E4%BB%B6%E6%B5%81/">
+
+
+
+  <title>
+DOM事件流 |
+Sleeo = Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">DOM事件流
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2019-06-11 18:48:56">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2019-06-11T18:48:56+08:00">2019-06-11</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sleeo</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciuv0socj20zk0m8qes.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclga70tsj20zk0m84mr.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicli9lfebj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicm0fdw5cj20zk0m8hdt.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://sleeowen.github.io/2019/06/11/DOM%E4%BA%8B%E4%BB%B6%E6%B5%81/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/img.png">
+    <meta itemprop="name" content="Sleeo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="什么是事件"><a class="markdownIt-Anchor" href="#什么是事件">#</a> 什么是事件？</h2>
+<blockquote>
+<p>事件，就是文档或浏览器窗口发生的一些特定的交互瞬间. JavaScript 和 HTML 之间的交互是通过事件实现的。可以使用事件监听器来监听事件，以便事件发生时执行相应的代码.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="事件流是什么"><a class="markdownIt-Anchor" href="#事件流是什么">#</a> 事件流是什么？</h2>
+<p>当在页面上某个元素触发特定事件时，比如点击，除了被点击的目标元素，所有祖先元素都会触发该事件，一直到 window.</p>
+<p>那这样就出现了一个问题，是先在目标元素上触发事件，还是先在祖先元素上触发呢？这就是事件流的概念.</p>
+<p><strong>事件流是事件在目标元素和祖先元素间的触发顺序</strong></p>
+<ul>
+<li><strong>捕获</strong> - Capture - 事件由最顶层逐级向下传播，直至到达目标元素.</li>
+<li><strong>冒泡</strong> - Bubble - 顾名思义，类似水中冒泡，从下往上。事件由第一个被触发的元素接收，然后逐级向上传播.</li>
+</ul>
+<p>后来 w3c 采用折中的方式，规定先捕获再冒泡平息了战火。如此一个事件就被分成了三个阶段 (是的，不光是捕获和冒泡):</p>
+<ol>
+<li>捕获阶段 - The capture phase - 事件从最顶层元素 window 一直传递到目标元素的父元素.</li>
+<li>目标阶段 - The target phase - 事件到达目标元素。如果事件指定不冒泡。那就会在这里中止.</li>
+<li>冒泡阶段 - The bubble phase - 事件从目标元素父元素向上逐级传递直到最顶层元素 window. 及捕获阶段的反方向.</li>
+</ol>
+<p>那这里又有一个新的疑问，既然捕获和冒泡阶段都会触发事件，那先捕获再冒泡，岂不是路径上的元素都会触发两次事件？</p>
+<p>在 DOM2 中，事件监听机制提供了一个参数来决定事件是在捕获阶段生效还是在冒泡阶段生效，接下来简要学习下 <mark>addEventListener</mark> .</p>
+<h2 id="addeventlistener"><a class="markdownIt-Anchor" href="#addeventlistener">#</a> addEventListener</h2>
+<p><strong>EventTarget.addEventListener()</strong> 方法将指定的监听器注册到目标元素上，当该对象触发指定的事件时，指定的回调函数就会被执行。事件目标可以是一个文档上的元素或任何其他支持事件的对象 (比如 XMLHttpRequest).</p>
+<p>它的工作原理是将实现 EventListener 的函数或对象添加到调用它的 EventTarget 上的指定事件类型的事件侦听器列表中.</p>
+<h4 id="语法"><a class="markdownIt-Anchor" href="#语法">#</a> 语法</h4>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">target.<span class="title function_">addEventListener</span>(type, listener[, options]);</span><br><span class="line">target.<span class="title function_">addEventListener</span>(type, listener[, useCapture]);</span><br><span class="line">target.<span class="title function_">addEventListener</span>(type, listener[, useCapture, wantsUntrusted  ]);  <span class="comment">// Gecko/Mozilla only</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>type: 表示监听事件类型的字符串。事件列表.</li>
+<li>listener: 当所监听的事件类型触发时的回调。会接收到一个事件通知对象.</li>
+<li>options: 可选。可用的选项如下:</li>
+<li>capture: Boolean, 如果是 true, 表示 listener 会在捕获阶段触发。默认是 false. 冒泡捕获。所以微软牛逼.</li>
+<li>once: Boolean, 如果是 true, 表示 listener 在添加之后最多只调用一次.</li>
+<li>passive: Boolean，如果是，表示 listener 永远不会调用 preventDefault (). 如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告.</li>
+<li>useCapture: 可选. Boolean, 同 options - capture</li>
+</ul>
+<blockquote>
+<p>注意：对于目标元素上的事件监听器来说，事件会处于目标阶段，而不是冒泡阶段或者捕获阶段。在目标阶段的事件会触发该元素上的所有监听器，而不在乎这个监听器到底在注册时 useCapture 是 true 还是 false.</p>
+</blockquote>
+<h2 id="事件监听添加与移除"><a class="markdownIt-Anchor" href="#事件监听添加与移除">#</a> 事件监听添加与移除</h2>
+<h3 id="事件添加的三种方式"><a class="markdownIt-Anchor" href="#事件添加的三种方式">#</a> 事件添加的三种方式</h3>
+<ol>
+<li>通过 HTML 属性的方式</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">&quot;console.log(&#x27;click&#x27;)&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>DOM0 中可以通过 js 脚本来给指定元素提供事件处理函数，即</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.onclick = function // 只会在冒泡阶段生效</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>DOM2 中，添加了新的事件监听 API, 即 <code>addEventListener</code> , 同时提供了取消监听的  <code>removeEventListener(type, handler[, options | useCapture])</code> . 显然事件处理函数注册后，要取消监听， <code>type/hanlder/useCapture</code>  的一致.</li>
+</ol>
+<p>相比第一，第二种， <code>addEventListener</code>  的方式有以下几点优势:</p>
+<ul>
+<li>可以为同一个事件注册多个回调函数，依次触发。而 DOM0 的方式则会被覆盖掉。只能添加一种</li>
+<li>使用 DOM0 会覆盖 HTML 的方式.</li>
+<li>可以通过参数决定监听是在冒泡阶段生效还是在捕获阶段生效.</li>
+<li><code>element.onclick</code>  注册的监听只会在冒泡阶段生效</li>
+</ul>
+<h5 id="实例"><a class="markdownIt-Anchor" href="#实例">#</a> 实例</h5>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;parent&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;child&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;console.log(&#x27;html&#x27;)&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> child = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;child&#x27;</span>) </span><br><span class="line"></span><br><span class="line">child.<span class="property">onclick</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;DOM0A&#x27;</span>) &#125; <span class="comment">// 覆盖了 HTML 的方式</span></span><br><span class="line">child.<span class="property">onclick</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;DOM0B&#x27;</span>) &#125; <span class="comment">// 覆盖了上一条 DOM0A   </span></span><br><span class="line"></span><br><span class="line">child.<span class="title function_">addEventLisnter</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;lisnterA&#x27;</span>) &#125;)</span><br><span class="line">child.<span class="title function_">addEventLisnter</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;lisnterB&#x27;</span>) &#125;) <span class="comment">// 不会覆盖</span></span><br></pre></td></tr></table></figure>
+<h5 id="三种方式对应的如何移除"><a class="markdownIt-Anchor" href="#三种方式对应的如何移除">#</a> 三种方式对应的如何移除:</h5>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">child.<span class="title function_">setAttributer</span>(<span class="string">&#x27;onclick&#x27;</span>, <span class="literal">false</span>)</span><br><span class="line">child.<span class="property">onclick</span> = <span class="literal">null</span></span><br><span class="line">child.<span class="title function_">removeEventLisnter</span>(<span class="string">&#x27;设置相同的参数&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="问题"><a class="markdownIt-Anchor" href="#问题">#</a> 问题</h2>
+<ol>
+<li>以下代码的输出顺序</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">onclick</span>=<span class="string">&quot;console.log(&#x27;html&#x27;)&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Test<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">const</span> parent = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;parent&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">const</span> child = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;child&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            child.<span class="property">onclick</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;child onclick&#x27;</span>) &#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// capture 默认为 false, 冒泡</span></span></span><br><span class="line"><span class="language-javascript">            parent.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;parent event&#x27;</span>) &#125;);</span></span><br><span class="line"><span class="language-javascript">            child.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;child event&#x27;</span>) &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 捕获</span></span></span><br><span class="line"><span class="language-javascript">            parent.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;parent event capture&#x27;</span>) &#125;, &#123; <span class="attr">capture</span>: <span class="literal">true</span> &#125;);</span></span><br><span class="line"><span class="language-javascript">            child.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;child event capture&#x27;</span>) &#125;, &#123; <span class="attr">capture</span>: <span class="literal">true</span> &#125;);</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="property">onclick</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;window&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onclick</span>=<span class="string">&quot;console.log(&#x27;body&#x27;)&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;parent&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;console.log(&#x27;parent html&#x27;)&quot;</span>&gt;</span>parent</span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;child&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;console.log(&#x27;child html&#x27;)&quot;</span>&gt;</span>child<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>什么是事件流，同一个事件有几个阶段？</li>
+<li>如何移除通过 HTML 属性、element.onclick 等注册的事件处理函数？</li>
+</ol>
+<h2 id="答案"><a class="markdownIt-Anchor" href="#答案">#</a> 答案</h2>
+<h3 id="问题1"><a class="markdownIt-Anchor" href="#问题1">#</a> 问题 1</h3>
+<p>首先参考 chrome 浏览器的结果。先来看点击 child, 输出:</p>
+<ol>
+<li>parent html</li>
+<li>parent event</li>
+<li>parent event capture</li>
+<li>body</li>
+<li>html</li>
+<li>window</li>
+</ol>
+<p>奇怪！这时候不是应该先捕获，capture 在前吗？别急，这时候如果调换 parent event 与 parent event capture 的 addEventListener 顺序，会发现，输出顺序也变了:</p>
+<ol>
+<li>parent html</li>
+<li><strong>parent event capture</strong></li>
+<li><strong>parent event</strong></li>
+<li>body</li>
+<li>html</li>
+<li>window</li>
+</ol>
+<p>其实这时候的输出顺序只和  <code>addEventListener</code>  的顺序有关。是否开启  <code>capture</code>  无关。因为我们是直接点击了  <code>parent</code> . 对于  <code>parent</code>  自身而言。它在整个点击传递过程中处于目标阶段。并不涉及捕获和冒泡。同时我们也发现. html 设置的点击是优先于  <code>addEventListener</code>  的方式的.</p>
+<p>我们再来看下点击 child:</p>
+<ol>
+<li>parent event capture</li>
+<li>hild onclick</li>
+<li>child event</li>
+<li>child event capture</li>
+<li>parent html</li>
+<li>parent event</li>
+<li>body</li>
+<li>html</li>
+<li>window</li>
+</ol>
+<p>首先，child html 没有输出，因为被 child onclick 覆盖掉了.</p>
+<p>第二点，child onclick 的优先级也是高于  <code>addEventListener</code>  的.</p>
+<p>再然后，点击事件传递过程中，首先在捕获阶段，输出了 parent event capture. 然后到达目标阶段。同理之前点击 parent. 如果此时调换 child event 与 child event capture 的  <code>addEventListener</code>  顺序。输出顺序也会改变</p>
+<p>最后，到达冒泡阶段，由于 html 的优先级高于  <code>addEventListener</code> . 所以被输出. (别忘了，默认都是开启冒泡)</p>
+<p>但是。如果使用 Safari 浏览器，则会发现，点击 parent, 输出:</p>
+<ol>
+<li>parent event capture</li>
+<li>parent html</li>
+<li>parent event</li>
+<li>body</li>
+<li>html</li>
+<li>window</li>
+</ol>
+<p>点击 child, 输出:</p>
+<ol>
+<li>parent event capture</li>
+<li>child event capture</li>
+<li>child onclick</li>
+<li>child event</li>
+<li>parent html</li>
+<li>parent event</li>
+<li>body</li>
+<li>html</li>
+<li>window</li>
+</ol>
+<p>会发现，对于捕获阶段的处理不一样了。点击目标元素时，目标元素不仅处于目标阶段，也处于捕获阶段的终点和冒泡阶段的起点。所以会进行  <code>capture</code>  的判断。所以在代码编写时这里要尤为注意.</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC82NTEyMTM5ZDFkOWU=">原文地址</span></p>
+
+      <div class="tags">
+          <a href="/tags/html/" rel="tag"><i class="ic i-tag"></i> html</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2022-06-22 15:37:25" itemprop="dateModified" datetime="2022-06-22T15:37:25+08:00">2022-06-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>Sleeo <i class="ic i-at"><em>@</em></i>Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://sleeowen.github.io/2019/06/11/DOM%E4%BA%8B%E4%BB%B6%E6%B5%81/" title="DOM事件流">https://sleeowen.github.io/2019/06/11/DOM事件流/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2019/06/01/DOM%E7%BA%A7%E5%88%AB%E4%B8%8EDOM%E4%BA%8B%E4%BB%B6/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipesrnqv3j20zk0m8ava.jpg" title="DOM级别与DOM事件">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>DOM级别与DOM事件</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2019/06/25/Event%E4%BA%8B%E4%BB%B6%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicli9lfebj20zk0m84qp.jpg" title="Event事件常见应用">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Event事件常见应用</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text"> 什么是事件？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%B5%81%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text"> 事件流是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#addeventlistener"><span class="toc-number">3.</span> <span class="toc-text"> addEventListener</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">3.0.1.</span> <span class="toc-text"> 语法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E6%B7%BB%E5%8A%A0%E4%B8%8E%E7%A7%BB%E9%99%A4"><span class="toc-number">4.</span> <span class="toc-text"> 事件监听添加与移除</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%B7%BB%E5%8A%A0%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text"> 事件添加的三种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">4.1.0.1.</span> <span class="toc-text"> 实例</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%AF%B9%E5%BA%94%E7%9A%84%E5%A6%82%E4%BD%95%E7%A7%BB%E9%99%A4"><span class="toc-number">4.1.0.2.</span> <span class="toc-text"> 三种方式对应的如何移除:</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text"> 问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%94%E6%A1%88"><span class="toc-number">6.</span> <span class="toc-text"> 答案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%981"><span class="toc-number">6.1.</span> <span class="toc-text"> 问题 1</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Sleeo"
+      data-src="/images/img.png">
+  <p class="name" itemprop="name">Sleeo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">71</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2019/06/01/DOM%E7%BA%A7%E5%88%AB%E4%B8%8EDOM%E4%BA%8B%E4%BB%B6/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2019/06/25/Event%E4%BA%8B%E4%BB%B6%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/06/15/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/" title="for循环全家桶">for循环全家桶</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2021/06/08/%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF%E4%B8%8B%E4%BD%BF%E7%94%A8Render%E5%87%BD%E6%95%B0%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEJSX/" title="什么场景下使用Render函数，如何配置JSX">什么场景下使用Render函数，如何配置JSX</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/08/22/%E9%80%9A%E4%BF%A1%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" title="通信相关问题">通信相关问题</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/20/call%E3%80%81apply%E3%80%81bind/" title="call、apply、bind">call、apply、bind</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/02/21/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94DNS%E9%A2%84%E8%A7%A3%E6%9E%90/" title="前端性能优化——DNS预解析">前端性能优化——DNS预解析</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/10/20/Vue%E5%9F%BA%E7%A1%80%E4%B8%80/" title="Vue基础一">Vue基础一</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/11/01/Vue%E5%9F%BA%E7%A1%80%E4%BA%8C/" title="Vue基础二">Vue基础二</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/01/12/Vue%E5%92%8CMVVM/" title="Vue和MVVM">Vue和MVVM</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/08/10/node%E6%A1%86%E6%9E%B6%E7%AE%80%E5%8D%95%E5%AF%B9%E6%AF%94/" title="node框架简单对比">node框架简单对比</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/04/02/ES6%E4%B8%AD%E7%9A%84Proxy%E3%80%81Reflect%E4%BB%A5%E5%8F%8AVue3-0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%8E%9F%E7%90%86/" title="ES6中的Proxy、Reflect以及Vue3.0中的应用原理">ES6中的Proxy、Reflect以及Vue3.0中的应用原理</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sleeo @ Sleeo</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="站点总字数">403k 字</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:06</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2019/06/11/DOM事件流/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

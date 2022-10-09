@@ -1,0 +1,627 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://sleeowen.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Blog" href="https://sleeowen.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Blog" href="https://sleeowen.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="webpack" />
+
+
+<link rel="canonical" href="https://sleeowen.github.io/2020/04/11/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">
+
+
+
+  <title>
+webpack相关问题 |
+Sleeo = Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">webpack相关问题
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2020-04-11 01:07:59">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2020-04-11T01:07:59+08:00">2020-04-11</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sleeo</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciuja1j1j20zk0m8kjl.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitf0kl1j20zk0m87fe.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipewf5l51j20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipewkhf1zj20zk0m81kx.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://sleeowen.github.io/2020/04/11/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/img.png">
+    <meta itemprop="name" content="Sleeo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <p>随着现代前端开发的复杂度和规模越来越庞大，已经不能抛开工程化来独立开发了，如 react 的 jsx 代码必须编译后才能在浏览器中使用；又如 sass 和 less 的代码浏览器也是不支持的。 而如果摒弃了这些开发框架，那么开发的效率将大幅下降。在众多前端工程化工具中，webpack 脱颖而出成为了当今最流行的前端构建工具。 然而大多数的使用者都只是单纯的会使用，而并不知道其深层的原理。希望通过以下的面试题总结可以帮助大家温故知新、查缺补漏，知其然而又知其所以然。</p>
+<h2 id="-more-问题一览"><a class="markdownIt-Anchor" href="#-more-问题一览">#</a> <span id="more"></span><br>
+问题一览</h2>
+<ol>
+<li>webpack 与 grunt、gulp 的不同？</li>
+<li>与 webpack 类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用 webpack？</li>
+<li>有哪些常见的 Loader？他们是解决什么问题的？</li>
+<li>有哪些常见的 Plugin？他们是解决什么问题的？</li>
+<li>Loader 和 Plugin 的不同？</li>
+<li>webpack 的构建流程是什么？从读取配置到输出文件这个过程尽量说全</li>
+<li>是否写过 Loader 和 Plugin？描述一下编写 loader 或 plugin 的思路？</li>
+<li>webpack 的热更新是如何做到的？说明其原理？</li>
+<li>如何利用 webpack 来优化前端性能？（提高性能和体验）</li>
+<li>如何提高 webpack 的构建速度？</li>
+<li>怎么配置单页应用？怎么配置多页应用？</li>
+<li>npm 打包时需要注意哪些？如何利用 webpack 来更好的构建？</li>
+<li>如何在 vue 项目中实现按需加载？</li>
+</ol>
+<h2 id="问题解答"><a class="markdownIt-Anchor" href="#问题解答">#</a> 问题解答</h2>
+<h3 id="1-webpack-与-grunt-gulp-的不同"><a class="markdownIt-Anchor" href="#1-webpack-与-grunt-gulp-的不同">#</a> 1. webpack 与 grunt、gulp 的不同？</h3>
+<p>三者都是前端构建工具，grunt 和 gulp 在早期比较流行，现在 webpack 相对来说比较主流，不过一些轻量化的任务还是会用 gulp 来处理，比如单独打包 CSS 文件等。</p>
+<p>grunt 和 gulp 是基于任务和流（Task、Stream）的。类似 jQuery，找到一个（或一类）文件，对其做一系列链式操作，更新流上的数据， 整条链式操作构成了一个任务，多个任务就构成了整个 web 的构建流程。</p>
+<p>webpack 是基于入口的。webpack 会自动地递归解析入口所需要加载的所有资源文件，然后用不同的 Loader 来处理不同的文件，用 Plugin 来扩展 webpack 功能。</p>
+<p>所以总结一下：</p>
+<ul>
+<li>从构建思路来说</li>
+</ul>
+<p>gulp 和 grunt 需要开发者将整个前端构建过程拆分成多个  <code>Task</code> ，并合理控制所有  <code>Task</code>  的调用关系 webpack 需要开发者找到入口，并需要清楚对于不同的资源应该使用什么 Loader 做何种解析和加工</p>
+<ul>
+<li>对于知识背景来说</li>
+</ul>
+<p>gulp 更像后端开发者的思路，需要对于整个流程了如指掌 webpack 更倾向于前端开发者的思路</p>
+<h3 id="2-与-webpack-类似的工具还有哪些谈谈你为什么最终选择或放弃使用-webpack"><a class="markdownIt-Anchor" href="#2-与-webpack-类似的工具还有哪些谈谈你为什么最终选择或放弃使用-webpack">#</a> 2. 与 webpack 类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用 webpack？</h3>
+<p>同样是基于入口的打包工具还有以下几个主流的：</p>
+<ul>
+<li>webpack</li>
+<li>rollup</li>
+<li>parcel</li>
+</ul>
+<p><strong>从应用场景上来看：</strong></p>
+<ul>
+<li>webpack 适用于大型复杂的前端站点构建</li>
+<li>rollup 适用于基础库的打包，如 vue、react</li>
+<li>parcel 适用于简单的实验性项目，他可以满足低门槛的快速看到效果</li>
+</ul>
+<p>由于 parcel 在打包过程中给出的调试信息十分有限，所以一旦打包出错难以调试，所以不建议复杂的项目使用 parcel</p>
+<h3 id="3-有哪些常见的-loader他们是解决什么问题的"><a class="markdownIt-Anchor" href="#3-有哪些常见的-loader他们是解决什么问题的">#</a> 3. 有哪些常见的 Loader？他们是解决什么问题的？</h3>
+<ul>
+<li>file-loader：把文件输出到一个文件夹中，在代码中通过相对 URL 去引用输出的文件</li>
+<li>url-loader：和 file-loader 类似，但是能在文件很小的情况下以 base64 的方式把文件内容注入到代码中去</li>
+<li>source-map-loader：加载额外的 Source Map 文件，以方便断点调试</li>
+<li>image-loader：加载并且压缩图片文件</li>
+<li>babel-loader：把 ES6 转换成 ES5</li>
+<li>css-loader：加载 CSS，支持模块化、压缩、文件导入等特性</li>
+<li>style-loader：把 CSS 代码注入到 JavaScript 中，通过 DOM 操作去加载 CSS。</li>
+<li>eslint-loader：通过 ESLint 检查 JavaScript 代码</li>
+</ul>
+<h3 id="4-有哪些常见的-plugin他们是解决什么问题的"><a class="markdownIt-Anchor" href="#4-有哪些常见的-plugin他们是解决什么问题的">#</a> 4. 有哪些常见的 Plugin？他们是解决什么问题的？</h3>
+<ul>
+<li>define-plugin：定义环境变量</li>
+<li>commons-chunk-plugin：提取公共代码</li>
+<li>uglifyjs-webpack-plugin：通过 UglifyES 压缩 ES6 代码</li>
+</ul>
+<h3 id="5loader-和-plugin-的不同"><a class="markdownIt-Anchor" href="#5loader-和-plugin-的不同">#</a> 5.Loader 和 Plugin 的不同？</h3>
+<p><strong>不同的作用</strong></p>
+<ul>
+<li><strong>Loader</strong> 直译为 “加载器”。Webpack 将一切文件视为模块，但是 webpack 原生是只能解析 js 文件，如果想将其他文件也打包的话，就会用到 loader。 所以 Loader 的作用是让 webpack 拥有了加载和解析非 JavaScript 文件的能力。</li>
+<li><strong>Plugin</strong> 直译为 “插件”。Plugin 可以扩展 webpack 的功能，让 webpack 具有更多的灵活性。 在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。</li>
+</ul>
+<p><strong>不同的用法</strong></p>
+<ul>
+<li><strong>Loader</strong> 在 module.rules 中配置，也就是说他作为模块的解析规则而存在。 类型为数组，每一项都是一个 Object，里面描述了对于什么类型的文件（test），使用什么加载 (loader) 和使用的参数（options）</li>
+<li><strong>Plugin</strong> 在 plugins 中单独配置。 类型为数组，每一项是一个 plugin 的实例，参数都通过构造函数传入。</li>
+</ul>
+<h3 id="6webpack-的构建流程是什么-从读取配置到输出文件这个过程尽量说全"><a class="markdownIt-Anchor" href="#6webpack-的构建流程是什么-从读取配置到输出文件这个过程尽量说全">#</a> 6.webpack 的构建流程是什么？从读取配置到输出文件这个过程尽量说全</h3>
+<p>Webpack 的运行流程是一个串行的过程，从启动到结束会依次执行以下流程：</p>
+<ol>
+<li>初始化参数：从配置文件和 Shell 语句中读取与合并参数，得出最终的参数；</li>
+<li>开始编译：用上一步得到的参数初始化 Compiler 对象，加载所有配置的插件，执行对象的 run 方法开始执行编译；</li>
+<li>确定入口：根据配置中的 entry 找出所有的入口文件；</li>
+<li>编译模块：从入口文件出发，调用所有配置的 Loader 对模块进行翻译，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理；</li>
+<li>完成模块编译：在经过第 4 步使用 Loader 翻译完所有模块后，得到了每个模块被翻译后的最终内容以及它们之间的依赖关系；</li>
+<li>输出资源：根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk，再把每个 Chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会；</li>
+<li>输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统。</li>
+</ol>
+<p>在以上过程中，Webpack 会在特定的时间点广播出特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑，并且插件可以调用 Webpack 提供的 API 改变 Webpack 的运行结果。</p>
+<h3 id="7-是否写过-loader-和-plugin描述一下编写-loader-或-plugin-的思路"><a class="markdownIt-Anchor" href="#7-是否写过-loader-和-plugin描述一下编写-loader-或-plugin-的思路">#</a> 7. 是否写过 Loader 和 Plugin？描述一下编写 loader 或 plugin 的思路？</h3>
+<p>Loader 像一个 “翻译官” 把读到的源文件内容转义成新的文件内容，并且每个 Loader 通过链式操作，将源文件一步步翻译成想要的样子。</p>
+<p>编写 Loader 时要遵循单一原则，每个 Loader 只做一种 “转义” 工作。 每个 Loader 的拿到的是源文件内容（source），可以通过返回值的方式将处理后的内容输出，也可以调用 this.callback () 方法，将内容返回给 webpack。 还可以通过 this.async () 生成一个 callback 函数，再用这个 callback 将处理后的内容输出出去。 此外 webpack 还为开发者准备了开发 loader 的工具函数集 ——loader-utils。</p>
+<p>相对于 Loader 而言，Plugin 的编写就灵活了许多。 webpack 在运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。</p>
+<h3 id="8webpack-的热更新是如何做到的说明其原理"><a class="markdownIt-Anchor" href="#8webpack-的热更新是如何做到的说明其原理">#</a> 8.webpack 的热更新是如何做到的？说明其原理？</h3>
+<p>webpack 的热更新又称热替换（Hot Module Replacement），缩写为 HMR。 这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。</p>
+<p>原理：</p>
+<p><img data-src="webpack1.jpeg" alt="image"></p>
+<p>首先要知道 server 端和 client 端都做了处理工作</p>
+<ol>
+<li>第一步，在 webpack 的 watch 模式下，文件系统中某一个文件发生修改，webpack 监听到文件变化，根据配置文件对模块重新编译打包，并将打包后的代码通过简单的 JavaScript 对象保存在内存中。</li>
+<li>第二步是 webpack-dev-server 和 webpack 之间的接口交互，而在这一步，主要是 dev-server 的中间件 webpack-dev-middleware 和 webpack 之间的交互，webpack-dev-middleware 调用 webpack 暴露的 API 对代码变化进行监控，并且告诉 webpack，将代码打包到内存中。</li>
+<li>第三步是 webpack-dev-server 对文件变化的一个监控，这一步不同于第一步，并不是监控代码变化重新打包。当我们在配置文件中配置了 devServer.watchContentBase 为 true 的时候，Server 会监听这些配置文件夹中静态文件的变化，变化后会通知浏览器端对应用进行 live reload。注意，这儿是浏览器刷新，和 HMR 是两个概念。</li>
+<li>第四步也是 webpack-dev-server 代码的工作，该步骤主要是通过 sockjs（webpack-dev-server 的依赖）在浏览器端和服务端之间建立一个 websocket 长连接，将 webpack 编译打包的各个阶段的状态信息告知浏览器端，同时也包括第三步中 Server 监听静态文件变化的信息。浏览器端根据这些 socket 消息进行不同的操作。当然服务端传递的最主要信息还是新模块的 hash 值，后面的步骤根据这一 hash 值来进行模块热替换。</li>
+<li>webpack-dev-server/client 端并不能够请求更新的代码，也不会执行热更模块操作，而把这些工作又交回给了 webpack，webpack/hot/dev-server 的工作就是根据 webpack-dev-server/client 传给它的信息以及 dev-server 的配置决定是刷新浏览器呢还是进行模块热更新。当然如果仅仅是刷新浏览器，也就没有后面那些步骤了。</li>
+<li>HotModuleReplacement.runtime 是客户端 HMR 的中枢，它接收到上一步传递给他的新模块的 hash 值，它通过 JsonpMainTemplate.runtime 向 server 端发送 Ajax 请求，服务端返回一个 json，该 json 包含了所有要更新的模块的 hash 值，获取到更新列表后，该模块再次通过 jsonp 请求，获取到最新的模块代码。这就是上图中 7、8、9 步骤。</li>
+<li>而第 10 步是决定 HMR 成功与否的关键步骤，在该步骤中，HotModulePlugin 将会对新旧模块进行对比，决定是否更新模块，在决定更新模块后，检查模块之间的依赖关系，更新模块的同时更新模块间的依赖引用。</li>
+<li>最后一步，当 HMR 失败后，回退到 live reload 操作，也就是进行浏览器刷新来获取最新打包代码。</li>
+</ol>
+<h3 id="9-如何利用-webpack-来优化前端性能提高性能和体验"><a class="markdownIt-Anchor" href="#9-如何利用-webpack-来优化前端性能提高性能和体验">#</a> 9. 如何利用 webpack 来优化前端性能？（提高性能和体验）</h3>
+<p>用 webpack 优化前端性能是指优化 webpack 的输出结果，让打包的最终结果在浏览器运行快速高效。</p>
+<ul>
+<li>压缩代码。删除多余的代码、注释、简化代码的写法等等方式。可以利用 webpack 的 UglifyJsPlugin 和 ParallelUglifyPlugin 来压缩 JS 文件， 利用 cssnano（css-loader?minimize）来压缩 css</li>
+<li>利用 <span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9wcm9kdWN0L2Nkbj9mcm9tPTEwNjgw">CDN</span> 加速。在构建过程中，将引用的静态资源路径修改为 CDN 上对应的路径。可以利用 webpack 对于 output 参数和各 loader 的 publicPath 参数来修改资源路径</li>
+<li>删除死代码（Tree Shaking）。将代码中永远不会走到的片段删除掉。可以通过在启动 webpack 时追加参数 --optimize-minimize 来实现</li>
+<li>提取公共代码。</li>
+</ul>
+<h3 id="10-如何提高-webpack-的构建速度"><a class="markdownIt-Anchor" href="#10-如何提高-webpack-的构建速度">#</a> 10. 如何提高 webpack 的构建速度？</h3>
+<ol>
+<li>多入口情况下，使用 CommonsChunkPlugin 来提取公共代码</li>
+<li>通过 externals 配置来提取常用库</li>
+<li>利用 DllPlugin 和 DllReferencePlugin 预编译资源模块 通过 DllPlugin 来对那些我们引用但是绝对不会修改的 npm 包来进行预编译，再通过 DllReferencePlugin 将预编译的模块加载进来。</li>
+<li>使用 Happypack 实现多线程加速编译</li>
+<li>使用 webpack-uglify-parallel 来提升 uglifyPlugin 的压缩速度。 原理上 webpack-uglify-parallel 采用了多核并行压缩来提升压缩速度</li>
+<li>使用 Tree-shaking 和 Scope Hoisting 来剔除多余代码</li>
+</ol>
+<h3 id="11-怎么配置单页应用怎么配置多页应用"><a class="markdownIt-Anchor" href="#11-怎么配置单页应用怎么配置多页应用">#</a> 11. 怎么配置单页应用？怎么配置多页应用？</h3>
+<p>单页应用可以理解为 webpack 的标准模式，直接在 entry 中指定单页应用的入口即可，这里不再赘述</p>
+<p>多页应用的话，可以使用 webpack 的 AutoWebPlugin 来完成简单自动化的构建，但是前提是项目的目录结构必须遵守他预设的规范。 多页应用中要注意的是：</p>
+<ul>
+<li>每个页面都有公共的代码，可以将这些代码抽离出来，避免重复的加载。比如，每个页面都引用了同一套 css 样式表</li>
+<li>随着业务的不断扩展，页面可能会不断的追加，所以一定要让入口的配置足够灵活，避免每次添加新页面还需要修改构建配置</li>
+</ul>
+<h3 id="12npm-打包时需要注意哪些如何利用-webpack-来更好的构建"><a class="markdownIt-Anchor" href="#12npm-打包时需要注意哪些如何利用-webpack-来更好的构建">#</a> 12.npm 打包时需要注意哪些？如何利用 webpack 来更好的构建？</h3>
+<p>Npm 是目前最大的 JavaScript 模块仓库，里面有来自全世界开发者上传的可复用模块。你可能只是 JS 模块的使用者，但是有些情况你也会去选择上传自己开发的模块。 关于 NPM 模块上传的方法可以去官网上进行学习，这里只讲解如何利用 webpack 来构建。</p>
+<p>NPM 模块需要注意以下问题：</p>
+<ol>
+<li>要支持 CommonJS 模块化规范，所以要求打包后的最后结果也遵守该规则。</li>
+<li>Npm 模块使用者的环境是不确定的，很有可能并不支持 ES6，所以打包的最后结果应该是采用 ES5 编写的。并且如果 ES5 是经过转换的，请最好连同 SourceMap 一同上传。</li>
+<li>Npm 包大小应该是尽量小（有些仓库会限制包大小）</li>
+<li>发布的模块不能将依赖的模块也一同打包，应该让用户选择性的去自行安装。这样可以避免模块应用者再次打包时出现底层模块被重复打包的情况。</li>
+<li>UI 组件类的模块应该将依赖的其它资源文件，例如. css 文件也需要包含在发布的模块里。</li>
+</ol>
+<p>基于以上需要注意的问题，我们可以对于 webpack 配置做以下扩展和优化：</p>
+<ol>
+<li>CommonJS 模块化规范的解决方案： 设置 output.libraryTarget='commonjs2’使输出的代码符合 CommonJS2 模块化规范，以供给其它模块导入使用</li>
+<li>输出 ES5 代码的解决方案：使用 babel-loader 把 ES6 代码转换成 ES5 的代码。再通过开启 devtool: 'source-map’输出 SourceMap 以发布调试。</li>
+<li>Npm 包大小尽量小的解决方案：Babel 在把 ES6 代码转换成 ES5 代码时会注入一些辅助函数，最终导致每个输出的文件中都包含这段辅助函数的代码，造成了代码的冗余。解决方法是修改. babelrc 文件，为其加入 transform-runtime 插件</li>
+<li>不能将依赖模块打包到 NPM 模块中的解决方案：使用 externals 配置项来告诉 webpack 哪些模块不需要打包。</li>
+<li>对于依赖的资源文件打包的解决方案：通过 css-loader 和 extract-text-webpack-plugin 来实现，配置如下：</li>
+</ol>
+<p><img data-src="webpack2.jpeg" alt="image"></p>
+<h3 id="13-如何在-vue-项目中实现按需加载"><a class="markdownIt-Anchor" href="#13-如何在-vue-项目中实现按需加载">#</a> 13. 如何在 vue 项目中实现按需加载？</h3>
+<p>Vue UI 组件库的按需加载 为了快速开发前端项目，经常会引入现成的 UI 组件库如 ElementUI、iView 等，但是他们的体积和他们所提供的功能一样，是很庞大的。 而通常情况下，我们仅仅需要少量的几个组件就足够了，但是我们却将庞大的组件库打包到我们的源码中，造成了不必要的开销。</p>
+<p>不过很多组件库已经提供了现成的解决方案，如 Element 出品的 babel-plugin-component 和 AntDesign 出品的 babel-plugin-import 安装以上插件后，在. babelrc 配置中或 babel-loader 的参数中进行设置，即可实现组件按需加载了。</p>
+<p><img data-src="webpack3.png" alt="image"></p>
+<p>单页应用的按需加载 现在很多前端项目都是通过单页应用的方式开发的，但是随着业务的不断扩展，会面临一个严峻的问题 —— 首次加载的代码量会越来越多，影响用户的体验。</p>
+<p>通过 import (<em>) 语句来控制加载时机，webpack 内置了对于 import (</em>) 的解析，会将 import (<em>) 中引入的模块作为一个新的入口在生成一个 chunk。 当代码执行到 import (</em>) 语句时，会去加载 Chunk 对应生成的文件。import () 会返回一个 Promise 对象，所以为了让浏览器支持，需要事先注入 Promise polyfill</p>
+<p><strong>参考文章</strong></p>
+<ul>
+<li>关于 webpack 的面试题有哪些？</li>
+<li>前端面试之 webpack 面试常见问题</li>
+<li>《深入浅出 webpack》电子版</li>
+<li>webpack 构建性能优化策略小结</li>
+</ul>
+<p>原文链接：<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZ2FvaHQvcC8xMTMxMDM2NS5odG1s">https://www.cnblogs.com/gaoht/p/11310365.html</span></p>
+
+      <div class="tags">
+          <a href="/tags/webpack/" rel="tag"><i class="ic i-tag"></i> webpack</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2022-06-22 15:37:25" itemprop="dateModified" datetime="2022-06-22T15:37:25+08:00">2022-06-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>Sleeo <i class="ic i-at"><em>@</em></i>Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://sleeowen.github.io/2020/04/11/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" title="webpack相关问题">https://sleeowen.github.io/2020/04/11/webpack相关问题/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2020/04/02/ES6%E4%B8%AD%E7%9A%84Proxy%E3%80%81Reflect%E4%BB%A5%E5%8F%8AVue3-0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%8E%9F%E7%90%86/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicis081o9j20zk0m8dmr.jpg" title="ES6中的Proxy、Reflect以及Vue3.0中的应用原理">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>ES6中的Proxy、Reflect以及Vue3.0中的应用原理</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2020/04/17/webpack%E9%85%8D%E7%BD%AE/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclgrvbd6j20zk0m8qv5.jpg" title="webpack配置">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>webpack配置</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#-more-%E9%97%AE%E9%A2%98%E4%B8%80%E8%A7%88"><span class="toc-number">1.</span> <span class="toc-text"> 
+问题一览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94"><span class="toc-number">2.</span> <span class="toc-text"> 问题解答</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-webpack-%E4%B8%8E-grunt-gulp-%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="toc-number">2.1.</span> <span class="toc-text"> 1. webpack 与 grunt、gulp 的不同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%8E-webpack-%E7%B1%BB%E4%BC%BC%E7%9A%84%E5%B7%A5%E5%85%B7%E8%BF%98%E6%9C%89%E5%93%AA%E4%BA%9B%E8%B0%88%E8%B0%88%E4%BD%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%80%E7%BB%88%E9%80%89%E6%8B%A9%E6%88%96%E6%94%BE%E5%BC%83%E4%BD%BF%E7%94%A8-webpack"><span class="toc-number">2.2.</span> <span class="toc-text"> 2. 与 webpack 类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用 webpack？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84-loader%E4%BB%96%E4%BB%AC%E6%98%AF%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E7%9A%84"><span class="toc-number">2.3.</span> <span class="toc-text"> 3. 有哪些常见的 Loader？他们是解决什么问题的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84-plugin%E4%BB%96%E4%BB%AC%E6%98%AF%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E7%9A%84"><span class="toc-number">2.4.</span> <span class="toc-text"> 4. 有哪些常见的 Plugin？他们是解决什么问题的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5loader-%E5%92%8C-plugin-%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="toc-number">2.5.</span> <span class="toc-text"> 5.Loader 和 Plugin 的不同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6webpack-%E7%9A%84%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B%E6%98%AF%E4%BB%80%E4%B9%88-%E4%BB%8E%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E5%88%B0%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E8%BF%99%E4%B8%AA%E8%BF%87%E7%A8%8B%E5%B0%BD%E9%87%8F%E8%AF%B4%E5%85%A8"><span class="toc-number">2.6.</span> <span class="toc-text"> 6.webpack 的构建流程是什么？从读取配置到输出文件这个过程尽量说全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E6%98%AF%E5%90%A6%E5%86%99%E8%BF%87-loader-%E5%92%8C-plugin%E6%8F%8F%E8%BF%B0%E4%B8%80%E4%B8%8B%E7%BC%96%E5%86%99-loader-%E6%88%96-plugin-%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="toc-number">2.7.</span> <span class="toc-text"> 7. 是否写过 Loader 和 Plugin？描述一下编写 loader 或 plugin 的思路？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8webpack-%E7%9A%84%E7%83%AD%E6%9B%B4%E6%96%B0%E6%98%AF%E5%A6%82%E4%BD%95%E5%81%9A%E5%88%B0%E7%9A%84%E8%AF%B4%E6%98%8E%E5%85%B6%E5%8E%9F%E7%90%86"><span class="toc-number">2.8.</span> <span class="toc-text"> 8.webpack 的热更新是如何做到的？说明其原理？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8-webpack-%E6%9D%A5%E4%BC%98%E5%8C%96%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E6%8F%90%E9%AB%98%E6%80%A7%E8%83%BD%E5%92%8C%E4%BD%93%E9%AA%8C"><span class="toc-number">2.9.</span> <span class="toc-text"> 9. 如何利用 webpack 来优化前端性能？（提高性能和体验）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98-webpack-%E7%9A%84%E6%9E%84%E5%BB%BA%E9%80%9F%E5%BA%A6"><span class="toc-number">2.10.</span> <span class="toc-text"> 10. 如何提高 webpack 的构建速度？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E6%80%8E%E4%B9%88%E9%85%8D%E7%BD%AE%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E6%80%8E%E4%B9%88%E9%85%8D%E7%BD%AE%E5%A4%9A%E9%A1%B5%E5%BA%94%E7%94%A8"><span class="toc-number">2.11.</span> <span class="toc-text"> 11. 怎么配置单页应用？怎么配置多页应用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12npm-%E6%89%93%E5%8C%85%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E5%93%AA%E4%BA%9B%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8-webpack-%E6%9D%A5%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%9E%84%E5%BB%BA"><span class="toc-number">2.12.</span> <span class="toc-text"> 12.npm 打包时需要注意哪些？如何利用 webpack 来更好的构建？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E5%A6%82%E4%BD%95%E5%9C%A8-vue-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD"><span class="toc-number">2.13.</span> <span class="toc-text"> 13. 如何在 vue 项目中实现按需加载？</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Sleeo"
+      data-src="/images/img.png">
+  <p class="name" itemprop="name">Sleeo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">71</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2020/04/02/ES6%E4%B8%AD%E7%9A%84Proxy%E3%80%81Reflect%E4%BB%A5%E5%8F%8AVue3-0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%8E%9F%E7%90%86/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2020/04/17/webpack%E9%85%8D%E7%BD%AE/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/02/12/Vue%E8%99%9A%E6%8B%9FDOM/" title="Vue虚拟DOM">Vue虚拟DOM</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/02/28/Vue%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91/" title="Vue模板编译">Vue模板编译</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/07/22/vue%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7%EF%BC%88%E4%B8%80%EF%BC%89/" title="vue开发技巧（一）">vue开发技巧（一）</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/01/01/VueRouter/" title="VueRouter">VueRouter</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/10/20/Vue%E5%9F%BA%E7%A1%80%E4%B8%80/" title="Vue基础一">Vue基础一</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2021/06/23/css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96-0/" title="css的GPU动画优化">css的GPU动画优化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/02/21/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94DNS%E9%A2%84%E8%A7%A3%E6%9E%90/" title="前端性能优化——DNS预解析">前端性能优化——DNS预解析</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/12/06/Vuex/" title="Vuex">Vuex</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/10/11/%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" title="页面性能优化">页面性能优化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/04/07/%E5%87%BD%E6%95%B0%E7%9A%84%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81/" title="函数的防抖和节流">函数的防抖和节流</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sleeo @ Sleeo</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="站点总字数">403k 字</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:06</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2020/04/11/webpack相关问题/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

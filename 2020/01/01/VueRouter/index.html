@@ -1,0 +1,566 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://sleeowen.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Blog" href="https://sleeowen.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Blog" href="https://sleeowen.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Vue" />
+
+
+<link rel="canonical" href="https://sleeowen.github.io/2020/01/01/VueRouter/">
+
+
+
+  <title>
+VueRouter |
+Sleeo = Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">VueRouter
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2020-01-01 21:30:12">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2020-01-01T21:30:12+08:00">2020-01-01</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sleeo</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciszlczyj20zk0m816d.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclize41wj20zk0m87gk.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclfdu6exj20zk0m87hw.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giph4wqtg4j20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipexw3o58j20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciuja1j1j20zk0m8kjl.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://sleeowen.github.io/2020/01/01/VueRouter/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/img.png">
+    <meta itemprop="name" content="Sleeo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="路由模式"><a class="markdownIt-Anchor" href="#路由模式">#</a> 路由模式</h2>
+<ul>
+<li>hash</li>
+<li>history</li>
+</ul>
+<span id="more"></span>
+<h3 id="hash"><a class="markdownIt-Anchor" href="#hash">#</a> hash</h3>
+<p>带＃</p>
+<h3 id="history"><a class="markdownIt-Anchor" href="#history">#</a> history</h3>
+<p>需要 server 支持</p>
+<h2 id="动态路由"><a class="markdownIt-Anchor" href="#动态路由">#</a> 动态路由</h2>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">User</span> = &#123;</span><br><span class="line">    <span class="attr">template</span>:<span class="string">&#x27;&lt;div&gt;&#123;&#123;$route.params.id&#125;&#125;&lt;/div&gt;&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">    <span class="attr">routes</span>:[</span><br><span class="line">        <span class="comment">// 动态路径参数 以冒号开头。命中/user/10等格式路由</span></span><br><span class="line">        &#123;<span class="attr">path</span>:<span class="string">&#x27;/user/:id&#x27;</span>,<span class="attr">component</span>:<span class="title class_">User</span>&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="懒加载"><a class="markdownIt-Anchor" href="#懒加载">#</a> 懒加载</h2>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">VueRouter</span> <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">VueRouter</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line"> <span class="attr">routes</span>: [</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line"> <span class="attr">name</span>: <span class="string">&#x27;Navigator&#x27;</span>,</span><br><span class="line"> <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="title function_">import</span>(<span class="comment">/* webpackChunkName: &quot;navigator&quot; */</span> <span class="string">&#x27;./../components/Navigator&#x27;</span>)</span><br><span class="line"> &#125;,</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="attr">path</span>: <span class="string">&#x27;/tucao&#x27;</span>,</span><br><span class="line"> <span class="attr">name</span>: <span class="string">&#x27;Tucao&#x27;</span>,</span><br><span class="line"> <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="title function_">import</span>(<span class="comment">/* webpackChunkName: &quot;tucao&quot; */</span> <span class="string">&#x27;./../components/Tucao&#x27;</span>)</span><br><span class="line"> &#125;</span><br><span class="line"> ]</span><br></pre></td></tr></table></figure>
+<h2 id="路由守卫"><a class="markdownIt-Anchor" href="#路由守卫">#</a> 路由守卫</h2>
+<p>路由钩子函数有三种：</p>
+<ol>
+<li>
+<p>全局钩子： beforeEach、 afterEach</p>
+</li>
+<li>
+<p>单个路由里面的钩子： beforeEnter、 beforeLeave</p>
+</li>
+<li>
+<p>组件路由：beforeRouteEnter、 beforeRouteUpdate、 beforeRouteLeave</p>
+</li>
+</ol>
+<h3 id="全局守卫"><a class="markdownIt-Anchor" href="#全局守卫">#</a> 全局守卫</h3>
+<p>无论访问哪一个路径，都会触发全局的钩子函数，位置是调用 router 的方法</p>
+<p><strong>router.beforeEach () 进入之前触发</strong></p>
+<p><strong>router.afterEach () 进入之后触发</strong></p>
+<h4 id="beforeeach全局前置守卫"><a class="markdownIt-Anchor" href="#beforeeach全局前置守卫">#</a> beforeEach（全局前置守卫）</h4>
+<p>使用 router.beforeEach 注册一个全局前置守卫</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">    。。。</span><br><span class="line">&#125;)</span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function">(<span class="params">to,<span class="keyword">from</span>,next</span>)=&gt;</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>每个守卫方法接收三个参数：</p>
+<ul>
+<li>to: Route: 即将要进入的目标路由对象（to 是一个对象，是将要进入的路由对象，可以用 to.path 调用路由对象中的属性）</li>
+<li>from: Route: 当前导航正要离开的路由</li>
+<li>next: Function: 这是一个必须需要调用的方法，执行效果依赖 next 方法的调用参数。</li>
+</ul>
+<h5 id="next参数"><a class="markdownIt-Anchor" href="#next参数">#</a> next 参数</h5>
+<ul>
+<li>next (): 进行管道中的下一个钩子。如果全部钩子执行完了，则导航的状态就是 confirmed (确认的)。</li>
+<li>next (false): 中断当前的导航。如果浏览器的 URL 改变了 (可能是用户手动或者浏览器后退按 钮)，那么 URL 地址会重置到 from 路由对应的地址。</li>
+<li>next (’/’) 或者 next ({ path: ‘/’ }): 跳转到一个不同的地址。当前的导航被中断，然后进行一个新的导航。你可以向 next 传递任意位置对象，且允许设置诸如 replace: true、name: ‘home’ 之类的选项以及任何用在 router-link 的 to prop 或 router.push 中的选项。</li>
+<li>next (error): (2.4.0+) 如果传入 next 的参数是一个 Error 实例，则导航会被终止且该错误会被传递给 router.onError () 注册过的回调。</li>
+</ul>
+<blockquote>
+<p>确保要调用 next 方法，否则钩子就不会被 resolved。</p>
+</blockquote>
+<h4 id="aftereach全局后置钩子"><a class="markdownIt-Anchor" href="#aftereach全局后置钩子">#</a> afterEach（全局后置钩子）</h4>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">    。。。</span><br><span class="line">&#125;)</span><br><span class="line">router.<span class="title function_">afterEach</span>(<span class="function">(<span class="params">to,<span class="keyword">from</span></span>)=&gt;</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>和守卫不同的是，这些钩子不会接受 next 函数也不会改变导航本身</p>
+<h4 id="路由独享的守卫单个路由独享的"><a class="markdownIt-Anchor" href="#路由独享的守卫单个路由独享的">#</a> 路由独享的守卫 (单个路由独享的)</h4>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line"> <span class="attr">routes</span>: [</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line"> <span class="attr">name</span>: <span class="string">&#x27;Navigator&#x27;</span>,</span><br><span class="line"> router.<span class="title function_">beforeEnter</span>(<span class="function">(<span class="params">to,<span class="keyword">from</span>,next</span>)=&gt;</span>&#123;</span><br><span class="line">    ...</span><br><span class="line"> &#125;),</span><br><span class="line"> <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="title function_">import</span>(<span class="comment">/* webpackChunkName: &quot;navigator&quot; */</span> <span class="string">&#x27;./../components/Navigator&#x27;</span>)</span><br><span class="line"> &#125;</span><br><span class="line"> ]</span><br></pre></td></tr></table></figure>
+<h4 id="组件级路由钩子"><a class="markdownIt-Anchor" href="#组件级路由钩子">#</a> 组件级路由钩子</h4>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">data,</span><br><span class="line"></span><br><span class="line">methods</span><br><span class="line"></span><br><span class="line"><span class="title function_">beforeRouteEnter</span>(<span class="params"></span>)&#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// this 不指向实例 组件还没创建</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_">next</span>(<span class="function">(<span class="params">vm</span>) =&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// vm就是实例</span></span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">beforeRouteUpdate</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">beforeRouteLeave</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img data-src="luyou1.png" alt="image"><br>
+beforeRouteEnter 守卫 不能 访问 this，因为守卫在导航确认前被调用，因此即将登场的新组件还没被创建。不过，你可以通过传一个回调给 next 来访问组件实例。在导航被确认的时候执行回调，并且把组件实例作为回调方法的参数。</p>
+<p><img data-src="luyou2.png" alt="image"></p>
+<p>注意～： beforeRouteEnter 是支持给 next 传递回调的唯一守卫。对于 beforeRouteUpdate 和 beforeRouteLeave 来说，this 已经可用了，所以不支持传递回调，因为没有必要了。</p>
+<p>这个离开守卫 beforeRouteLeave () 通常用来禁止用户在还未保存修改前突然离开。该导航可以通过 next (false) 来取消。</p>
+<p><img data-src="luyou3.png" alt="image"></p>
+<h4 id="完整的导航解析流程"><a class="markdownIt-Anchor" href="#完整的导航解析流程">#</a> 完整的导航解析流程：</h4>
+<ol>
+<li>
+<p>导航被触发。</p>
+</li>
+<li>
+<p>在失活的组件里调用离开守卫。</p>
+</li>
+<li>
+<p>调用全局的 beforeEach 守卫。</p>
+</li>
+<li>
+<p>在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。</p>
+</li>
+<li>
+<p>在路由配置里调用 beforeEnter。</p>
+</li>
+<li>
+<p>解析异步路由组件。</p>
+</li>
+<li>
+<p>在被激活的组件里调用 beforeRouteEnter。</p>
+</li>
+<li>
+<p>调用全局的 beforeResolve 守卫 (2.5+)。</p>
+</li>
+<li>
+<p>导航被确认。</p>
+</li>
+<li>
+<p>调用全局的 afterEach 钩子。</p>
+</li>
+<li>
+<p>触发 DOM 更新。</p>
+</li>
+<li>
+<p>用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。</p>
+</li>
+</ol>
+
+      <div class="tags">
+          <a href="/tags/Vue/" rel="tag"><i class="ic i-tag"></i> Vue</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2022-06-22 15:37:25" itemprop="dateModified" datetime="2022-06-22T15:37:25+08:00">2022-06-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>Sleeo <i class="ic i-at"><em>@</em></i>Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://sleeowen.github.io/2020/01/01/VueRouter/" title="VueRouter">https://sleeowen.github.io/2020/01/01/VueRouter/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2019/12/06/Vuex/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicitf0kl1j20zk0m87fe.jpg" title="Vuex">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Vuex</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2020/01/12/Vue%E5%92%8CMVVM/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeudstjqj20zk0m8k3r.jpg" title="Vue和MVVM">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Vue和MVVM</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text"> 路由模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hash"><span class="toc-number">1.1.</span> <span class="toc-text"> hash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#history"><span class="toc-number">1.2.</span> <span class="toc-text"> history</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1"><span class="toc-number">2.</span> <span class="toc-text"> 动态路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">3.</span> <span class="toc-text"> 懒加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB"><span class="toc-number">4.</span> <span class="toc-text"> 路由守卫</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%AE%88%E5%8D%AB"><span class="toc-number">4.1.</span> <span class="toc-text"> 全局守卫</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#beforeeach%E5%85%A8%E5%B1%80%E5%89%8D%E7%BD%AE%E5%AE%88%E5%8D%AB"><span class="toc-number">4.1.1.</span> <span class="toc-text"> beforeEach（全局前置守卫）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#next%E5%8F%82%E6%95%B0"><span class="toc-number">4.1.1.1.</span> <span class="toc-text"> next 参数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#aftereach%E5%85%A8%E5%B1%80%E5%90%8E%E7%BD%AE%E9%92%A9%E5%AD%90"><span class="toc-number">4.1.2.</span> <span class="toc-text"> afterEach（全局后置钩子）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E7%8B%AC%E4%BA%AB%E7%9A%84%E5%AE%88%E5%8D%AB%E5%8D%95%E4%B8%AA%E8%B7%AF%E7%94%B1%E7%8B%AC%E4%BA%AB%E7%9A%84"><span class="toc-number">4.1.3.</span> <span class="toc-text"> 路由独享的守卫 (单个路由独享的)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E7%BA%A7%E8%B7%AF%E7%94%B1%E9%92%A9%E5%AD%90"><span class="toc-number">4.1.4.</span> <span class="toc-text"> 组件级路由钩子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E5%AF%BC%E8%88%AA%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="toc-number">4.1.5.</span> <span class="toc-text"> 完整的导航解析流程：</span></a></li></ol></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Sleeo"
+      data-src="/images/img.png">
+  <p class="name" itemprop="name">Sleeo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">71</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2019/12/06/Vuex/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2020/01/12/Vue%E5%92%8CMVVM/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/10/20/Vue%E5%9F%BA%E7%A1%80%E4%B8%80/" title="Vue基础一">Vue基础一</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/07/20/vue%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95-%E4%BA%8B%E4%BB%B6/" title="vue兄弟组件间传数据的方法-事件">vue兄弟组件间传数据的方法-事件</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/08/10/node%E6%A1%86%E6%9E%B6%E7%AE%80%E5%8D%95%E5%AF%B9%E6%AF%94/" title="node框架简单对比">node框架简单对比</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/03/11/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/" title="Vue组件渲染过程">Vue组件渲染过程</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/10/11/%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" title="页面性能优化">页面性能优化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/" title="原型链">原型链</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/02/28/Vue%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91/" title="Vue模板编译">Vue模板编译</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/23/http%E6%96%B9%E6%B3%95%E8%A7%A3%E6%9E%90/" title="http方法解析">http方法解析</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2021/02/12/%E5%9C%A8%E5%A4%A7%E5%8E%82%E6%98%AF%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%BB%84%E7%BB%87npmscript%E7%9A%84/" title="在大厂是如何高效组织npmscript的">在大厂是如何高效组织npmscript的</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/09/18/flex%E5%B8%83%E5%B1%80/" title="flex布局">flex布局</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sleeo @ Sleeo</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="站点总字数">403k 字</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:06</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2020/01/01/VueRouter/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

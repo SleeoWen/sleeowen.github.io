@@ -1,0 +1,729 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://sleeowen.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Blog" href="https://sleeowen.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Blog" href="https://sleeowen.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="前端性能优化" />
+
+
+<link rel="canonical" href="https://sleeowen.github.io/2021/07/09/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/">
+
+
+
+  <title>
+性能优化总结 |
+Sleeo = Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">性能优化总结
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2021-07-09 15:39:56">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2021-07-09T15:39:56+08:00">2021-07-09</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sleeo</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipey0a334j20zk0m8qpt.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipew28b65j20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipevuctzzj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeybxm1pj20zk0m8niv.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipex2cdtbj20zk0m8x6p.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://sleeowen.github.io/2021/07/09/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/img.png">
+    <meta itemprop="name" content="Sleeo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <blockquote>
+<p>所有的性能优化都围绕着两大层面两小层面实现，核心层面是网络层面和渲染层面，辅助层面是时间层面和体积层面，而辅助层面则充满在核心层面里，笔者通过本文整理出关于前端性能优化的九大策略和六大指标</p>
+</blockquote>
+<p>「本文已参与好文召集令活动，点击查看：<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTc4Njg1NTM5OTg1NjUzNzY3">后端、大前端双赛道投稿，2 万元奖池等你挑战！</span>」</p>
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言">#</a> 前言</h3>
+<p>可能有些 <code>性能优化建议</code> 已被大家熟知，不过也不影响这次分享，当然笔者也将一些平时可能不会注意的细节罗列出来。</p>
+<p>平时大家认为 <code>性能优化</code> 是一种无序的应用场景，但在笔者看来它是一种有序的应用场景且很多 <code>性能优化</code> 都是互相铺垫甚至一带一路。从过程趋势来看， <code>性能优化</code> 可分为<strong>网络层面</strong>和<strong>渲染层面</strong>；从结果趋势来看， <code>性能优化</code> 可分为<strong>时间层面</strong>和<strong>体积层面</strong>。简单来说就是 <code>要在访问网站时使其快准狠地立马呈现在用户眼前</code> 。</p>
+<p><img data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bbd56e49c40441f699ed659ca5a26917~tplv-k3u1fbpfcp-watermark.image" alt></p>
+<p>所有的 <code>性能优化</code> 都围绕着 <code>两大层面两小层面</code> 实现，核心层面是 <code>网络层面</code> 和 <code>渲染层面</code> ，辅助层面是 <code>时间层面</code> 和 <code>体积层面</code> ，而辅助层面则充满在核心层面里。于是笔者通过本文整理出关于前端 <code>性能优化</code> 的<strong>九大策略</strong>和<strong>六大指标</strong>。当然这些 <code>策略</code> 和 <code>指标</code> 都是笔者自己定义，方便通过某种方式为性能优化做一些规范。</p>
+<p>因此在工作或面试时结合这些特征就能完美地诠释 <code>性能优化</code> 所延伸出来的知识了。<strong>前方高能，不看也得收藏，走起！！！</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">所有代码示例为了凸显主题，只展示核心配置代码，其他配置并未补上，请自行脑补</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="九大策略"><a class="markdownIt-Anchor" href="#九大策略">#</a> 九大策略</h3>
+<h4 id="网络层面"><a class="markdownIt-Anchor" href="#网络层面">#</a> 网络层面</h4>
+<p><strong>网络层面</strong>的性能优化，无疑是如何让资源 <code>体积更小加载更快</code> ，因此笔者从以下四方面做出建议。</p>
+<ul>
+<li><strong>构建策略</strong>：基于构建工具 ( <code>Webpack/Rollup/Parcel/Esbuild/Vite/Gulp</code> )</li>
+<li><strong>图像策略</strong>：基于图像类型 ( <code>JPG/PNG/SVG/WebP/Base64</code> )</li>
+<li><strong>分发策略</strong>：基于内容分发网络 ( <code>CDN</code> )</li>
+<li><strong>缓存策略</strong>：基于浏览器缓存 ( <code>强缓存/协商缓存</code> )</li>
+</ul>
+<p>上述四方面都是一步接着一步完成，充满在整个项目流程里。<strong>构建策略</strong>和<strong>图像策略</strong>处于开发阶段，<strong>分发策略</strong>和<strong>缓存策略</strong>处于生产阶段，因此在每个阶段都可检查是否按顺序接入上述策略。通过这种方式就能最大限度增加 <code>性能优化</code> 应用场景。</p>
+<h5 id="构建策略"><a class="markdownIt-Anchor" href="#构建策略">#</a> 构建策略</h5>
+<p>该策略主要围绕 <code>webpack</code>  做相关处理，同时也是接入最普遍的 <code>性能优化策略</code> 。其他构建工具的处理也是大同小异，可能只是配置上不一致。说到 <code>webpack</code>  的 <code>性能优化</code> ，无疑是从 <code>时间层面</code> 和 <code>体积层面</code> 入手。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">笔者发现目前webpack v5整体兼容性还不是特别好，某些功能配合第三方工具可能出现问题，故暂未升级到v5，继续使用v4作为生产工具，故以下配置均基于v4，但总体与v5的配置出入不大</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>笔者对两层面分别做出 6 个 <code>性能优化建议</code> 总共 12 个 <code>性能优化建议</code> ，为了方便记忆均使用四字词语概括，方便大家消化。⏱表示 <code>减少打包时间</code> ，📦表示 <code>减少打包体积</code> 。</p>
+<ul>
+<li><strong>减少打包时间</strong>： <code>缩减范围</code> 、 <code>缓存副本</code> 、 <code>定向搜索</code> 、 <code>提前构建</code> 、 <code>并行构建</code> 、 <code>可视结构</code></li>
+<li><strong>减少打包体积</strong>： <code>分割代码</code> 、 <code>摇树优化</code> 、 <code>动态垫片</code> 、 <code>按需加载</code> 、 <code>作用提升</code> 、 <code>压缩资源</code></li>
+</ul>
+<blockquote>
+<p>⏱缩减范围</p>
+</blockquote>
+<p><strong>配置 include/exclude 缩小 Loader 对文件的搜索范围</strong>，好处是 <code>避免不必要的转译</code> 。 <code>node_modules目录</code> 的体积这么大，那得增加多少时间成本去检索所有文件啊？</p>
+<p><code>include/exclude</code>  通常在各大 <code>Loader</code>  里配置， <code>src目录</code> 通常作为源码目录，可做如下处理。当然 <code>include/exclude</code>  可根据实际情况修改。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">module</span>: &#123;</span><br><span class="line">        <span class="attr">rules</span>: [&#123;</span><br><span class="line">            <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>,</span><br><span class="line">            <span class="attr">include</span>: <span class="regexp">/src/</span>,</span><br><span class="line">            <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span><br><span class="line">            <span class="attr">use</span>: <span class="string">&quot;babel-loader&quot;</span></span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>⏱缓存副本</p>
+</blockquote>
+<p><strong>配置 cache 缓存 Loader 对文件的编译副本</strong>，好处是 <code>再次编译时只编译修改过的文件</code> 。未修改过的文件干嘛要随着修改过的文件重新编译呢？</p>
+<p>大部分 <code>Loader/Plugin</code>  都会提供一个可使用编译缓存的选项，通常包含 <code>cache</code>  字眼。以 <code>babel-loader</code>  和 <code>eslint-webpack-plugin</code>  为例。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">EslintPlugin</span> <span class="keyword">from</span> <span class="string">&quot;eslint-webpack-plugin&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">module</span>: &#123;</span><br><span class="line">        <span class="attr">rules</span>: [&#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span><br><span class="line">            <span class="attr">use</span>: [&#123;</span><br><span class="line">                <span class="attr">loader</span>: <span class="string">&quot;babel-loader&quot;</span>,</span><br><span class="line">                <span class="attr">options</span>: &#123; <span class="attr">cacheDirectory</span>: <span class="literal">true</span> &#125;</span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">EslintPlugin</span>(&#123; <span class="attr">cache</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>⏱定向搜索</p>
+</blockquote>
+<p><strong>配置 resolve 提高文件的搜索速度</strong>，好处是 <code>定向指定必须文件路径</code> 。若某些第三方库以常规形式引入可能报错或希望程序自动索引特定类型文件都可通过该方式解决。</p>
+<p><code>alias</code>  映射模块路径， <code>extensions</code>  表明文件后缀， <code>noParse</code>  过滤无依赖文件。通常配置 <code>alias</code>  和 <code>extensions</code>  就足够。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">resolve</span>: &#123;</span><br><span class="line">        <span class="attr">alias</span>: &#123;</span><br><span class="line">            <span class="string">&quot;#&quot;</span>: <span class="title class_">AbsPath</span>(<span class="string">&quot;&quot;</span>), <span class="comment">// 根目录快捷方式</span></span><br><span class="line">            <span class="string">&quot;@&quot;</span>: <span class="title class_">AbsPath</span>(<span class="string">&quot;src&quot;</span>), <span class="comment">// src目录快捷方式</span></span><br><span class="line">            <span class="attr">swiper</span>: <span class="string">&quot;swiper/js/swiper.min.js&quot;</span></span><br><span class="line">        &#125;, <span class="comment">// 模块导入快捷方式</span></span><br><span class="line">        <span class="attr">extensions</span>: [<span class="string">&quot;.js&quot;</span>, <span class="string">&quot;.ts&quot;</span>, <span class="string">&quot;.jsx&quot;</span>, <span class="string">&quot;.tsx&quot;</span>, <span class="string">&quot;.json&quot;</span>, <span class="string">&quot;.vue&quot;</span>] <span class="comment">// import路径时文件可省略后缀名</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>⏱提前构建</p>
+</blockquote>
+<p><strong>配置 DllPlugin 将第三方依赖提前打包</strong>，好处是 <code>将DLL与业务代码完全分离且每次只构建业务代码</code> 。这是一个古老配置，在 <code>webpack v2</code>  时已存在，不过现在 <code>webpack v4+</code>  已不推荐使用该配置，因为其版本迭代带来的性能提升足以忽略 <code>DllPlugin</code>  所带来的效益。</p>
+<p><strong>DLL</strong> 意为 <code>动态链接库</code> ，指一个包含可由多个程序同时使用的代码库。在前端领域里可认为是另类缓存的存在，它把公共代码打包为 DLL 文件并存到硬盘里，再次打包时动态链接 <code>DLL文件</code> 就无需再次打包那些公共代码，从而提升构建速度，减少打包时间。</p>
+<p>配置 <code>DLL</code>  总体来说相比其他配置复杂，配置流程可大致分为三步。</p>
+<p>首先告知构建脚本哪些依赖做成 <code>DLL</code>  并生成 <code>DLL文件</code> 和 <code>DLL映射表文件</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">DefinePlugin</span>, <span class="title class_">DllPlugin</span> &#125; <span class="keyword">from</span> <span class="string">&quot;webpack&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">entry</span>: &#123;</span><br><span class="line">        <span class="attr">vendor</span>: [<span class="string">&quot;react&quot;</span>, <span class="string">&quot;react-dom&quot;</span>, <span class="string">&quot;react-router-dom&quot;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&quot;production&quot;</span>,</span><br><span class="line">    <span class="attr">optimization</span>: &#123;</span><br><span class="line">        <span class="attr">splitChunks</span>: &#123;</span><br><span class="line">            <span class="attr">cacheGroups</span>: &#123;</span><br><span class="line">                <span class="attr">vendor</span>: &#123;</span><br><span class="line">                    <span class="attr">chunks</span>: <span class="string">&quot;all&quot;</span>,</span><br><span class="line">                    <span class="attr">name</span>: <span class="string">&quot;vendor&quot;</span>,</span><br><span class="line">                    <span class="attr">test</span>: <span class="regexp">/node_modules/</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">output</span>: &#123;</span><br><span class="line">        <span class="attr">filename</span>: <span class="string">&quot;[name].dll.js&quot;</span>, <span class="comment">// 输出路径和文件名称</span></span><br><span class="line">        <span class="attr">library</span>: <span class="string">&quot;[name]&quot;</span>, <span class="comment">// 全局变量名称：其他模块会从此变量上获取里面模块</span></span><br><span class="line">        <span class="attr">path</span>: <span class="title class_">AbsPath</span>(<span class="string">&quot;dist/static&quot;</span>) <span class="comment">// 输出目录路径</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">DefinePlugin</span>(&#123;</span><br><span class="line">            <span class="string">&quot;process.env.NODE_ENV&quot;</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="string">&quot;development&quot;</span>) <span class="comment">// DLL模式下覆盖生产环境成开发环境(启动第三方依赖调试模式)</span></span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">DllPlugin</span>(&#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&quot;[name]&quot;</span>, <span class="comment">// 全局变量名称：减小搜索范围，与output.library结合使用</span></span><br><span class="line">            <span class="attr">path</span>: <span class="title class_">AbsPath</span>(<span class="string">&quot;dist/static/[name]-manifest.json&quot;</span>) <span class="comment">// 输出目录路径</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>然后在 <code>package.json</code>  里配置执行脚本且每次构建前首先执行该脚本打包出 <code>DLL文件</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;dll&quot;</span>: <span class="string">&quot;webpack --config webpack.dll.js&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>最后链接 <code>DLL文件</code> 并告知 <code>webpack</code>  可命中的 <code>DLL文件</code> 让其自行读取。使用 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRmpoYXJyaXM0JTJGaHRtbC13ZWJwYWNrLXRhZ3MtcGx1Z2lu">html-webpack-tags-plugin</span> 在打包时自动插入 <code>DLL文件</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">DllReferencePlugin</span> &#125; <span class="keyword">from</span> <span class="string">&quot;webpack&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">HtmlTagsPlugin</span> <span class="keyword">from</span> <span class="string">&quot;html-webpack-tags-plugin&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">DllReferencePlugin</span>(&#123;</span><br><span class="line">            <span class="attr">manifest</span>: <span class="title class_">AbsPath</span>(<span class="string">&quot;dist/static/vendor-manifest.json&quot;</span>) <span class="comment">// manifest文件路径</span></span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">HtmlTagsPlugin</span>(&#123;</span><br><span class="line">            <span class="attr">append</span>: <span class="literal">false</span>, <span class="comment">// 在生成资源后插入</span></span><br><span class="line">            <span class="attr">publicPath</span>: <span class="string">&quot;/&quot;</span>, <span class="comment">// 使用公共路径</span></span><br><span class="line">            <span class="attr">tags</span>: [<span class="string">&quot;static/vendor.dll.js&quot;</span>] <span class="comment">// 资源路径</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>为了那几秒钟的时间成本，笔者建议配置上较好。当然也可使用 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRmFzZmt0eiUyRmF1dG9kbGwtd2VicGFjay1wbHVnaW4=">autodll-webpack-plugin</span> 代替手动配置。</p>
+<blockquote>
+<p>⏱并行构建</p>
+</blockquote>
+<p><strong>配置 Thread 将 Loader 单进程转换为多进程</strong>，好处是 <code>释放CPU多核并发的优势</code> 。在使用 <code>webpack</code>  构建项目时会有大量文件需解析和处理，构建过程是计算密集型的操作，随着文件增多会使构建过程变得越慢。</p>
+<p>运行在 <code>Node</code>  里的 <code>webpack</code>  是单线程模型，简单来说就是 <code>webpack</code>  待处理的任务需一件件处理，不能同一时刻处理多件任务。</p>
+<p><code>文件读写</code> 与 <code>计算操作</code> 无法避免，能不能让 <code>webpack</code>  同一时刻处理多个任务，发挥多核 <code>CPU</code>  电脑的威力以提升构建速度呢？<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRndlYnBhY2stY29udHJpYiUyRnRocmVhZC1sb2FkZXI=">thread-loader</span> 来帮你，根据 <code>CPU</code>  个数开启线程。</p>
+<p>在此需注意一个问题，若项目文件不算多就不要使用该 <code>性能优化建议</code> ，毕竟开启多个线程也会存在性能开销。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Os</span> <span class="keyword">from</span> <span class="string">&quot;os&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">module</span>: &#123;</span><br><span class="line">        <span class="attr">rules</span>: [&#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span><br><span class="line">            <span class="attr">use</span>: [&#123;</span><br><span class="line">                <span class="attr">loader</span>: <span class="string">&quot;thread-loader&quot;</span>,</span><br><span class="line">                <span class="attr">options</span>: &#123; <span class="attr">workers</span>: <span class="title class_">Os</span>.<span class="title function_">cpus</span>().<span class="property">length</span> &#125;</span><br><span class="line">            &#125;, &#123;</span><br><span class="line">                <span class="attr">loader</span>: <span class="string">&quot;babel-loader&quot;</span>,</span><br><span class="line">                <span class="attr">options</span>: &#123; <span class="attr">cacheDirectory</span>: <span class="literal">true</span> &#125;</span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>⏱可视结构</p>
+</blockquote>
+<p><strong>配置 BundleAnalyzer 分析打包文件结构</strong>，好处是 <code>找出导致体积过大的原因</code> 。从而通过分析原因得出优化方案减少构建时间。 <code>BundleAnalyzer</code>  是 <code>webpack</code>  官方插件，可直观分析 <code>打包文件</code> 的模块组成部分、模块体积占比、模块包含关系、模块依赖关系、文件是否重复、压缩体积对比等可视化数据。</p>
+<p>可使用 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRndlYnBhY2stY29udHJpYiUyRndlYnBhY2stYnVuZGxlLWFuYWx5emVy">webpack-bundle-analyzer</span> 配置，有了它，我们就能快速找到相关问题。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">BundleAnalyzerPlugin</span> &#125; <span class="keyword">from</span> <span class="string">&quot;webpack-bundle-analyzer&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="title class_">BundleAnalyzerPlugin</span>()</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>📦分割代码</p>
+</blockquote>
+<p><strong>分割各个模块代码，提取相同部分代码</strong>，好处是 <code>减少重复代码的出现频率</code> 。 <code>webpack v4</code>  使用 <code>splitChunks</code>  替代 <code>CommonsChunksPlugin</code>  实现代码分割。</p>
+<p><code>splitChunks</code>  配置较多，详情可参考<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGd2VicGFjay5kb2NzY2hpbmEub3JnJTJGY29uZmlndXJhdGlvbiUyRm9wdGltaXphdGlvbiUyRiUyM29wdGltaXphdGlvbnNwbGl0Y2h1bmtz">官网</span>，在此笔者贴上常用配置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">optimization</span>: &#123;</span><br><span class="line">        <span class="attr">runtimeChunk</span>: &#123; <span class="attr">name</span>: <span class="string">&quot;manifest&quot;</span> &#125;, <span class="comment">// 抽离WebpackRuntime函数</span></span><br><span class="line">        <span class="attr">splitChunks</span>: &#123;</span><br><span class="line">            <span class="attr">cacheGroups</span>: &#123;</span><br><span class="line">                <span class="attr">common</span>: &#123;</span><br><span class="line">                    <span class="attr">minChunks</span>: <span class="number">2</span>,</span><br><span class="line">                    <span class="attr">name</span>: <span class="string">&quot;common&quot;</span>,</span><br><span class="line">                    <span class="attr">priority</span>: <span class="number">5</span>,</span><br><span class="line">                    <span class="attr">reuseExistingChunk</span>: <span class="literal">true</span>, <span class="comment">// 重用已存在代码块</span></span><br><span class="line">                    <span class="attr">test</span>: <span class="title class_">AbsPath</span>(<span class="string">&quot;src&quot;</span>)</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">vendor</span>: &#123;</span><br><span class="line">                    <span class="attr">chunks</span>: <span class="string">&quot;initial&quot;</span>, <span class="comment">// 代码分割类型</span></span><br><span class="line">                    <span class="attr">name</span>: <span class="string">&quot;vendor&quot;</span>, <span class="comment">// 代码块名称</span></span><br><span class="line">                    <span class="attr">priority</span>: <span class="number">10</span>, <span class="comment">// 优先级</span></span><br><span class="line">                    <span class="attr">test</span>: <span class="regexp">/node_modules/</span> <span class="comment">// 校验文件正则表达式</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, <span class="comment">// 缓存组</span></span><br><span class="line">            <span class="attr">chunks</span>: <span class="string">&quot;all&quot;</span> <span class="comment">// 代码分割类型：all全部模块，async异步模块，initial入口模块</span></span><br><span class="line">        &#125; <span class="comment">// 代码块分割</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>📦摇树优化</p>
+</blockquote>
+<p><strong>删除项目中未被引用代码</strong>，好处是 <code>移除重复代码和未使用代码</code> 。 <code>摇树优化</code> 首次出现于 <code>rollup</code> ，是 <code>rollup</code>  的核心概念，后来在 <code>webpack v2</code>  里借鉴过来使用。</p>
+<p><code>摇树优化</code> 只对 <code>ESM规范</code> 生效，对其他模块规范失效。 <code>摇树优化</code> 针对静态结构分析，只有 <code>import/export</code>  才能提供静态的 <code>导入/导出</code> 功能。因此在编写业务代码时必须使用 <code>ESM规范</code> 才能让 <code>摇树优化</code> 移除重复代码和未使用代码。</p>
+<p>在 <code>webpack</code>  里只需将打包环境设置成 <code>生产环境</code> 就能让 <code>摇树优化</code> 生效，同时业务代码使用 <code>ESM规范</code> 编写，使用 <code>import</code>  导入模块，使用 <code>export</code>  导出模块。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&quot;production&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>📦动态垫片</p>
+</blockquote>
+<p><strong>通过垫片服务根据 UA 返回当前浏览器代码垫片</strong>，好处是 <code>无需将繁重的代码垫片打包进去</code> 。每次构建都配置 <code>@babel/preset-env</code>  和 <code>core-js</code>  根据某些需求将 <code>Polyfill</code>  打包进来，这无疑又为代码体积增加了贡献。</p>
+<p><code>@babel/preset-env</code>  提供的 <code>useBuiltIns</code>  可按需导入 <code>Polyfill</code> 。</p>
+<ul>
+<li><strong>false</strong>：无视 <code>target.browsers</code>  将所有 <code>Polyfill</code>  加载进来</li>
+<li><strong>entry</strong>：根据 <code>target.browsers</code>  将部分 <code>Polyfill</code>  加载进来 (仅引入有浏览器不支持的 <code>Polyfill</code> ，需在入口文件 <code>import &quot;core-js/stable&quot;</code> )</li>
+<li><strong>usage</strong>：根据 <code>target.browsers</code>  和检测代码里 ES6 的使用情况将部分 <code>Polyfill</code>  加载进来 (无需在入口文件 <code>import &quot;core-js/stable&quot;</code> )</li>
+</ul>
+<p>在此推荐大家使用 <code>动态垫片</code> 。 <code>动态垫片</code> 可根据浏览器 <code>UserAgent</code>  返回当前浏览器 <code>Polyfill</code> ，其思路是根据浏览器的 <code>UserAgent</code>  从 <code>browserlist</code>  查找出当前浏览器哪些特性缺乏支持从而返回这些特性的 <code>Polyfill</code> 。对这方面感兴趣的同学可参考 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRkZpbmFuY2lhbC1UaW1lcyUyRnBvbHlmaWxsLWxpYnJhcnk=">polyfill-library</span> 和 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRkZpbmFuY2lhbC1UaW1lcyUyRnBvbHlmaWxsLXNlcnZpY2U=">polyfill-service</span> 的源码。</p>
+<p>在此提供两个 <code>动态垫片</code> 服务，可在不同浏览器里点击以下链接看看输出不同的 <code>Polyfill</code> 。相信 <code>IExplore</code>  还是最多 <code>Polyfill</code>  的，它自豪地说： <code>我就是我，不一样的烟火</code> 。</p>
+<ul>
+<li><strong>官方 CDN 服务</strong>：<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGcG9seWZpbGwuaW8lMkZ2MyUyRnBvbHlmaWxsLm1pbi5qcw==">polyfill.io/v3/polyfill…</span></li>
+<li><strong>阿里 CDN 服务</strong>：<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGcG9seWZpbGwuYWxpY2RuLmNvbSUyRnBvbHlmaWxsLm1pbi5qcw==">polyfill.alicdn.com/polyfill.mi…</span></li>
+</ul>
+<p>使用 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRmpoYXJyaXM0JTJGaHRtbC13ZWJwYWNrLXRhZ3MtcGx1Z2lu">html-webpack-tags-plugin</span> 在打包时自动插入 <code>动态垫片</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">HtmlTagsPlugin</span> <span class="keyword">from</span> <span class="string">&quot;html-webpack-tags-plugin&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">HtmlTagsPlugin</span>(&#123;</span><br><span class="line">            <span class="attr">append</span>: <span class="literal">false</span>, <span class="comment">// 在生成资源后插入</span></span><br><span class="line">            <span class="attr">publicPath</span>: <span class="literal">false</span>, <span class="comment">// 使用公共路径</span></span><br><span class="line">            <span class="attr">tags</span>: [<span class="string">&quot;https://polyfill.alicdn.com/polyfill.min.js&quot;</span>] <span class="comment">// 资源路径</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>📦按需加载</p>
+</blockquote>
+<p><strong>将路由页面 / 触发性功能单独打包为一个文件，使用时才加载</strong>，好处是 <code>减轻首屏渲染的负担</code> 。因为项目功能越多其打包体积越大，导致首屏渲染速度越慢。</p>
+<p>首屏渲染时只需对应 <code>JS代码</code> 而无需其他 <code>JS代码</code> ，所以可使用 <code>按需加载</code> 。 <code>webpack v4</code>  提供模块按需切割加载功能，配合 <code>import()</code>  可做到首屏渲染减包的效果，从而加快首屏渲染速度。只有当触发某些功能时才会加载当前功能的 <code>JS代码</code> 。</p>
+<p><code>webpack v4</code>  提供魔术注解命名 <code>切割模块</code> ，若无注解则切割出来的模块无法分辨出属于哪个业务模块，所以一般都是一个业务模块共用一个 <code>切割模块</code> 的注解名称。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Login</span> = (<span class="params"></span>) =&gt; <span class="title function_">import</span>( <span class="comment">/* webpackChunkName: &quot;login&quot; */</span> <span class="string">&quot;../../views/login&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">Logon</span> = (<span class="params"></span>) =&gt; <span class="title function_">import</span>( <span class="comment">/* webpackChunkName: &quot;logon&quot; */</span> <span class="string">&quot;../../views/logon&quot;</span>);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>运行起来控制台可能会报错，在 <code>package.json</code>  的 <code>babel</code>  相关配置里接入 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGYmFiZWxqcy5pbyUyRmRvY3MlMkZlbiUyRmJhYmVsLXBsdWdpbi1zeW50YXgtZHluYW1pYy1pbXBvcnQuaHRtbA==">@babel/plugin-syntax-dynamic-import</span> 即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="string">&quot;babel&quot;</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="string">&quot;plugins&quot;</span>: [</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="string">&quot;@babel/plugin-syntax-dynamic-import&quot;</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>📦作用提升</p>
+</blockquote>
+<p><strong>分析模块间依赖关系，把打包好的模块合并到一个函数中</strong>，好处是 <code>减少函数声明和内存花销</code> 。 <code>作用提升</code> 首次出现于 <code>rollup</code> ，是 <code>rollup</code>  的核心概念，后来在 <code>webpack v3</code>  里借鉴过来使用。</p>
+<p>在未开启 <code>作用提升</code> 前，构建后的代码会存在大量函数闭包。由于模块依赖，通过 <code>webpack</code>  打包后会转换成 <code>IIFE</code> ，大量函数闭包包裹代码会导致打包体积增大 ( <code>模块越多越明显</code> )。在运行代码时创建的函数作用域变多，从而导致更大的内存开销。</p>
+<p>在开启 <code>作用提升</code> 后，构建后的代码会按照引入顺序放到一个函数作用域里，通过适当重命名某些变量以防止变量名冲突，从而减少函数声明和内存花销。</p>
+<p>在 <code>webpack</code>  里只需将打包环境设置成 <code>生产环境</code> 就能让 <code>作用提升</code> 生效，或显式设置 <code>concatenateModules</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&quot;production&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 显式设置</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">optimization</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="attr">concatenateModules</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>📦压缩资源</p>
+</blockquote>
+<p><strong>压缩 HTML/CSS/JS 代码，压缩字体 / 图像 / 音频 / 视频</strong>，好处是 <code>更有效减少打包体积</code> 。极致地优化代码都有可能不及优化一个资源文件的体积更有效。</p>
+<p>针对 <code>HTML</code>  代码，使用 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRmphbnRpbW9uJTJGaHRtbC13ZWJwYWNrLXBsdWdpbg==">html-webpack-plugin</span> 开启压缩功能。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">HtmlPlugin</span> <span class="keyword">from</span> <span class="string">&quot;html-webpack-plugin&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="title class_">HtmlPlugin</span>(&#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="attr">minify</span>: &#123;</span><br><span class="line">                <span class="attr">collapseWhitespace</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">removeComments</span>: <span class="literal">true</span></span><br><span class="line">            &#125; <span class="comment">// 压缩HTML</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>针对 <code>CSS/JS</code>  代码，分别使用以下插件开启压缩功能。其中 <code>OptimizeCss</code>  基于 <code>cssnano</code>  封装， <code>Uglifyjs</code>  和 <code>Terser</code>  都是 <code>webpack</code>  官方插件，同时需注意压缩 <code>JS代码</code> 需区分 <code>ES5</code>  和 <code>ES6</code> 。</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRk5NRlIlMkZvcHRpbWl6ZS1jc3MtYXNzZXRzLXdlYnBhY2stcGx1Z2lu">optimize-css-assets-webpack-plugin</span>：压缩 <code>CSS代码</code></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRndlYnBhY2stY29udHJpYiUyRnVnbGlmeWpzLXdlYnBhY2stcGx1Z2lu">uglifyjs-webpack-plugin</span>：压缩 <code>ES5</code>  版本的 <code>JS代码</code></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRndlYnBhY2stY29udHJpYiUyRnRlcnNlci13ZWJwYWNrLXBsdWdpbg==">terser-webpack-plugin</span>：压缩 <code>ES6</code>  版本的 <code>JS代码</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">OptimizeCssAssetsPlugin</span> <span class="keyword">from</span> <span class="string">&quot;optimize-css-assets-webpack-plugin&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">TerserPlugin</span> <span class="keyword">from</span> <span class="string">&quot;terser-webpack-plugin&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">UglifyjsPlugin</span> <span class="keyword">from</span> <span class="string">&quot;uglifyjs-webpack-plugin&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">compressOpts</span> = type =&gt; (&#123;</span><br><span class="line">    <span class="attr">cache</span>: <span class="literal">true</span>, <span class="comment">// 缓存文件</span></span><br><span class="line">    <span class="attr">parallel</span>: <span class="literal">true</span>, <span class="comment">// 并行处理</span></span><br><span class="line">    [<span class="string">`<span class="subst">$&#123;type&#125;</span>Options`</span>]: &#123;</span><br><span class="line">        <span class="attr">beautify</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">compress</span>: &#123; <span class="attr">drop_console</span>: <span class="literal">true</span> &#125;</span><br><span class="line">    &#125; <span class="comment">// 压缩配置</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">const</span> compressCss = <span class="keyword">new</span> <span class="title class_">OptimizeCssAssetsPlugin</span>(&#123;</span><br><span class="line">    <span class="attr">cssProcessorOptions</span>: &#123;</span><br><span class="line">        <span class="attr">autoprefixer</span>: &#123; <span class="attr">remove</span>: <span class="literal">false</span> &#125;, <span class="comment">// 设置autoprefixer保留过时样式</span></span><br><span class="line">        <span class="attr">safe</span>: <span class="literal">true</span> <span class="comment">// 避免cssnano重新计算z-index</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">const</span> compressJs = <span class="variable constant_">USE_ES6</span></span><br><span class="line">    ? <span class="keyword">new</span> <span class="title class_">TerserPlugin</span>(<span class="title function_">compressOpts</span>(<span class="string">&quot;terser&quot;</span>))</span><br><span class="line">    : <span class="keyword">new</span> <span class="title class_">UglifyjsPlugin</span>(<span class="title function_">compressOpts</span>(<span class="string">&quot;uglify&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">optimization</span>: &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="attr">minimizer</span>: [compressCss, compressJs] <span class="comment">// 代码压缩</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>针对 <code>字体/音频/视频</code> 文件，还真没相关 <code>Plugin</code>  供我们使用，就只能拜托大家在发布项目到生产服前使用对应的压缩工具处理了。针对 <code>图像</code> 文件，大部分 <code>Loader/Plugin</code>  封装时均使用了某些图像处理工具，而这些工具的某些功能又托管在国外服务器里，所以导致经常安装失败。具体解决方式可回看笔者曾经发布的<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTA0MTkyMjQ3NTk1MDIy">《聊聊 NPM 镜像那些险象环生的坑》</span>一文寻求答案。</p>
+<p>鉴于此，笔者花了一点小技巧开发了一个 <code>Plugin</code>  用于配合 <code>webpack</code>  压缩图像，详情请参考 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRkpvd2F5WW91bmclMkZ0aW55aW1nLXdlYnBhY2stcGx1Z2lu">tinyimg-webpack-plugin</span>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">TinyimgPlugin</span> <span class="keyword">from</span> <span class="string">&quot;tinyimg-webpack-plugin&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="title class_">TinyimgPlugin</span>()</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<hr>
+<p>上述 <code>构建策略</code> 都集成到笔者开源的 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRkpvd2F5WW91bmclMkZicnVjZS1jbGk=">bruce-cli</span> 里，它是一个 <strong>React/Vue</strong> 应用自动化构建脚手架，其零配置开箱即用的优点非常适合入门级、初中级、快速开发项目的前端同学使用，还可通过创建 <code>brucerc.js</code>  文件覆盖其默认配置，只需专注业务代码的编写无需关注构建代码的编写，让项目结构更简洁。详情请戳<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRkpvd2F5WW91bmclMkZicnVjZS1jbGk=">这里</span>，使用时记得查看文档，支持一个 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRkpvd2F5WW91bmclMkZicnVjZS1jbGk=">Star</span> 哈！</p>
+<h5 id="图像策略"><a class="markdownIt-Anchor" href="#图像策略">#</a> 图像策略</h5>
+<p>该策略主要围绕 <code>图像类型</code> 做相关处理，同时也是接入成本较低的 <code>性能优化策略</code> 。只需做到以下两点即可。</p>
+<ul>
+<li><strong>图像选型</strong>：了解所有图像类型的特点及其何种应用场景最合适</li>
+<li><strong>图像压缩</strong>：在部署到生产环境前使用工具或脚本对其压缩处理</li>
+</ul>
+<p><code>图像选型</code> 一定要知道每种图像类型的 <code>体积/质量/兼容/请求/压缩/透明/场景</code> 等参数相对值，这样才能迅速做出判断在何种场景使用何种类型的图像。</p>
+<table><thead><tr><th>类型</th><th>体积</th><th>质量</th><th>兼容</th><th>请求</th><th>压缩</th><th>透明</th><th>场景</th></tr></thead><tbody><tr><td>JPG</td><td>小</td><td>中</td><td>高</td><td>是</td><td>有损</td><td>不支持</td><td>背景图、轮播图、色彩丰富图</td></tr><tr><td>PNG</td><td>大</td><td>高</td><td>高</td><td>是</td><td>无损</td><td>支持</td><td>图标、透明图</td></tr><tr><td>SVG</td><td>小</td><td>高</td><td>高</td><td>是</td><td>无损</td><td>支持</td><td>图标、矢量图</td></tr><tr><td>WebP</td><td>小</td><td>中</td><td>低</td><td>是</td><td>兼备</td><td>支持</td><td>看兼容情况</td></tr><tr><td>Base64</td><td>看情况</td><td>中</td><td>高</td><td>否</td><td>无损</td><td>支持</td><td>图标</td></tr></tbody></table>
+<p><code>图像压缩</code> 可在上述 <code>构建策略-压缩资源</code> 里完成，也可自行使用工具完成。由于现在大部分 <code>webpack</code>  图像压缩工具不是安装失败就是各种环境问题 ( <code>你懂的</code> )，所以笔者还是推荐在发布项目到生产服前使用图像压缩工具处理，这样运行稳定也不会增加打包时间。</p>
+<p>好用的图像压缩工具无非就是以下几个，若有更好用的工具麻烦在评论里补充喔！</p>
+<table><thead><tr><th>工具</th><th>开源</th><th>收费</th><th>API</th><th>免费体验</th></tr></thead><tbody><tr><td><span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGd3d3LnR1aGFva3VhaS5jb20=">QuickPicture</span></td><td>✖️</td><td>✔️</td><td>✖️</td><td>可压缩类型较多，压缩质感较好，有体积限制，有数量限制</td></tr><tr><td><span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGc2hyaW5rbWUuYXBw">ShrinkMe</span></td><td>✖️</td><td>✖️</td><td>✖️</td><td>可压缩类型较多，压缩质感一般，无数量限制，有体积限制</td></tr><tr><td><span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGc3F1b29zaC5hcHA=">Squoosh</span></td><td>✔️</td><td>✖️</td><td>✔️</td><td>可压缩类型较少，压缩质感一般，无数量限制，有体积限制</td></tr><tr><td><span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGdGlueWpwZy5jb20=">TinyJpg</span></td><td>✖️</td><td>✔️</td><td>✔️</td><td>可压缩类型较少，压缩质感很好，有数量限制，有体积限制</td></tr><tr><td><span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGdGlueXBuZy5jb20=">TinyPng</span></td><td>✖️</td><td>✔️</td><td>✔️</td><td>可压缩类型较少，压缩质感很好，有数量限制，有体积限制</td></tr><tr><td><span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGemhpdHUuaXN1eC51cw==">Zhitu</span></td><td>✖️</td><td>✖️</td><td>✖️</td><td>可压缩类型一般，压缩质感一般，有数量限制，有体积限制</td></tr></tbody></table>
+<p>若不想在网站里来回拖动图像文件，可使用笔者开源的图像批处理工具 <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRkpvd2F5WW91bmclMkZpbWctbWFzdGVy">img-master</span> 代替，不仅有压缩功能，还有分组功能、标记功能和变换功能。目前笔者负责的全部项目都使用该工具处理，一直用一直爽！</p>
+<p><code>图像策略</code> 也许处理一张图像就能完爆所有 <code>构建策略</code> ，因此是一种很廉价但极有效的 <code>性能优化策略</code> 。</p>
+<h5 id="分发策略"><a class="markdownIt-Anchor" href="#分发策略">#</a> 分发策略</h5>
+<p>该策略主要围绕 <code>内容分发网络</code> 做相关处理，同时也是接入成本较高的 <code>性能优化策略</code> ，需足够资金支持。</p>
+<p>虽然接入成本较高，但大部分企业都会购买一些 <code>CDN服务器</code> ，所以在部署的事情上就不用过分担忧，尽管使用就好。该策略尽量遵循以下两点就能发挥 <code>CDN</code>  最大作用。</p>
+<ul>
+<li><strong>所有静态资源走 CDN</strong>：开发阶段确定哪些文件属于静态资源</li>
+<li><strong>把静态资源与主页面置于不同域名下</strong>：避免请求带上 <code>Cookie</code></li>
+</ul>
+<p><strong>内容分发网络</strong>简称 <strong>CDN</strong>，指一组分布在各地存储数据副本并可根据就近原则满足数据请求的服务器。其核心特征是 <code>缓存</code> 和 <code>回源</code> ，缓存是把资源复制到 <code>CDN服务器</code> 里，回源是 <code>资源过期/不存在</code> 就向上层服务器请求并复制到 <code>CDN服务器</code> 里。</p>
+<p>使用 <code>CDN</code>  可降低网络拥塞，提高用户访问响应速度和命中率。构建在现有网络基础上的智能虚拟网络，依靠部署在各地服务器，通过中心平台的调度、负载均衡、内容分发等功能模块，使用户就近获取所需资源，这就是 <code>CDN</code>  的终极使命。</p>
+<p>基于 <code>CDN</code>  的<strong>就近原则</strong>所带来的优点，可将网站所有静态资源全部部署到 <code>CDN服务器</code> 里。那静态资源包括哪些文件？通常来说就是无需服务器产生计算就能得到的资源，例如不常变化的 <code>样式文件</code> 、 <code>脚本文件</code> 和 <code>多媒体文件(字体/图像/音频/视频)</code>  等。</p>
+<p>若需单独配置 <code>CDN服务器</code> ，可考虑<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGd3d3LmFsaXl1bi5jb20lMkZwcm9kdWN0JTJGb3Nz">阿里云 OSS</span>、<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGd3d3LjE2M3l1bi5jb20lMkZwcm9kdWN0JTJGbm9z">网易树帆 NOS</span> 和<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGd3d3LnFpbml1LmNvbSUyRnByb2R1Y3RzJTJGa29kbw==">七牛云 Kodo</span>，当然配置起来还需购买该产品对应的 <code>CDN服务</code> 。由于篇幅问题，这些配置在购买后会有相关教程，可自行体会，在此就不再叙述了。</p>
+<p>笔者推荐大家首选<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzJTNBJTJGJTJGd3d3LjE2M3l1bi5jb20lMkZwcm9kdWN0JTJGbm9z">网易树帆 NOS</span>，毕竟对自家产品还是挺有信心的，不小心给自家产品打了个小广告了，哈哈！</p>
+<h5 id="缓存策略"><a class="markdownIt-Anchor" href="#缓存策略">#</a> 缓存策略</h5>
+<p>该策略主要围绕 <code>浏览器缓存</code> 做相关处理，同时也使接入成本最低的 <code>性能优化策略</code> 。其显著减少网络传输所带来的损耗，提升网页访问速度，是一种很值得使用的 <code>性能优化策略</code> 。</p>
+<p>通过下图可知，为了让 <code>浏览器缓存</code> 发挥最大作用，该策略尽量遵循以下五点就能发挥 <code>浏览器缓存</code> 最大作用。</p>
+<ul>
+<li><strong>考虑拒绝一切缓存策略</strong>： <code>Cache-Control:no-store</code></li>
+<li><strong>考虑资源是否每次向服务器请求</strong>： <code>Cache-Control:no-cache</code></li>
+<li><strong>考虑资源是否被代理服务器缓存</strong>： <code>Cache-Control:public/private</code></li>
+<li><strong>考虑资源过期时间</strong>： <code>Expires:t/Cache-Control:max-age=t,s-maxage=t</code></li>
+<li><strong>考虑协商缓存</strong>： <code>Last-Modified/Etag</code></li>
+</ul>
+<p><img data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9f245496e62f4d1f96f48363512267cc~tplv-k3u1fbpfcp-watermark.image" alt></p>
+<p>同时 <code>浏览器缓存</code> 也是高频面试题之一，笔者觉得上述涉及到的名词在不同语序串联下也能完全理解才能真正弄懂 <code>浏览器缓存</code> 在 <code>性能优化</code> 里起到的作用。</p>
+<p><code>缓存策略</code> 通过设置 <code>HTTP</code>  报文实现，在形式上分为<strong>强缓存 / 强制缓存</strong>和<strong>协商缓存 / 对比缓存</strong>。为了方便对比，笔者将某些细节使用图例展示，相信你有更好的理解。</p>
+<p><img data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e2572dfb1ee4923a0d3e183c63380b2~tplv-k3u1fbpfcp-watermark.image" alt></p>
+<p><img data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fc66368a78e947058b8d816f92b00607~tplv-k3u1fbpfcp-watermark.image" alt></p>
+<p>整个 <code>缓存策略</code> 机制很明了， <code>先走强缓存，若命中失败才走协商缓存</code> 。若命中 <code>强缓存</code> ，直接使用 <code>强缓存</code> ；若未命中 <code>强缓存</code> ，发送请求到服务器检查是否命中 <code>协商缓存</code> ；若命中 <code>协商缓存</code> ，服务器返回 304 通知浏览器使用 <code>本地缓存</code> ，否则返回 <code>最新资源</code> 。</p>
+<p>有两种较常用的应用场景值得使用 <code>缓存策略</code> 一试，当然更多应用场景都可根据项目需求制定。</p>
+<ul>
+<li><strong>频繁变动资源</strong>：设置 <code>Cache-Control:no-cache</code> ，使浏览器每次都发送请求到服务器，配合 <code>Last-Modified/ETag</code>  验证资源是否有效</li>
+<li><strong>不常变化资源</strong>：设置 <code>Cache-Control:max-age=31536000</code> ，对文件名哈希处理，当代码修改后生成新的文件名，当 HTML 文件引入文件名发生改变才会下载最新文件</li>
+</ul>
+<h4 id="渲染层面"><a class="markdownIt-Anchor" href="#渲染层面">#</a> 渲染层面</h4>
+<p><strong>渲染层面</strong>的性能优化，无疑是如何让代码 <code>解析更好执行更快</code> 。因此笔者从以下五方面做出建议。</p>
+<ul>
+<li><strong>CSS 策略</strong>：基于 CSS 规则</li>
+<li><strong>DOM 策略</strong>：基于 DOM 操作</li>
+<li><strong>阻塞策略</strong>：基于脚本加载</li>
+<li><strong>回流重绘策略</strong>：基于回流重绘</li>
+<li><strong>异步更新策略</strong>：基于异步更新</li>
+</ul>
+<p>上述五方面都是编写代码时完成，充满在整个项目流程的开发阶段里。因此在开发阶段需时刻注意以下涉及到的每一点，养成良好的开发习惯， <code>性能优化</code> 也自然而然被使用上了。</p>
+<p><code>渲染层面</code> 的 <code>性能优化</code> 更多表现在编码细节上，而并非实体代码。简单来说就是遵循某些编码规则，才能将 <code>渲染层面</code> 的 <code>性能优化</code> 发挥到最大作用。</p>
+<p><strong>回流重绘策略</strong>在 <code>渲染层面</code> 的 <code>性能优化</code> 里占比较重，也是最常规的 <code>性能优化</code> 之一。上年笔者发布的掘金小册<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vYm9vay82ODUwNDEzNjE2NDg0MDQwNzEx">《玩转 CSS 的艺术之美》</span>使用一整章讲解 <code>回流重绘</code> ，本章已开通试读，更多细节请戳<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vYm9vay82ODUwNDEzNjE2NDg0MDQwNzExL3NlY3Rpb24vNjg1MDQxMzYxNjU1OTE5NDExOQ==">这里</span>。</p>
+<h5 id="css-策略"><a class="markdownIt-Anchor" href="#css-策略">#</a> CSS 策略</h5>
+<ul>
+<li>避免出现超过三层的 <code>嵌套规则</code></li>
+<li>避免为 <code>ID选择器</code> 添加多余选择器</li>
+<li>避免使用 <code>标签选择器</code> 代替 <code>类选择器</code></li>
+<li>避免使用 <code>通配选择器</code> ，只对目标节点声明规则</li>
+<li>避免重复匹配重复定义，关注 <code>可继承属性</code></li>
+</ul>
+<h5 id="dom-策略"><a class="markdownIt-Anchor" href="#dom-策略">#</a> DOM 策略</h5>
+<ul>
+<li>缓存 <code>DOM计算属性</code></li>
+<li>避免过多 <code>DOM操作</code></li>
+<li>使用 <code>DOMFragment</code>  缓存批量化 <code>DOM操作</code></li>
+</ul>
+<h5 id="阻塞策略"><a class="markdownIt-Anchor" href="#阻塞策略">#</a> 阻塞策略</h5>
+<ul>
+<li>脚本与 <code>DOM/其它脚本</code> 的依赖关系很强：对 <code>&lt;script&gt;</code>  设置 <code>defer</code></li>
+<li>脚本与 <code>DOM/其它脚本</code> 的依赖关系不强：对 <code>&lt;script&gt;</code>  设置 <code>async</code></li>
+</ul>
+<h5 id="回流重绘策略"><a class="markdownIt-Anchor" href="#回流重绘策略">#</a> 回流重绘策略</h5>
+<ul>
+<li>缓存 <code>DOM计算属性</code></li>
+<li>使用类合并样式，避免逐条改变样式</li>
+<li>使用 <code>display</code>  控制 <code>DOM显隐</code> ，将 <code>DOM离线化</code></li>
+</ul>
+<h5 id="异步更新策略"><a class="markdownIt-Anchor" href="#异步更新策略">#</a> 异步更新策略</h5>
+<ul>
+<li>在 <code>异步任务</code> 中修改 <code>DOM</code>  时把其包装成 <code>微任务</code></li>
+</ul>
+<h3 id="六大指标"><a class="markdownIt-Anchor" href="#六大指标">#</a> 六大指标</h3>
+<p>笔者根据 <code>性能优化</code> 的重要性和实际性划分出 <code>九大策略</code> 和 <code>六大指标</code> ，其实它们都是一条条活生生的 <code>性能优化建议</code> 。有些 <code>性能优化建议</code> 接不接入影响都不大，因此笔者将 <code>九大策略</code> 定位高于 <code>六大指标</code> 。针对 <code>九大策略</code> 还是建议在开发阶段和生产阶段接入，在项目复盘时可将 <code>六大指标</code> 的条条框框根据实际应用场景接入。</p>
+<p><code>六大指标</code> 基本囊括大部分 <code>性能优化</code> 细节，可作为 <code>九大策略</code> 的补充。笔者根据每条 <code>性能优化建议</code> 的特征将 <code>指标</code> 划分为以下六方面。</p>
+<ul>
+<li><strong>加载优化</strong>：资源在加载时可做的性能优化</li>
+<li><strong>执行优化</strong>：资源在执行时可做的性能优化</li>
+<li><strong>渲染优化</strong>：资源在渲染时可做的性能优化</li>
+<li><strong>样式优化</strong>：样式在编码时可做的性能优化</li>
+<li><strong>脚本优化</strong>：脚本在编码时可做的性能优化</li>
+<li><strong>V8 引擎优化</strong>：针对 <code>V8引擎</code> 特征可做的性能优化</li>
+</ul>
+<h5 id="加载优化"><a class="markdownIt-Anchor" href="#加载优化">#</a> 加载优化</h5>
+<p><img data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a890d76ed4a748b1b745e85dde126989~tplv-k3u1fbpfcp-watermark.image" alt></p>
+<h5 id="执行优化"><a class="markdownIt-Anchor" href="#执行优化">#</a> 执行优化</h5>
+<p><img data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5898aa8a121b40e896c457d9e95ac6f6~tplv-k3u1fbpfcp-watermark.image" alt></p>
+<h5 id="渲染优化"><a class="markdownIt-Anchor" href="#渲染优化">#</a> 渲染优化</h5>
+<p><img data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/57664767785349ca8d00c712de02989d~tplv-k3u1fbpfcp-watermark.image" alt></p>
+<h5 id="样式优化"><a class="markdownIt-Anchor" href="#样式优化">#</a> 样式优化</h5>
+<p><img data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/589007e1d9c144629803dc242b69861e~tplv-k3u1fbpfcp-watermark.image" alt></p>
+<h5 id="脚本优化"><a class="markdownIt-Anchor" href="#脚本优化">#</a> 脚本优化</h5>
+<p><img data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f6a2c1427695424e8a274ee747950bee~tplv-k3u1fbpfcp-watermark.image" alt></p>
+<h5 id="v8-引擎优化"><a class="markdownIt-Anchor" href="#v8-引擎优化">#</a> V8 引擎优化</h5>
+<p><img data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ae8786a5bac5483f9589b0494604705b~tplv-k3u1fbpfcp-watermark.image" alt></p>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结">#</a> 总结</h3>
+<p><strong>性能优化</strong>作为老生常谈的知识，必然会在工作或面试时遇上。很多时候不是想到某条 <code>性能优化建议</code> 就去做或答，而是要对这方面有一个整体认知，知道为何这样设计，这样设计的目的能达到什么效果。</p>
+<p><code>性能优化</code> 不是通过一篇文章就能全部讲完，若详细去讲可能要写两本书的篇幅才能讲完。本文能到给大家的就是一个方向一种态度，学以致用呗，希望阅读完本文会对你有所帮助。</p>
+<p>最后，笔者将本文所有内容整理成一张高清脑图，由于体积太大无法上传，可关注笔者个人公众号 <strong>IQ 前端</strong>并回复 <code>性能优化</code> 获取口袋知识图谱吧！</p>
+<blockquote>
+<p>往期超过 5 万阅读量的掘金爆文</p>
+</blockquote>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzOTI2MTEwNjE3NjEz">灵活运用 CSS 开发技巧</span>： <code>4500+</code>  点赞量， <code>13.8w</code>  阅读量</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzODM4NDQ5NjY0MDEz">灵活运用 JS 开发技巧</span>： <code>1700+</code>  点赞量， <code>5.4w</code>  阅读量</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzOTU5MjgzMzY3OTUw">1.5 万字概括 ES6 全部特性</span>： <code>4500+</code>  点赞量， <code>16.5w</code>  阅读量</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTIxODg2NDI4MTU4NzU0ODI5">中高级前端必须注意的 40 条移动端 H5 坑位指南 | 网易三年实践</span>： <code>3800+</code>  点赞量， <code>5.7w</code>  阅读量</li>
+</ul>
+<h3 id="结语"><a class="markdownIt-Anchor" href="#结语">#</a> 结语</h3>
+<p>原文地址 <span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTgxNjczNzY2MTc4NzgzMjYy">juejin.cn</span></p>
+
+      <div class="tags">
+          <a href="/tags/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag"><i class="ic i-tag"></i> 前端性能优化</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2022-06-22 15:37:25" itemprop="dateModified" datetime="2022-06-22T15:37:25+08:00">2022-06-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>Sleeo <i class="ic i-at"><em>@</em></i>Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://sleeowen.github.io/2021/07/09/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/" title="性能优化总结">https://sleeowen.github.io/2021/07/09/性能优化总结/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2021/07/07/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%87%BD%E6%95%B0%E5%8F%AA%E8%A2%AB%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclx6phq6j20zk0m8e36.jpg" title="如何让函数只被执行一次">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>如何让函数只被执行一次</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/02/22/vue3%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipevuctzzj20zk0m84qp.jpg" title="vue3学习">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>vue3学习</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text"> 前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%9D%E5%A4%A7%E7%AD%96%E7%95%A5"><span class="toc-number">2.</span> <span class="toc-text"> 九大策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%E9%9D%A2"><span class="toc-number">2.1.</span> <span class="toc-text"> 网络层面</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E7%AD%96%E7%95%A5"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 构建策略</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E7%AD%96%E7%95%A5"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 图像策略</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E5%8F%91%E7%AD%96%E7%95%A5"><span class="toc-number">2.1.3.</span> <span class="toc-text"> 分发策略</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5"><span class="toc-number">2.1.4.</span> <span class="toc-text"> 缓存策略</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E5%B1%82%E9%9D%A2"><span class="toc-number">2.2.</span> <span class="toc-text"> 渲染层面</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#css-%E7%AD%96%E7%95%A5"><span class="toc-number">2.2.1.</span> <span class="toc-text"> CSS 策略</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#dom-%E7%AD%96%E7%95%A5"><span class="toc-number">2.2.2.</span> <span class="toc-text"> DOM 策略</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E7%AD%96%E7%95%A5"><span class="toc-number">2.2.3.</span> <span class="toc-text"> 阻塞策略</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%9E%E6%B5%81%E9%87%8D%E7%BB%98%E7%AD%96%E7%95%A5"><span class="toc-number">2.2.4.</span> <span class="toc-text"> 回流重绘策略</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="toc-number">2.2.5.</span> <span class="toc-text"> 异步更新策略</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E5%A4%A7%E6%8C%87%E6%A0%87"><span class="toc-number">3.</span> <span class="toc-text"> 六大指标</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%8C%96"><span class="toc-number">3.0.1.</span> <span class="toc-text"> 加载优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E4%BC%98%E5%8C%96"><span class="toc-number">3.0.2.</span> <span class="toc-text"> 执行优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96"><span class="toc-number">3.0.3.</span> <span class="toc-text"> 渲染优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F%E4%BC%98%E5%8C%96"><span class="toc-number">3.0.4.</span> <span class="toc-text"> 样式优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E4%BC%98%E5%8C%96"><span class="toc-number">3.0.5.</span> <span class="toc-text"> 脚本优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#v8-%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96"><span class="toc-number">3.0.6.</span> <span class="toc-text"> V8 引擎优化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text"> 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">5.</span> <span class="toc-text"> 结语</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Sleeo"
+      data-src="/images/img.png">
+  <p class="name" itemprop="name">Sleeo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">71</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2021/07/07/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%87%BD%E6%95%B0%E5%8F%AA%E8%A2%AB%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/02/22/vue3%E5%AD%A6%E4%B9%A0/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/10/30/Animation/" title="Animation">Animation</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/07/01/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bcheckbox/" title="element源码解析之checkbox">element源码解析之checkbox</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/01/js%E6%9F%AF%E9%87%8C%E5%8C%96/" title="js柯里化">js柯里化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/01/23/Vue%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F/" title="Vue的响应式">Vue的响应式</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/06/25/Event%E4%BA%8B%E4%BB%B6%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/" title="Event事件常见应用">Event事件常见应用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2021/06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/" title="使用css的GPU动画优化">使用css的GPU动画优化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/06/29/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bemitter-js/" title="element源码解析之emitter.js">element源码解析之emitter.js</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/11/02/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E8%AF%A6%E8%A7%A3%E4%BB%A5%E5%8F%8A%E9%9C%80%E8%A6%81%E5%85%B3%E6%B3%A8%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" title="前端优化详解以及需要关注的几个问题">前端优化详解以及需要关注的几个问题</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/06/15/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/" title="for循环全家桶">for循环全家桶</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/07/20/vue%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95-%E4%BA%8B%E4%BB%B6/" title="vue兄弟组件间传数据的方法-事件">vue兄弟组件间传数据的方法-事件</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sleeo @ Sleeo</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="站点总字数">403k 字</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:06</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2021/07/09/性能优化总结/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

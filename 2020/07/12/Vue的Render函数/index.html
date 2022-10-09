@@ -1,0 +1,651 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://sleeowen.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Blog" href="https://sleeowen.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Blog" href="https://sleeowen.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Vue" />
+
+
+<link rel="canonical" href="https://sleeowen.github.io/2020/07/12/Vue%E7%9A%84Render%E5%87%BD%E6%95%B0/">
+
+
+
+  <title>
+Vue的Render函数 |
+Sleeo = Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">Vue的Render函数
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2020-07-12 20:48:42">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2020-07-12T20:48:42+08:00">2020-07-12</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sleeo</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclfdu6exj20zk0m87hw.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeybxm1pj20zk0m8niv.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeun65urj20zk0m81ii.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipexw3o58j20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicljgocqbj20zk0m8e81.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://sleeowen.github.io/2020/07/12/Vue%E7%9A%84Render%E5%87%BD%E6%95%B0/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/img.png">
+    <meta itemprop="name" content="Sleeo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <p>前几天想学学 Vue 中怎么编写可复用的组件，提到要对 Vue 的 <code>render</code>  函数有所了解。可仔细一想，对于 Vue 的 <code>render</code>  函数自己只是看了官方的一些介绍，并未深入一点去了解这方面的知识。为了更好的学习后续的知识，又折回来了解 Vue 中的 <code>render</code>  函数，这一切主要都是为了后续能更好的学习 Vue 的知识。</p>
+<h2 id="-more-回忆-vue-的一些基本概念"><a class="markdownIt-Anchor" href="#-more-回忆-vue-的一些基本概念">#</a> <span id="more"></span><br>
+回忆 Vue 的一些基本概念</h2>
+<p>今天我们学习的目的是了解和学习 Vue 的 <code>render</code>  函数。如果想要更好的学习 Vue 的 <code>render</code>  函数相关的知识，我们有必要重温一下 Vue 中的一些基本概念。那么先上一张图，这张图从宏观上展现了 Vue 整体流程：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-32832d6b08b108c4.jpg" alt></p>
+<p>image</p>
+<p>从上图中，不难发现一个 Vue 的应用程序是如何运行起来的，模板通过编译生成 AST，再由 AST 生成 Vue 的 <code>render</code>  函数（渲染函数），渲染函数结合数据生成 Virtual DOM 树，Diff 和 Patch 后生成新的 UI。从这张图中，可以接触到 Vue 的一些主要概念：</p>
+<ul>
+<li><strong>模板</strong>：Vue 的模板基于纯 HTML，基于 Vue 的模板语法，我们可以比较方便地声明数据和 UI 的关系。</li>
+<li><strong>AST</strong>：AST 是 <strong>Abstract Syntax Tree</strong> 的简称，Vue 使用 HTML 的 Parser 将 HTML 模板解析为 AST，并且对 AST 进行一些优化的标记处理，提取最大的静态树，方便 Virtual DOM 时直接跳过 Diff。</li>
+<li><strong>渲染函数</strong>：渲染函数是用来生成 Virtual DOM 的。Vue 推荐使用模板来构建我们的应用界面，在底层实现中 Vue 会将模板编译成渲染函数，当然我们也可以不写模板，直接写渲染函数，以获得更好的控制 （这部分是我们今天主要要了解和学习的部分）。</li>
+<li><strong>Virtual DOM</strong>：虚拟 DOM 树，Vue 的 Virtual DOM Patching 算法是基于 <strong><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NuYWJiZG9tL3NuYWJiZG9t">Snabbdom</span></strong> 的实现，并在些基础上作了很多的调整和改进。</li>
+<li><strong>Watcher</strong>：每个 Vue 组件都有一个对应的 <code>watcher</code> ，这个 <code>watcher</code>  将会在组件 <code>render</code>  的时候收集组件所依赖的数据，并在依赖有更新的时候，触发组件重新渲染。你根本不需要写 <code>shouldComponentUpdate</code> ，Vue 会自动优化并更新要更新的 UI。</li>
+</ul>
+<p>上图中， <code>render</code>  函数可以作为一道分割线， <code>render</code>  函数的左边可以称之为<strong>编译期</strong>，将 Vue 的模板转换为<strong>渲染函数</strong>。 <code>render</code>  函数的右边是 Vue 的运行时，主要是基于渲染函数生成 Virtual DOM 树，Diff 和 Patch。</p>
+<h2 id="渲染函数的基础"><a class="markdownIt-Anchor" href="#渲染函数的基础">#</a> 渲染函数的基础</h2>
+<p>Vue 推荐在绝大多数情况下使用 <code>template</code>  来创建你的 HTML。然而在一些场景中，需要使用 JavaScript 的编程能力和创建 HTML，这就是 ** <code>render</code>  函数 **，它比 <code>template</code>  更接近编译器。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> &gt;</span></span><br><span class="line">        Hello world!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在 HTML 层，我们决定这样定义组件接口：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">anchored-heading</span> <span class="attr">:level</span>=<span class="string">&quot;1&quot;</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">anchored-heading</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当我们开始写一个通过 <code>level</code>  的 <code>prop</code>  动态生成 <code>heading</code>  标签的组件，你可能很快想到这样实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/x-template&quot;</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">v-if</span>=<span class="string">&quot;level === 1&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">v-else-if</span>=<span class="string">&quot;level === 2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">h3</span> <span class="attr">v-else-if</span>=<span class="string">&quot;level === 3&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">h4</span> <span class="attr">v-else-if</span>=<span class="string">&quot;level === 4&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">h5</span> <span class="attr">v-else-if</span>=<span class="string">&quot;level === 5&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">h6</span> <span class="attr">v-else-if</span>=<span class="string">&quot;level === 6&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">h6</span>&gt;</span></span></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;anchored-heading&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">template</span>: <span class="string">&#x27;#anchored-heading-template&#x27;</span>,</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">level</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">            <span class="attr">required</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在这种场景中使用  <code>template</code>  并不是最好的选择：首先代码冗长，为了在不同级别的标题中插入锚点元素，我们需要重复地使用  <code>&lt;slot&gt;&lt;/slot&gt;</code> 。</p>
+<p>虽然模板在大多数组件中都非常好用，但是在这里它就不是很简洁的了。那么，我们来尝试使用  <code>render</code>  函数重写上面的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;anchored-heading&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">createElement</span>(</span><br><span class="line">            <span class="string">&#x27;h&#x27;</span> + <span class="variable language_">this</span>.<span class="property">level</span>,   </span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">$slots</span>.<span class="property">default</span> </span><br><span class="line">        )</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">level</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">            <span class="attr">required</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>简单清晰很多！简单来说，这样代码精简很多，但是需要非常熟悉 Vue 的实例属性。在这个例子中，你需要知道当你不使用  <code>slot</code>  属性向组件中传递内容时，比如  <code>anchored-heading</code>  中的  <code>Hello world!</code> ，这些子元素被存储在组件实例中的  <code>$slots.default</code>  中。</p>
+<h2 id="节点-树以及虚拟-dom"><a class="markdownIt-Anchor" href="#节点-树以及虚拟-dom">#</a> 节点、树以及虚拟 DOM</h2>
+<p>对 Vue 的一些概念和渲染函数的基础有一定的了解之后，我们需要对一些浏览器的工作原理有一些了解，这样对我们学习 <code>render</code>  函数是很重要的。比如下面的这段 HTML 代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>My title<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    Some text content</span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当浏览器读到这些代码时，它会建立一个 **<span class="exturl" data-url="aHR0cHM6Ly9qYXZhc2NyaXB0LmluZm8vZG9tLW5vZGVz">DOM 节点树</span> ** 来保持追踪，如果你会画一张家谱树来追踪家庭成员的发展一样。</p>
+<p>HTML 的 DOM 节点树如下图所示：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-53f54999b1bc18e9.png" alt></p>
+<p>image</p>
+<p>每个元素都是一个节点。每片文字也是一个节点。甚至注释也都是节点。一个节点就是页面的一个部分。就像家谱树一样，每个节点都可以有孩子节点 (也就是说每个部分可以包含其它的一些部分)。</p>
+<p>高效的更新所有这些节点会是比较困难的，不过所幸你不必再手动完成这个工作了。你只需要告诉 Vue 你希望页面上的 HTML 是什么，这可以是在一个模板里：</p>
+<p>或者一个渲染函数里：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;h1&#x27;</span>, <span class="variable language_">this</span>.<span class="property">blogTitle</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这两种情况下，Vue 都会自动保持页面的更新，即便  <code>blogTitle</code>  发生了改变。</p>
+<h2 id="虚拟-dom"><a class="markdownIt-Anchor" href="#虚拟-dom">#</a> 虚拟 DOM</h2>
+<p>在 Vue 2.0 中，渲染层的实现做了根本性改动，那就是引入了虚拟 DOM。</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-4eb2a73597a2a9aa.png" alt></p>
+<p>image</p>
+<p>Vue 的编译器在编译模板之后，会把这些模板编译成一个渲染函数。而函数被调用的时候就会渲染并且返回一个<strong>虚拟 DOM 的树</strong>。</p>
+<p>当我们有了这个虚拟的树之后，再交给一个 <strong>Patch 函数</strong>，负责把这些虚拟 DOM 真正施加到真实的 DOM 上。在这个过程中，Vue 有自身的响应式系统来侦测在渲染过程中所依赖到的数据来源。在渲染过程中，侦测到数据来源之后就可以精确感知数据源的变动。到时候就可以根据需要重新进行渲染。当重新进行渲染之后，会生成一个新的树，将新的树与旧的树进行对比，就可以最终得出应施加到真实 DOM 上的改动。最后再通过 Patch 函数施加改动。</p>
+<p>简单点讲，在 Vue 的底层实现上，Vue 将模板编译成虚拟 DOM 渲染函数。结合 Vue 自带的响应系统，在应该状态改变时，Vue 能够智能地计算出重新渲染组件的最小代价并应到 DOM 操作上。</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-4c7f8bdf4b804bd9.png" alt></p>
+<p>image</p>
+<p>Vue 支持我们通过 <code>data</code>  参数传递一个 JavaScript 对象做为组件数据，然后 Vue 将遍历此对象属性，使用 <a target="_blank" rel="noopener" href="https://www.w3cplus.com/vue/vue-two-way-binding-object-defineproperty.html"> <code>Object.defineProperty</code>  方法</a>设置描述对象，通过存取器函数可以追踪该属性的变更，Vue 创建了一层 <code>Watcher</code>  层，在组件渲染的过程中把属性记录为依赖，之后当依赖项的 <code>setter</code>  被调用时，会通知 <code>Watcher</code>  重新计算，从而使它关联的组件得以更新，如下图：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-e5ab233db6c73c31.png" alt></p>
+<p>image</p>
+<p>有关于 Vue 的响应式相关的内容，可以阅读下列文章：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cudzNjcGx1cy5jb20vdnVlL3VuZGVyc3RhbmRpbmctdnVlLWpzLXJlYWN0aXZpdHktZGVwdGgtb2JqZWN0LWRlZmluZXByb3BlcnR5Lmh0bWw=">深入理解 Vue.js 响应式原理</span></li>
+<li><a target="_blank" rel="noopener" href="https://www.w3cplus.com/vue/vue-two-way-binding-object-defineproperty.html">Vue 双向绑定的实现原理 <code>Object.defineproperty</code> </a></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cudzNjcGx1cy5jb20vdnVlL3Z1ZS10d28td2F5LWJpbmRpbmcuaHRtbA==">Vue 的双向绑定原理及实现</span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cudzNjcGx1cy5jb20vdnVlL3Z1ZS1yZWFjdGl2aXR5Lmh0bWw=">Vue 中的响应式</span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cudzNjcGx1cy5jb20vdnVlL3JlYWN0aXZlLmh0bWw=">从 JavaScript 属性描述器剖析 Vue.js 响应式视图</span></li>
+</ul>
+<p>对于 Vue 自带的响应式系统，并不是咱们今天要聊的东西。我们还是回到 Vue 的虚拟 DOM 中来。对于虚拟 DOM，咱们来看一个简单的实例，就是下图所示的这个，详细的阐述了 <code>模板 → 渲染函数 → 虚拟DOM树 → 真实DOM</code>  的一个过程</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-54ee24bdb630fb55.png" alt></p>
+<p>image</p>
+<p>其实 Vue 中的虚拟 DOM 还是很复杂的，我也是一知半解，如果你想深入的了解，可以阅读 @JoeRay61 的《<span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAwODI5MTY0NQ==">Vue 原理解析之 Virtual DOM</span>》一文。</p>
+<p>通过前面的学习，我们初步了解到 Vue 通过建立一个<strong>虚拟 DOM</strong> 对真实 DOM 发生的变化保持追踪。比如下面这行代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;h1&#x27;</span>, <span class="variable language_">this</span>.<span class="property">blogTitle</span>)</span><br></pre></td></tr></table></figure>
+<p><code>createElement</code>  到底会返回什么呢？其实不是一个实际的 DOM 元素。它更准确的名字可能是  <code>createNodeDescription</code> ，因为它所包含的信息会告诉 Vue 页面上需要渲染什么样的节点，及其子节点。我们把这样的节点描述为 “虚拟节点 (Virtual Node)”，也常简写它为 “VNode”。“虚拟 DOM” 是我们对由 Vue 组件树建立起来的整个 VNode 树的称呼。</p>
+<p>Vue 组件树建立起来的整个 VNode 树是唯一的。这意味着，下面的 ** <code>render</code>  函数是无效 ** 的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> myParagraphVNode = <span class="title function_">createElement</span>(<span class="string">&#x27;p&#x27;</span>, <span class="string">&#x27;hi&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>, [</span><br><span class="line">        </span><br><span class="line">        myParagraphVNode, myParagraphVNode</span><br><span class="line">    ])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你真的需要重复很多次的元素 / 组件，你可以使用工厂函数来实现。例如，下面这个例子  <code>render</code>  函数完美有效地渲染了  <code>20</code>  个重复的段落：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>,</span><br><span class="line">        <span class="title class_">Array</span>.<span class="title function_">apply</span>(<span class="literal">null</span>, &#123; <span class="attr">length</span>: <span class="number">20</span> &#125;).<span class="title function_">map</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;p&#x27;</span>, <span class="string">&#x27;hi&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="vue-的渲染机制"><a class="markdownIt-Anchor" href="#vue-的渲染机制">#</a> Vue 的渲染机制</h2>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-b34d3ed28b6eccb6.png" alt></p>
+<p>image</p>
+<p>上图展示的是独立构建时的一个渲染流程图。</p>
+<p>继续使用上面用到的模板到真实 DOM 过程的一个图：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-3466e87621454e79.png" alt></p>
+<p>image</p>
+<p>这里会涉及到 Vue 的另外两个概念：</p>
+<ul>
+<li><strong>独立构建</strong>：包含模板编译器，渲染过程 <code>HTML字符串 → render函数 → VNode → 真实DOM节点</code></li>
+<li><strong>运行时构建</strong>：不包含模板编译器，渲染过程 <code>render函数 → VNode → 真实DOM节点</code></li>
+</ul>
+<p>运行时构建的包，会比独立构建少一个模板编译器。在 <code>$mount</code>  函数上也不同。而 <code>$mount</code>  方法又是整个渲染过程的起始点。用一张流程图来说明：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-7f193c6cb2e36da0.png" alt></p>
+<p>image</p>
+<p>由此图可以看到，在渲染过程中，提供了三种渲染模式，自定义 <code>render</code>  函数、 <code>template</code> 、 <code>el</code>  均可以渲染页面，也就是对应我们使用 Vue 时，三种写法：</p>
+<h3 id="自定义render函数"><a class="markdownIt-Anchor" href="#自定义render函数">#</a> 自定义 <code>render函数</code></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;anchored-heading&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> createElement (</span><br><span class="line">            <span class="string">&#x27;h&#x27;</span> + <span class="variable language_">this</span>.<span class="property">level</span>,   </span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">$slots</span>.<span class="property">default</span> </span><br><span class="line">        )</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">level</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">            <span class="attr">required</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="template写法"><a class="markdownIt-Anchor" href="#template写法">#</a>  <code>template</code>  写法</h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">template</span>: <span class="string">`&lt;div&gt;&#123;&#123; msg &#125;&#125;&lt;/div&gt;`</span>,</span><br><span class="line">    data () &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">msg</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="el写法"><a class="markdownIt-Anchor" href="#el写法">#</a>  <code>el</code>  写法</h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    data () &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">msg</span>: <span class="string">&#x27;Hello Vue!&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这三种渲染模式最终都是要得到 <code>render</code>  函数。只不过用户自定义的 <code>render</code>  函数省去了程序分析的过程，等同于处理过的 <code>render</code>  函数，而普通的 <code>template</code>  或者 <code>el</code>  只是字符串，需要解析成 AST，再将 AST 转化为 <code>render</code>  函数。</p>
+<blockquote>
+<p><strong>记住一点，无论哪种方法，都要得到 <code>render</code>  函数。</strong></p>
+</blockquote>
+<p>我们在使用过程中具体要使用哪种调用方式，要根据具体的需求来。</p>
+<p>如果是比较简单的逻辑，使用 <code>template</code>  和 <code>el</code>  比较好，因为这两种都属于声明式渲染，对用户理解比较容易，但灵活性比较差，因为最终生成的 <code>render</code>  函数是由程序通过 AST 解析优化得到的；而使用自定义 <code>render</code>  函数相当于人已经将逻辑翻译给程序，能够胜任复杂的逻辑，灵活性高，但对于用户的理解相对差点。</p>
+<h2 id="理解createelement"><a class="markdownIt-Anchor" href="#理解createelement">#</a> 理解 <code>createElement</code></h2>
+<p>在使用 <code>render</code>  函数，其中还有另一个需要掌握的部分，那就是 <code>createElement</code> 。接下来我们需要熟悉的是如何在 <code>createElement</code>  函数中生成模板。那么我们分两个部分来对 <code>createElement</code>  进行理解。</p>
+<h3 id="createelement参数"><a class="markdownIt-Anchor" href="#createelement参数">#</a>  <code>createElement</code>  参数</h3>
+<p><code>createElement</code>  可以是接受多个参数：</p>
+<h4 id="第一个参数string-object-function"><a class="markdownIt-Anchor" href="#第一个参数string-object-function">#</a> 第一个参数： <code>&#123;String | Object | Function&#125;</code></h4>
+<p>第一个参数对于 <code>createElement</code>  而言是一个必须的参数，这个参数可以是字符串 <code>string</code> 、是一个对象 <code>object</code> ，也可以是一个函数 <code>function</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">custom-element</span>&gt;</span><span class="tag">&lt;/<span class="name">custom-element</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;custom-element&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面的示例，给 <code>createElement</code>  传了一个 <code>String</code>  参数 <code>'div'</code> ，即传了一个 HTML 标签字符。最后会有一个 <code>div</code>  元素渲染出来：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-eb35f142664bda0c.png" alt></p>
+<p>image</p>
+<p>接着把上例中的 <code>String</code>  换成一个 <code>Object</code> ，比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;custom-element&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">createElement</span>(&#123;</span><br><span class="line">            <span class="attr">template</span>: <span class="string">`&lt;div&gt;Hello Vue!&lt;/div&gt;`</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上例传了一个 <code>&#123;template: '&lt;div&gt;Hello Vue!&lt;/div&gt;'&#125;</code>  对象。此时 <code>custom-element</code>  组件渲染出来的结果如下：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-cafcbeeddcfda7e4.png" alt></p>
+<p>image</p>
+<p>除此之外，还可以传一个 <code>Function</code> ，比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;custom-element&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> eleFun = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                <span class="attr">template</span>: <span class="string">`&lt;div&gt;Hello Vue!&lt;/div&gt;`</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="title function_">eleFun</span>())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>最终得到的结果和上图是一样的。这里传了一个 <code>eleFun()</code>  函数给 <code>createElement</code> ，而这个函数返回的是一个对象。</p>
+<h4 id="第二个参数object"><a class="markdownIt-Anchor" href="#第二个参数object">#</a> 第二个参数: <code>&#123;Object&#125;</code></h4>
+<p><code>createElement</code>  是一个可选参数，这个参数是一个 <code>Object</code> 。来看一个小示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">custom-element</span>&gt;</span><span class="tag">&lt;/<span class="name">custom-element</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;custom-element&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> self = <span class="variable language_">this</span></span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>, &#123;</span><br><span class="line">            <span class="string">&#x27;class&#x27;</span>: &#123;</span><br><span class="line">                <span class="attr">foo</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">bar</span>: <span class="literal">false</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">style</span>: &#123;</span><br><span class="line">                <span class="attr">color</span>: <span class="string">&#x27;red&#x27;</span>,</span><br><span class="line">                <span class="attr">fontSize</span>: <span class="string">&#x27;14px&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">attrs</span>: &#123;</span><br><span class="line">                <span class="attr">id</span>: <span class="string">&#x27;boo&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">domProps</span>: &#123;</span><br><span class="line">                <span class="attr">innerHTML</span>: <span class="string">&#x27;Hello Vue!&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>最终生成的 DOM，将会带一些属性和内容的 <code>div</code>  元素，如下图所示：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-bef18523b2d62e16.png" alt></p>
+<p>image</p>
+<h4 string | array id="第三个参数"><a class="markdownIt-Anchor" href="#第三个参数">#</a> 第三个参数：</h4>
+<p><code>createElement</code>  还有第三个参数，这个参数是可选的，可以给其传一个 <code>String</code>  或 <code>Array</code> 。比如下面这个小示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">custom-element</span>&gt;</span><span class="tag">&lt;/<span class="name">custom-element</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;custom-element&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> self = <span class="variable language_">this</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">createElement</span>(</span><br><span class="line">            <span class="string">&#x27;div&#x27;</span>, </span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">class</span>: &#123;</span><br><span class="line">                    <span class="attr">title</span>: <span class="literal">true</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">style</span>: &#123;</span><br><span class="line">                    <span class="attr">border</span>: <span class="string">&#x27;1px solid&#x27;</span>,</span><br><span class="line">                    <span class="attr">padding</span>: <span class="string">&#x27;10px&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, </span><br><span class="line">            [</span><br><span class="line">                <span class="title function_">createElement</span>(<span class="string">&#x27;h1&#x27;</span>, <span class="string">&#x27;Hello Vue!&#x27;</span>),</span><br><span class="line">                <span class="title function_">createElement</span>(<span class="string">&#x27;p&#x27;</span>, <span class="string">&#x27;开始学习Vue!&#x27;</span>)</span><br><span class="line">            ] </span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>最终的效果如下：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-1c69ce736a29a3c1.png" alt></p>
+<p>image</p>
+<p>其实从上面这几个小例来看，不难发现，以往我们使用 <code>Vue.component()</code>  创建组件的方式，都可以用 <code>render</code>  函数配合 <code>createElement</code>  来完成。你也会发现，使用 <code>Vue.component()</code>  和 <code>render</code>  各有所长，正如文章开头的一个示例代码，就不适合 <code>Vue.component()</code>  的 <code>template</code> ，而使用 <code>render</code>  更方便。</p>
+<p>接下来看一个小示例，看看 <code>template</code>  和 <code>render</code>  方式怎么创建相同效果的一个组件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">custom-element</span>&gt;</span><span class="tag">&lt;/<span class="name">custom-element</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;custom-element&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">template</span>: <span class="string">`&lt;div :class=&quot;&#123;show: show&#125;&quot; @click=&quot;handleClick&quot;&gt;Hello Vue!&lt;/div&gt;`</span>,</span><br><span class="line">    data () &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">show</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="attr">handleClick</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Clicked!&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面 <code>Vue.component()</code>  中的代码换成 <code>render</code>  函数之后，可以这样写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;custom-element&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>, &#123;</span><br><span class="line">            <span class="attr">class</span>: &#123;</span><br><span class="line">                <span class="attr">show</span>: <span class="variable language_">this</span>.<span class="property">show</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">attrs</span>: &#123;</span><br><span class="line">                <span class="attr">id</span>: <span class="string">&#x27;box&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">on</span>: &#123;</span><br><span class="line">                <span class="attr">click</span>: <span class="variable language_">this</span>.<span class="property">handleClick</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&#x27;Hello Vue!&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    data () &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">show</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="attr">handleClick</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Clicked!&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>最后声明一个 Vue 实例，并挂载到 <code>id</code>  为 <code>#app</code>  的一个元素上：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="createelement解析过程"><a class="markdownIt-Anchor" href="#createelement解析过程">#</a>  <code>createElement</code>  解析过程</h3>
+<p>简单的来看一下 <code>createElement</code>  解析的过程，这部分需要对 JS 有一些功底。不然看起来有点蛋疼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">SIMPLE_NORMALIZE</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ALWAYS_NORMALIZE</span> = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createElement</span> (context, tag, data, children, normalizationType, alwaysNormalize) &#123;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(data) || <span class="title function_">isPrimitive</span>(data)) &#123;</span><br><span class="line">        normalizationType = children</span><br><span class="line">        children = data</span><br><span class="line">        data = <span class="literal">undefined</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (alwaysNormalize) normalizationType = <span class="variable constant_">ALWAYS_NORMALIZE</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">_createElement</span>(context, tag, data, children, normalizationType)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_createElement</span> (context, tag, data, children, normalizationType) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (data &amp;&amp; data.<span class="property">__ob__</span>) &#123;</span><br><span class="line">            process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&#x27;production&#x27;</span> &amp;&amp; <span class="title function_">warn</span>(</span><br><span class="line">            <span class="string">`Avoid using observed data object as vnode data: <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(data)&#125;</span>\n`</span> +</span><br><span class="line">            <span class="string">&#x27;Always create fresh vnode data objects in each render!&#x27;</span>,</span><br><span class="line">            context</span><br><span class="line">            )</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">createEmptyVNode</span>()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (!tag) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">createEmptyVNode</span>()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(children) &amp;&amp; <span class="keyword">typeof</span> children[<span class="number">0</span>] === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">            data = data || &#123;&#125;</span><br><span class="line">            data.<span class="property">scopedSlots</span> = &#123; <span class="attr">default</span>: children[<span class="number">0</span>] &#125;</span><br><span class="line">            children.<span class="property">length</span> = <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (normalizationType === <span class="variable constant_">ALWAYS_NORMALIZE</span>) &#123;</span><br><span class="line">            children = <span class="title function_">normalizeChildren</span>(children)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (normalizationType === <span class="variable constant_">SIMPLE_NORMALIZE</span>) &#123;</span><br><span class="line">            children = <span class="title function_">simpleNormalizeChildren</span>(children)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> vnode, ns</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> tag === <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="title class_">Ctor</span></span><br><span class="line">            </span><br><span class="line">            ns = config.<span class="title function_">getTagNamespace</span>(tag)</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (config.<span class="title function_">isReservedTag</span>(tag)) &#123;</span><br><span class="line">                </span><br><span class="line">                vnode = <span class="keyword">new</span> <span class="title class_">VNode</span>(</span><br><span class="line">                    config.<span class="title function_">parsePlatformTagName</span>(tag), data, children,</span><br><span class="line">                    <span class="literal">undefined</span>, <span class="literal">undefined</span>, context</span><br><span class="line">                )</span><br><span class="line"></span><br><span class="line">                </span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((<span class="title class_">Ctor</span> = <span class="title function_">resolveAsset</span>(context.<span class="property">$options</span>, <span class="string">&#x27;components&#x27;</span>, tag))) &#123;</span><br><span class="line">                </span><br><span class="line">                vnode = <span class="title function_">createComponent</span>(<span class="title class_">Ctor</span>, data, context, children, tag)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                </span><br><span class="line">                vnode = <span class="keyword">new</span> <span class="title class_">VNode</span>(</span><br><span class="line">                    tag, data, children,</span><br><span class="line">                    <span class="literal">undefined</span>, <span class="literal">undefined</span>, context</span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            vnode = <span class="title function_">createComponent</span>(tag, data, context, children)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (vnode) &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (ns) <span class="title function_">applyNS</span>(vnode, ns)</span><br><span class="line">            <span class="keyword">return</span> vnode</span><br><span class="line">        </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">createEmptyVNode</span>()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单的梳理了一个流程图，可以参考下</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-e0558045f83150dd.png" alt></p>
+<p>image</p>
+<blockquote>
+<p>这部分代码和流程图来自于 @JoeRay61 的《<span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAwODI5MTY0NQ==">Vue 原理解析之 Virtual DOM</span>》一文。</p>
+</blockquote>
+<h2 id="使用-javascript-代替模板功能"><a class="markdownIt-Anchor" href="#使用-javascript-代替模板功能">#</a> 使用 JavaScript 代替模板功能</h2>
+<p>在使用 Vue 模板的时候，我们可以在模板中灵活的使用 <a target="_blank" rel="noopener" href="https://www.w3cplus.com/vue/v-if-vs-v-show.html"> <code>v-if</code> </a>、<a target="_blank" rel="noopener" href="https://www.w3cplus.com/vue/v-for.html"> <code>v-for</code> </a>、<a target="_blank" rel="noopener" href="https://www.w3cplus.com/vue/v-model.html"> <code>v-model</code> </a> 和 <a target="_blank" rel="noopener" href="https://www.w3cplus.com/vue/vue-slot.html"> <code>&lt;slot&gt;</code> </a> 之类的。但在 <code>render</code>  函数中是没有提供专用的 API。如果在 <code>render</code>  使用这些，需要使用原生的 JavaScript 来实现。</p>
+<h3 id="v-if和v-for"><a class="markdownIt-Anchor" href="#v-if和v-for">#</a>  <code>v-if</code>  和 <code>v-for</code></h3>
+<p>在 <code>render</code>  函数中可以使用 <code>if/else</code>  和 <code>map</code>  来实现 <code>template</code>  中的 <code>v-if</code>  和 <code>v-for</code> 。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">v-if</span>=<span class="string">&quot;items.length&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;item in items&quot;</span>&gt;</span>&#123;&#123; item &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">v-else</span>&gt;</span>No items found.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>换成 <code>render</code>  函数，可以这样写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;item-list&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">props</span>: [<span class="string">&#x27;items&#x27;</span>],</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">items</span>.<span class="property">length</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;ul&#x27;</span>, <span class="variable language_">this</span>.<span class="property">items</span>.<span class="title function_">map</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;item&#x27;</span>)</span><br><span class="line">            &#125;))</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;p&#x27;</span>, <span class="string">&#x27;No items found.&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&lt;div&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">item-list</span> <span class="attr">:items</span>=<span class="string">&quot;items&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">item-list</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    data () &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">items</span>: [<span class="string">&#x27;大漠&#x27;</span>, <span class="string">&#x27;W3cplus&#x27;</span>, <span class="string">&#x27;blog&#x27;</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>得到的效果如下：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-b4d9489c6fd49ab6.gif" alt></p>
+<p>image</p>
+<h3 id="v-model"><a class="markdownIt-Anchor" href="#v-model">#</a>  <code>v-model</code></h3>
+<p><code>render</code>  函数中也没有与 <code>v-model</code>  相应的 API，如果要实现 <code>v-model</code>  类似的功能，同样需要使用原生 JavaScript 来实现。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">el-input</span> <span class="attr">:</span> @<span class="attr">input</span>=<span class="string">&quot;val =&gt; name = val&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;el-input&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> self = <span class="variable language_">this</span></span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;input&#x27;</span>, &#123;</span><br><span class="line">            <span class="attr">domProps</span>: &#123;</span><br><span class="line">                <span class="attr">value</span>: self.<span class="property">name</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">on</span>: &#123;</span><br><span class="line">                <span class="attr">input</span>: <span class="keyword">function</span> (<span class="params">event</span>) &#123;</span><br><span class="line">                    self.$emit(<span class="string">&#x27;input&#x27;</span>, event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="title class_">String</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    data () &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;大漠&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>刷新你的浏览器，可以看到效果如下：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/13429147-a59263e3580b34ee.png" alt></p>
+<p>image</p>
+<p>这就是深入底层要付出的，尽管麻烦了一些，但相对于  <code>v-model</code>  来说，你可以更灵活地控制。</p>
+<h3 id="插槽"><a class="markdownIt-Anchor" href="#插槽">#</a> 插槽</h3>
+<p>你可以从 <code>this.$slots</code>  获取 VNodes 列表中的静态内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>, <span class="variable language_">this</span>.<span class="property">$slots</span>.<span class="property">default</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还可以从 <code>this.$scopedSlots</code>  中获得能用作函数的作用域插槽，这个函数返回 VNodes:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">props</span>: [<span class="string">&#x27;message&#x27;</span>],</span><br><span class="line"><span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>, [</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">$scopedSlots</span>.<span class="title function_">default</span>(&#123;</span><br><span class="line">            <span class="attr">text</span>: <span class="variable language_">this</span>.<span class="property">message</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果要用渲染函数向子组件中传递作用域插槽，可以利用 VNode 数据中的 <code>scopedSlots</code>  域：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">custom-ele</span>&gt;</span><span class="tag">&lt;/<span class="name">custom-ele</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;custom-ele&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>, [</span><br><span class="line">            <span class="title function_">createElement</span>(<span class="string">&#x27;child&#x27;</span>, &#123;</span><br><span class="line">                <span class="attr">scopedSlots</span>: &#123;</span><br><span class="line">                    <span class="attr">default</span>: <span class="keyword">function</span> (<span class="params">props</span>) &#123;</span><br><span class="line">                        <span class="keyword">return</span> [</span><br><span class="line">                            <span class="title function_">createElement</span>(<span class="string">&#x27;span&#x27;</span>, <span class="string">&#x27;From Parent Component&#x27;</span>),</span><br><span class="line">                            <span class="title function_">createElement</span>(<span class="string">&#x27;span&#x27;</span>, props.<span class="property">text</span>)</span><br><span class="line">                        ]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        ])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;child&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">createElement</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">createElement</span>(<span class="string">&#x27;strong&#x27;</span>, <span class="variable language_">this</span>.<span class="property">$scopedSlots</span>.<span class="title function_">default</span>(&#123;</span><br><span class="line">            <span class="attr">text</span>: <span class="string">&#x27;This is Child Component&#x27;</span></span><br><span class="line">        &#125;))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="jsx"><a class="markdownIt-Anchor" href="#jsx">#</a> JSX</h2>
+<p>如果写习惯了 <code>template</code> ，然后要用 <code>render</code>  函数来写，一定会感觉好痛苦，特别是面对复杂的组件的时候。不过我们在 Vue 中使用 JSX 可以让我们回到更接近于模板的语法上。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">AnchoredHeading</span> <span class="keyword">from</span> <span class="string">&#x27;./AnchoredHeading.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#demo&#x27;</span>,</span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">h</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">AnchoredHeading</span> <span class="attr">level</span>=<span class="string">&#123;1&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">span</span>&gt;</span> world!</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">AnchoredHeading</span>&gt;</span></span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>将  <code>h</code>  作为  <code>createElement</code>  的别名是 Vue 生态系统中的一个通用惯例，实际上也是 JSX 所要求的，如果在作用域中  <code>h</code>  失去作用，在应用中会触发报错。</p>
+</blockquote>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结">#</a> 总结</h2>
+<p>回过头来看，Vue 中的渲染核心关键的几步流程还是非常清晰的：</p>
+<ul>
+<li><code>new Vue</code> ，执行初始化</li>
+<li>挂载 <code>$mount</code>  方法，通过自定义 <code>render</code>  方法、 <code>template</code> 、 <code>el</code>  等生成 <code>render</code>  函数</li>
+<li>通过 <code>Watcher</code>  监听数据的变化</li>
+<li>当数据发生变化时， <code>render</code>  函数执行生成 VNode 对象</li>
+<li>通过 <code>patch</code>  方法，对比新旧 VNode 对象，通过 DOM Diff 算法，添加、修改、删除真正的 DOM 元素</li>
+</ul>
+<p>至此，整个 <code>new Vue</code>  的渲染过程完毕。</p>
+<p>而这篇文章，主要把精力集中在 <code>render</code>  函数这一部分。学习了怎么用 <code>render</code>  函数来创建组件，以及了解了其中 <code>createElement</code> 。</p>
+<p>最后要说的是，上文虽然以学习 <code>render</code>  函数，但文中涉及了 Vue 不少的知识点，也有点零乱。初学者自己根据自己获取所要的知识点。由于本人也是初涉 Vue 相关的知识点，如果文章中有不对之处，烦请路过的大神拍正。</p>
+<p>原文地址 <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC83NTA4ZDJhMTE0ZDM=">www.jianshu.com</span></p>
+
+      <div class="tags">
+          <a href="/tags/Vue/" rel="tag"><i class="ic i-tag"></i> Vue</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2022-06-22 15:37:25" itemprop="dateModified" datetime="2022-06-22T15:37:25+08:00">2022-06-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>Sleeo <i class="ic i-at"><em>@</em></i>Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://sleeowen.github.io/2020/07/12/Vue%E7%9A%84Render%E5%87%BD%E6%95%B0/" title="Vue的Render函数">https://sleeowen.github.io/2020/07/12/Vue的Render函数/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2020/07/01/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bcheckbox/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipex2cdtbj20zk0m8x6p.jpg" title="element源码解析之checkbox">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>element源码解析之checkbox</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2020/07/20/vue%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95-%E4%BA%8B%E4%BB%B6/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipevarprfj20zk0m8npd.jpg" title="vue兄弟组件间传数据的方法-事件">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>vue兄弟组件间传数据的方法-事件</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#-more-%E5%9B%9E%E5%BF%86-vue-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text"> 
+回忆 Vue 的一些基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E7%A1%80"><span class="toc-number">2.</span> <span class="toc-text"> 渲染函数的基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8A%82%E7%82%B9-%E6%A0%91%E4%BB%A5%E5%8F%8A%E8%99%9A%E6%8B%9F-dom"><span class="toc-number">3.</span> <span class="toc-text"> 节点、树以及虚拟 DOM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F-dom"><span class="toc-number">4.</span> <span class="toc-text"> 虚拟 DOM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-%E7%9A%84%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6"><span class="toc-number">5.</span> <span class="toc-text"> Vue 的渲染机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89render%E5%87%BD%E6%95%B0"><span class="toc-number">5.1.</span> <span class="toc-text"> 自定义 render函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#template%E5%86%99%E6%B3%95"><span class="toc-number">5.2.</span> <span class="toc-text">  template  写法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#el%E5%86%99%E6%B3%95"><span class="toc-number">5.3.</span> <span class="toc-text">  el  写法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%90%86%E8%A7%A3createelement"><span class="toc-number">6.</span> <span class="toc-text"> 理解 createElement</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#createelement%E5%8F%82%E6%95%B0"><span class="toc-number">6.1.</span> <span class="toc-text">  createElement  参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0string-object-function"><span class="toc-number">6.1.1.</span> <span class="toc-text"> 第一个参数： {String | Object | Function}</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0object"><span class="toc-number">6.1.2.</span> <span class="toc-text"> 第二个参数: {Object}</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="toc-number">6.1.3.</span> <span class="toc-text"> 第三个参数：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#createelement%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="toc-number">6.2.</span> <span class="toc-text">  createElement  解析过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-javascript-%E4%BB%A3%E6%9B%BF%E6%A8%A1%E6%9D%BF%E5%8A%9F%E8%83%BD"><span class="toc-number">7.</span> <span class="toc-text"> 使用 JavaScript 代替模板功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#v-if%E5%92%8Cv-for"><span class="toc-number">7.1.</span> <span class="toc-text">  v-if  和 v-for</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#v-model"><span class="toc-number">7.2.</span> <span class="toc-text">  v-model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E6%A7%BD"><span class="toc-number">7.3.</span> <span class="toc-text"> 插槽</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jsx"><span class="toc-number">8.</span> <span class="toc-text"> JSX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text"> 总结</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Sleeo"
+      data-src="/images/img.png">
+  <p class="name" itemprop="name">Sleeo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">71</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2020/07/01/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bcheckbox/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2020/07/20/vue%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95-%E4%BA%8B%E4%BB%B6/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/04/11/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" title="webpack相关问题">webpack相关问题</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/06/15/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/" title="for循环全家桶">for循环全家桶</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/07/%E7%AE%97%E6%B3%95%E9%AB%98%E9%A2%91%E9%97%AE%E9%A2%98/" title="算法高频问题">算法高频问题</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/06/29/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bemitter-js/" title="element源码解析之emitter.js">element源码解析之emitter.js</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/03/02/meta%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" title="meta标签使用总结">meta标签使用总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/08/10/node%E6%A1%86%E6%9E%B6%E7%AE%80%E5%8D%95%E5%AF%B9%E6%AF%94/" title="node框架简单对比">node框架简单对比</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2021/06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/" title="使用css的GPU动画优化">使用css的GPU动画优化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/06/11/DOM%E4%BA%8B%E4%BB%B6%E6%B5%81/" title="DOM事件流">DOM事件流</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/02/28/Vue%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91/" title="Vue模板编译">Vue模板编译</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/06/01/DOM%E7%BA%A7%E5%88%AB%E4%B8%8EDOM%E4%BA%8B%E4%BB%B6/" title="DOM级别与DOM事件">DOM级别与DOM事件</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sleeo @ Sleeo</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="站点总字数">403k 字</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:06</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2020/07/12/Vue的Render函数/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,575 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://sleeowen.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Blog" href="https://sleeowen.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Blog" href="https://sleeowen.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="面试" />
+
+
+<link rel="canonical" href="https://sleeowen.github.io/2020/05/14/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%B7%B1%E6%8B%B7%E8%B4%9D/">
+
+
+
+  <title>
+如何实现一个深拷贝 |
+Sleeo = Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">如何实现一个深拷贝
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2020-05-14 15:20:41">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2020-05-14T15:20:41+08:00">2020-05-14</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sleeo</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciuv0socj20zk0m8qes.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipewr8iypj20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclimtf7dj20zk0m8qav.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeyhsblkj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://sleeowen.github.io/2020/05/14/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%B7%B1%E6%8B%B7%E8%B4%9D/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/img.png">
+    <meta itemprop="name" content="Sleeo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="引言"><a class="markdownIt-Anchor" href="#引言">#</a> 引言</h2>
+<p>上篇文章详细介绍了浅拷贝  <code>Object.assign</code> ，并对其进行了模拟实现，在实现的过程中，介绍了很多基础知识。今天这篇文章我们来看看一道必会面试题，即如何实现一个深拷贝。本文会详细介绍对象、数组、循环引用、引用丢失、Symbol 和递归爆栈等情况下的深拷贝实践，欢迎阅读。</p>
+<h2 id="-more-第一步简单实现"><a class="markdownIt-Anchor" href="#-more-第一步简单实现">#</a> <span id="more"></span><br>
+第一步：简单实现</h2>
+<p>其实深拷贝可以拆分成 2 步，浅拷贝 + 递归，浅拷贝时判断属性值是否是对象，如果是对象就进行递归操作，两个一结合就实现了深拷贝。</p>
+<p>根据上篇文章内容，我们可以写出简单浅拷贝代码如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">cloneShallow</span>(<span class="params">source</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> target = &#123;&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> source) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(source, key)) &#123;</span><br><span class="line">            target[key] = source[key];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试用例</span></span><br><span class="line"><span class="keyword">var</span> a = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;muyiy&quot;</span>,</span><br><span class="line">    <span class="attr">book</span>: &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;You Don&#x27;t Know JS&quot;</span>,</span><br><span class="line">        <span class="attr">price</span>: <span class="string">&quot;45&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">a1</span>: <span class="literal">undefined</span>,</span><br><span class="line">    <span class="attr">a2</span>: <span class="literal">null</span>,</span><br><span class="line">    <span class="attr">a3</span>: <span class="number">123</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> b = <span class="title function_">cloneShallow</span>(a);</span><br><span class="line"></span><br><span class="line">a.<span class="property">name</span> = <span class="string">&quot;高级前端进阶&quot;</span>;</span><br><span class="line">a.<span class="property">book</span>.<span class="property">price</span> = <span class="string">&quot;55&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b);</span><br><span class="line"><span class="comment">// &#123; </span></span><br><span class="line"><span class="comment">//   name: &#x27;muyiy&#x27;, </span></span><br><span class="line"><span class="comment">//   book: &#123; title: &#x27;You Don\&#x27;t Know JS&#x27;, price: &#x27;55&#x27; &#125;,</span></span><br><span class="line"><span class="comment">//   a1: undefined,</span></span><br><span class="line"><span class="comment">//   a2: null,</span></span><br><span class="line"><span class="comment">//   a3: 123</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+<p>上面代码是浅拷贝实现，只要稍微改动下，加上是否是对象的判断并在相应的位置使用递归就可以实现简单深拷贝。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep1</span>(<span class="params">source</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> target = &#123;&#125;;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> source) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(source, key)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">typeof</span> source[key] === <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">                target[key] = <span class="title function_">cloneDeep1</span>(source[key]); <span class="comment">// 注意这里</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                target[key] = source[key];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用上面测试用例测试一下</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="title function_">cloneDeep1</span>(a);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b);</span><br><span class="line"><span class="comment">// &#123; </span></span><br><span class="line"><span class="comment">//   name: &#x27;muyiy&#x27;, </span></span><br><span class="line"><span class="comment">//   book: &#123; title: &#x27;You Don\&#x27;t Know JS&#x27;, price: &#x27;45&#x27; &#125;, </span></span><br><span class="line"><span class="comment">//   a1: undefined,</span></span><br><span class="line"><span class="comment">//   a2: &#123;&#125;,</span></span><br><span class="line"><span class="comment">//   a3: 123</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+<p>一个简单的深拷贝就完成了，但是这个实现还存在很多问题。</p>
+<ul>
+<li>
+<p>1、没有对传入参数进行校验，传入  <code>null</code>  时应该返回  <code>null</code>  而不是  <code>&#123;&#125;</code></p>
+</li>
+<li>
+<p>2、对于对象的判断逻辑不严谨，因为  <code>typeof null === 'object'</code></p>
+</li>
+<li>
+<p>3、没有考虑数组的兼容</p>
+</li>
+</ul>
+<h2 id="第二步拷贝数组"><a class="markdownIt-Anchor" href="#第二步拷贝数组">#</a> 第二步：拷贝数组</h2>
+<p>我们来看下对于对象的判断，之前在【进阶 3-3 期】有过介绍，判断方案如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isObject</span>(<span class="params">obj</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(obj) === <span class="string">&#x27;[object Object]&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是用在这里并不合适，因为我们要保留数组这种情况，所以这里使用  <code>typeof</code>  来处理。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span> <span class="comment">//&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125; <span class="comment">//&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> [] <span class="comment">//&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;&#125; <span class="comment">//&quot;function&quot; (特殊情况)</span></span><br></pre></td></tr></table></figure>
+<p>改动过后的 isObject 判断逻辑如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isObject</span>(<span class="params">obj</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">typeof</span> obj === <span class="string">&#x27;object&#x27;</span> &amp;&amp; obj != <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以兼容数组的写法如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep2</span>(<span class="params">source</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isObject</span>(source)) <span class="keyword">return</span> source; <span class="comment">// 非对象返回自身</span></span><br><span class="line">      </span><br><span class="line">    <span class="keyword">var</span> target = <span class="title class_">Array</span>.<span class="title function_">isArray</span>(source) ? [] : &#123;&#125;;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> source) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(source, key)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">isObject</span>(source[key])) &#123;</span><br><span class="line">                target[key] = <span class="title function_">cloneDeep2</span>(source[key]); <span class="comment">// 注意这里</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                target[key] = source[key];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用上面测试用例测试一下</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="title function_">cloneDeep2</span>(a);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b);</span><br><span class="line"><span class="comment">// &#123; </span></span><br><span class="line"><span class="comment">//   name: &#x27;muyiy&#x27;, </span></span><br><span class="line"><span class="comment">//   book: &#123; title: &#x27;You Don\&#x27;t Know JS&#x27;, price: &#x27;45&#x27; &#125;,</span></span><br><span class="line"><span class="comment">//   a1: undefined,</span></span><br><span class="line"><span class="comment">//   a2: null,</span></span><br><span class="line"><span class="comment">//   a3: 123</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="第三步循环引用"><a class="markdownIt-Anchor" href="#第三步循环引用">#</a> 第三步：循环引用</h2>
+<p>我们知道  <code>JSON</code>  无法深拷贝循环引用，遇到这种情况会抛出异常。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="comment">// 此处 a 是文章开始的测试用例</span></span><br><span class="line">a.<span class="property">circleRef</span> = a;</span><br><span class="line"></span><br><span class="line"><span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(a));</span><br><span class="line"><span class="comment">// TypeError: Converting circular structure to JSON</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-使用哈希表"><a class="markdownIt-Anchor" href="#1-使用哈希表">#</a> 1、使用哈希表</h3>
+<p>解决方案很简单，其实就是循环检测，我们设置一个数组或者哈希表存储已拷贝过的对象，当检测到当前对象已存在于哈希表中时，取出该值并返回即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep3</span>(<span class="params">source, hash = <span class="keyword">new</span> <span class="built_in">WeakMap</span>()</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isObject</span>(source)) <span class="keyword">return</span> source; </span><br><span class="line">    <span class="keyword">if</span> (hash.<span class="title function_">has</span>(source)) <span class="keyword">return</span> hash.<span class="title function_">get</span>(source); <span class="comment">// 新增代码，查哈希表</span></span><br><span class="line">      </span><br><span class="line">    <span class="keyword">var</span> target = <span class="title class_">Array</span>.<span class="title function_">isArray</span>(source) ? [] : &#123;&#125;;</span><br><span class="line">    hash.<span class="title function_">set</span>(source, target); <span class="comment">// 新增代码，哈希表设值</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> source) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(source, key)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">isObject</span>(source[key])) &#123;</span><br><span class="line">                target[key] = <span class="title function_">cloneDeep3</span>(source[key], hash); <span class="comment">// 新增代码，传入哈希表</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                target[key] = source[key];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试一下，看看效果如何。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="comment">// 此处 a 是文章开始的测试用例</span></span><br><span class="line">a.<span class="property">circleRef</span> = a;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="title function_">cloneDeep3</span>(a);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b);</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">// 	name: &quot;muyiy&quot;,</span></span><br><span class="line"><span class="comment">// 	a1: undefined,</span></span><br><span class="line"><span class="comment">//	a2: null,</span></span><br><span class="line"><span class="comment">// 	a3: 123,</span></span><br><span class="line"><span class="comment">// 	book: &#123;title: &quot;You Don&#x27;t Know JS&quot;, price: &quot;45&quot;&#125;,</span></span><br><span class="line"><span class="comment">// 	circleRef: &#123;name: &quot;muyiy&quot;, book: &#123;…&#125;, a1: undefined, a2: null, a3: 123, …&#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+<p>完美！</p>
+<h3 id="2-使用数组"><a class="markdownIt-Anchor" href="#2-使用数组">#</a> 2、使用数组</h3>
+<p>这里使用了  <code>ES6</code>  中的  <code>WeakMap</code>  来处理，那在  <code>ES5</code>  下应该如何处理呢？</p>
+<p>也很简单，使用数组来处理就好啦，代码如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep3</span>(<span class="params">source, uniqueList</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isObject</span>(source)) <span class="keyword">return</span> source; </span><br><span class="line">    <span class="keyword">if</span> (!uniqueList) uniqueList = []; <span class="comment">// 新增代码，初始化数组</span></span><br><span class="line">      </span><br><span class="line">    <span class="keyword">var</span> target = <span class="title class_">Array</span>.<span class="title function_">isArray</span>(source) ? [] : &#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ============= 新增代码</span></span><br><span class="line">    <span class="comment">// 数据已经存在，返回保存的数据</span></span><br><span class="line">    <span class="keyword">var</span> uniqueData = <span class="title function_">find</span>(uniqueList, source);</span><br><span class="line">    <span class="keyword">if</span> (uniqueData) &#123;</span><br><span class="line">        <span class="keyword">return</span> uniqueData.<span class="property">target</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// 数据不存在，保存源数据，以及对应的引用</span></span><br><span class="line">    uniqueList.<span class="title function_">push</span>(&#123;</span><br><span class="line">        <span class="attr">source</span>: source,</span><br><span class="line">        <span class="attr">target</span>: target</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// =============</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> source) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(source, key)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">isObject</span>(source[key])) &#123;</span><br><span class="line">                target[key] = <span class="title function_">cloneDeep3</span>(source[key], uniqueList); <span class="comment">// 新增代码，传入数组</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                target[key] = source[key];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 新增方法，用于查找</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">find</span>(<span class="params">arr, item</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i].<span class="property">source</span> === item) &#123;</span><br><span class="line">            <span class="keyword">return</span> arr[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用上面测试用例已测试通过</span></span><br></pre></td></tr></table></figure>
+<p>现在已经很完美的解决了循环引用这种情况，那其实还是一种情况是引用丢失，我们看下面的例子。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">var</span> obj1 = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;<span class="attr">a</span>: obj1, <span class="attr">b</span>: obj1&#125;;</span><br><span class="line"></span><br><span class="line">obj2.<span class="property">a</span> === obj2.<span class="property">b</span>; </span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj3 = <span class="title function_">cloneDeep2</span>(obj2);</span><br><span class="line">obj3.<span class="property">a</span> === obj3.<span class="property">b</span>; </span><br><span class="line"><span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>引用丢失在某些情况下是有问题的，比如上面的对象 obj2，obj2 的键值 a 和 b 同时引用了同一个对象 obj1，使用 cloneDeep2 进行深拷贝后就丢失了引用关系变成了两个不同的对象，那如何处理呢。</p>
+<p>其实你有没有发现，我们的 cloneDeep3 已经解决了这个问题，因为只要存储已拷贝过的对象就可以了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 木易杨</span><br><span class="line">var obj3 = cloneDeep3(obj2);</span><br><span class="line">obj3.a === obj3.b; </span><br><span class="line">// true</span><br></pre></td></tr></table></figure>
+<p>完美！</p>
+<h2 id="第四步拷贝-symbol"><a class="markdownIt-Anchor" href="#第四步拷贝-symbol">#</a> 第四步：拷贝  <code>Symbol</code></h2>
+<p>这个时候可能要搞事情了，那我们能不能拷贝 Symol 类型呢？</p>
+<p>当然可以，不过  <code>Symbol</code>  在  <code>ES6</code>  下才有，我们需要一些方法来检测出  <code>Symble</code>  类型。</p>
+<p>方法一： <code>Object.getOwnPropertySymbols(...)</code></p>
+<p>方法二： <code>Reflect.ownKeys(...)</code></p>
+<p><strong>对于方法一</strong>可以查找一个给定对象的符号属性时返回一个  <code>?symbol</code>  类型的数组。注意，每个初始化的对象都是没有自己的  <code>symbol</code>  属性的，因此这个数组可能为空，除非你已经在对象上设置了  <code>symbol</code>  属性。（来自 MDN）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> a = <span class="title class_">Symbol</span>(<span class="string">&quot;a&quot;</span>); <span class="comment">// 创建新的symbol类型</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&quot;b&quot;</span>); <span class="comment">// 从全局的symbol注册?表设置和取得symbol</span></span><br><span class="line"></span><br><span class="line">obj[a] = <span class="string">&quot;localSymbol&quot;</span>;</span><br><span class="line">obj[b] = <span class="string">&quot;globalSymbol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> objectSymbols = <span class="title class_">Object</span>.<span class="title function_">getOwnPropertySymbols</span>(obj);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(objectSymbols.<span class="property">length</span>); <span class="comment">// 2</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(objectSymbols)         <span class="comment">// [Symbol(a), Symbol(b)]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(objectSymbols[<span class="number">0</span>])      <span class="comment">// Symbol(a)</span></span><br></pre></td></tr></table></figure>
+<p><strong>对于方法二</strong>返回一个由目标对象<strong>自身</strong>的属性键组成的数组。它的返回值等同于 <code>Object.getOwnPropertyNames(target).concat(Object.getOwnPropertySymbols(target))</code> 。(来自 MDN)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Reflect.ownKeys(&#123;z: 3, y: 2, x: 1&#125;); // [ &quot;z&quot;, &quot;y&quot;, &quot;x&quot; ]</span><br><span class="line">Reflect.ownKeys([]); // [&quot;length&quot;]</span><br><span class="line"></span><br><span class="line">var sym = Symbol.for(&quot;comet&quot;);</span><br><span class="line">var sym2 = Symbol.for(&quot;meteor&quot;);</span><br><span class="line">var obj = &#123;[sym]: 0, &quot;str&quot;: 0, &quot;773&quot;: 0, &quot;0&quot;: 0,</span><br><span class="line">           [sym2]: 0, &quot;-1&quot;: 0, &quot;8&quot;: 0, &quot;second str&quot;: 0&#125;;</span><br><span class="line">Reflect.ownKeys(obj);</span><br><span class="line">// [ &quot;0&quot;, &quot;8&quot;, &quot;773&quot;, &quot;str&quot;, &quot;-1&quot;, &quot;second str&quot;, Symbol(comet), Symbol(meteor) ]</span><br><span class="line">// 注意顺序</span><br><span class="line">// Indexes in numeric order, </span><br><span class="line">// strings in insertion order, </span><br><span class="line">// symbols in insertion order</span><br></pre></td></tr></table></figure>
+<h3 id="方法一"><a class="markdownIt-Anchor" href="#方法一">#</a> 方法一</h3>
+<p>思路就是先查找有没有  <code>Symbol</code>  属性，如果查找到则先遍历处理  <code>Symbol</code>  情况，然后再处理正常情况，多出来的逻辑就是下面的新增代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep4</span>(<span class="params">source, hash = <span class="keyword">new</span> <span class="built_in">WeakMap</span>()</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isObject</span>(source)) <span class="keyword">return</span> source; </span><br><span class="line">    <span class="keyword">if</span> (hash.<span class="title function_">has</span>(source)) <span class="keyword">return</span> hash.<span class="title function_">get</span>(source); </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">let</span> target = <span class="title class_">Array</span>.<span class="title function_">isArray</span>(source) ? [] : &#123;&#125;;</span><br><span class="line">    hash.<span class="title function_">set</span>(source, target);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ============= 新增代码</span></span><br><span class="line">    <span class="keyword">let</span> symKeys = <span class="title class_">Object</span>.<span class="title function_">getOwnPropertySymbols</span>(source); <span class="comment">// 查找</span></span><br><span class="line">    <span class="keyword">if</span> (symKeys.<span class="property">length</span>) &#123; <span class="comment">// 查找成功	</span></span><br><span class="line">        symKeys.<span class="title function_">forEach</span>(<span class="function"><span class="params">symKey</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">isObject</span>(source[symKey])) &#123;</span><br><span class="line">                target[symKey] = <span class="title function_">cloneDeep4</span>(source[symKey], hash); </span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                target[symKey] = source[symKey];</span><br><span class="line">            &#125;    </span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// =============</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> source) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(source, key)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">isObject</span>(source[key])) &#123;</span><br><span class="line">                target[key] = <span class="title function_">cloneDeep4</span>(source[key], hash); </span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                target[key] = source[key];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试下效果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="comment">// 此处 a 是文章开始的测试用例</span></span><br><span class="line"><span class="keyword">var</span> sym1 = <span class="title class_">Symbol</span>(<span class="string">&quot;a&quot;</span>); <span class="comment">// 创建新的symbol类型</span></span><br><span class="line"><span class="keyword">var</span> sym2 = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&quot;b&quot;</span>); <span class="comment">// 从全局的symbol注册?表设置和取得symbol</span></span><br><span class="line"></span><br><span class="line">a[sym1] = <span class="string">&quot;localSymbol&quot;</span>;</span><br><span class="line">a[sym2] = <span class="string">&quot;globalSymbol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="title function_">cloneDeep4</span>(a);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b);</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">// 	name: &quot;muyiy&quot;,</span></span><br><span class="line"><span class="comment">// 	a1: undefined,</span></span><br><span class="line"><span class="comment">//	a2: null,</span></span><br><span class="line"><span class="comment">// 	a3: 123,</span></span><br><span class="line"><span class="comment">// 	book: &#123;title: &quot;You Don&#x27;t Know JS&quot;, price: &quot;45&quot;&#125;,</span></span><br><span class="line"><span class="comment">// 	circleRef: &#123;name: &quot;muyiy&quot;, book: &#123;…&#125;, a1: undefined, a2: null, a3: 123, …&#125;,</span></span><br><span class="line"><span class="comment">//  [Symbol(a)]: &#x27;localSymbol&#x27;,</span></span><br><span class="line"><span class="comment">//  [Symbol(b)]: &#x27;globalSymbol&#x27;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+<p>完美！</p>
+<h3 id="方法二"><a class="markdownIt-Anchor" href="#方法二">#</a> 方法二</h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep4</span>(<span class="params">source, hash = <span class="keyword">new</span> <span class="built_in">WeakMap</span>()</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isObject</span>(source)) <span class="keyword">return</span> source; </span><br><span class="line">    <span class="keyword">if</span> (hash.<span class="title function_">has</span>(source)) <span class="keyword">return</span> hash.<span class="title function_">get</span>(source); </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">let</span> target = <span class="title class_">Array</span>.<span class="title function_">isArray</span>(source) ? [] : &#123;&#125;;</span><br><span class="line">    hash.<span class="title function_">set</span>(source, target);</span><br><span class="line">    </span><br><span class="line">  	<span class="title class_">Reflect</span>.<span class="title function_">ownKeys</span>(source).<span class="title function_">forEach</span>(<span class="function"><span class="params">key</span> =&gt;</span> &#123; <span class="comment">// 改动</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">isObject</span>(source[key])) &#123;</span><br><span class="line">            target[key] = <span class="title function_">cloneDeep4</span>(source[key], hash); </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            target[key] = source[key];</span><br><span class="line">        &#125;  </span><br><span class="line">  	&#125;);</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试已通过</span></span><br></pre></td></tr></table></figure>
+<p>这里使用了  <code>Reflect.ownKeys()</code>  获取所有的键值，同时包括  <code>Symbol</code> ，对 source 遍历赋值即可。</p>
+<p>写到这里已经差不多了，我们再延伸下，对于  <code>target</code>  换一种写法，改动如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 木易杨</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep4</span>(<span class="params">source, hash = <span class="keyword">new</span> <span class="built_in">WeakMap</span>()</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isObject</span>(source)) <span class="keyword">return</span> source; </span><br><span class="line">    <span class="keyword">if</span> (hash.<span class="title function_">has</span>(source)) <span class="keyword">return</span> hash.<span class="title function_">get</span>(source); </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">let</span> target = <span class="title class_">Array</span>.<span class="title function_">isArray</span>(source) ? [...source] : &#123; ...source &#125;; <span class="comment">// 改动 1</span></span><br><span class="line">    hash.<span class="title function_">set</span>(source, target);</span><br><span class="line">    </span><br><span class="line">  	<span class="title class_">Reflect</span>.<span class="title function_">ownKeys</span>(target).<span class="title function_">forEach</span>(<span class="function"><span class="params">key</span> =&gt;</span> &#123; <span class="comment">// 改动 2</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">isObject</span>(source[key])) &#123;</span><br><span class="line">            target[key] = <span class="title function_">cloneDeep4</span>(source[key], hash); </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            target[key] = source[key];</span><br><span class="line">        &#125;  </span><br><span class="line">  	&#125;);</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试已通过</span></span><br></pre></td></tr></table></figure>
+<p>在改动 1 中，返回一个新数组或者新对象，获取到源对象之后就可以如改动 2 所示传入 target 遍历赋值即可。</p>
+<p><code>Reflect.ownKeys()</code>  这种方式的问题在于不能深拷贝原型链上的数据，因为返回的是目标对象<strong>自身</strong>的属性键组成的数组。如果想深拷贝原型链上的数据怎么办，那用  <code>for..in</code>  就可以了。</p>
+<p>我们再介绍下两个知识点，分别是<strong>构造字面量数组时使用展开语法</strong>和<strong>构造字面量对象时使用展开语法</strong>。（以下代码示例来源于 MDN）</p>
+<h4 id="1-展开语法之字面量数组"><a class="markdownIt-Anchor" href="#1-展开语法之字面量数组">#</a> 1、展开语法之字面量数组</h4>
+<p>这是  <code>ES2015 （ES6）</code>  才有的语法，可以通过字面量方式，构造新数组，而不再需要组合使用  <code>push</code> ,  <code>splice</code> ,  <code>concat</code>  等方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> parts = [<span class="string">&#x27;shoulders&#x27;</span>, <span class="string">&#x27;knees&#x27;</span>]; </span><br><span class="line"><span class="keyword">var</span> lyrics = [<span class="string">&#x27;head&#x27;</span>, ...parts, <span class="string">&#x27;and&#x27;</span>, <span class="string">&#x27;toes&#x27;</span>]; </span><br><span class="line"><span class="comment">// [&quot;head&quot;, &quot;shoulders&quot;, &quot;knees&quot;, &quot;and&quot;, &quot;toes&quot;]</span></span><br></pre></td></tr></table></figure>
+<p>这里的使用方法和参数列表的展开有点类似。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">myFunction</span>(<span class="params">v, w, x, y, z</span>) &#123; &#125;</span><br><span class="line"><span class="keyword">var</span> args = [<span class="number">0</span>, <span class="number">1</span>];</span><br><span class="line"><span class="title function_">myFunction</span>(-<span class="number">1</span>, ...args, <span class="number">2</span>, ...[<span class="number">3</span>]);</span><br></pre></td></tr></table></figure>
+<p>返回的是新数组，对新数组修改之后不会影响到旧数组，类似于  <code>arr.slice()</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [...arr]; <span class="comment">// like arr.slice()</span></span><br><span class="line">arr2.<span class="title function_">push</span>(<span class="number">4</span>); </span><br><span class="line"></span><br><span class="line"><span class="comment">// arr2 此时变成 [1, 2, 3, 4]</span></span><br><span class="line"><span class="comment">// arr 不受影响</span></span><br></pre></td></tr></table></figure>
+<p>展开语法和  <code>Object.assign()</code>  行为一致，执行的都是浅拷贝（即只遍历一层）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [[<span class="number">1</span>], [<span class="number">2</span>], [<span class="number">3</span>]];</span><br><span class="line"><span class="keyword">var</span> b = [...a];</span><br><span class="line">b.<span class="title function_">shift</span>().<span class="title function_">shift</span>(); <span class="comment">// 1</span></span><br><span class="line"><span class="comment">// [[], [2], [3]]</span></span><br></pre></td></tr></table></figure>
+<p>这里 a 是多层数组，b 只拷贝了第一层，对于第二层依旧和 a 持有同一个地址，所以对 b 的修改会影响到 a。</p>
+<h4 id="2-展开语法之字面量对象"><a class="markdownIt-Anchor" href="#2-展开语法之字面量对象">#</a> 2、展开语法之字面量对象</h4>
+<p>这是  <code>ES2018</code>  才有的语法，将已有对象的所有<strong>可枚举属性</strong>拷贝到新构造的对象中，类似于  <code>Object.assign()</code>  方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123; <span class="attr">foo</span>: <span class="string">&#x27;bar&#x27;</span>, <span class="attr">x</span>: <span class="number">42</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = &#123; <span class="attr">foo</span>: <span class="string">&#x27;baz&#x27;</span>, <span class="attr">y</span>: <span class="number">13</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> clonedObj = &#123; ...obj1 &#125;;</span><br><span class="line"><span class="comment">// &#123; foo: &quot;bar&quot;, x: 42 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> mergedObj = &#123; ...obj1, ...obj2 &#125;;</span><br><span class="line"><span class="comment">// &#123; foo: &quot;baz&quot;, x: 42, y: 13 &#125;</span></span><br></pre></td></tr></table></figure>
+<p><code>Object.assign()</code>  函数会触发 setters，而展开语法不会。有时候不能替换或者模拟  <code>Object.assign()</code>  函数，因为会得到意想不到的结果，如下所示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123; <span class="attr">foo</span>: <span class="string">&#x27;bar&#x27;</span>, <span class="attr">x</span>: <span class="number">42</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = &#123; <span class="attr">foo</span>: <span class="string">&#x27;baz&#x27;</span>, <span class="attr">y</span>: <span class="number">13</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">merge</span> = (<span class="params"> ...objects </span>) =&gt; ( &#123; ...objects &#125; );</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> mergedObj = merge ( obj1, obj2);</span><br><span class="line"><span class="comment">// &#123; 0: &#123; foo: &#x27;bar&#x27;, x: 42 &#125;, 1: &#123; foo: &#x27;baz&#x27;, y: 13 &#125; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> mergedObj = merge ( &#123;&#125;, obj1, obj2);</span><br><span class="line"><span class="comment">// &#123; 0: &#123;&#125;, 1: &#123; foo: &#x27;bar&#x27;, x: 42 &#125;, 2: &#123; foo: &#x27;baz&#x27;, y: 13 &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里实际上是将多个解构变为剩余参数（  <code>rest</code>  ），然后再将剩余参数展开为字面量对象.</p>
+<h2 id="第五步破解递归爆栈"><a class="markdownIt-Anchor" href="#第五步破解递归爆栈">#</a> 第五步：破解递归爆栈</h2>
+<p>上面四步使用的都是递归方法，但是有一个问题在于会爆栈，错误提示如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// RangeError: Maximum call stack size exceeded</span></span><br></pre></td></tr></table></figure>
+<p>那应该如何解决呢？其实我们使用循环就可以了，代码如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep5</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> root = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 栈</span></span><br><span class="line">    <span class="keyword">const</span> loopList = [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">parent</span>: root,</span><br><span class="line">            <span class="attr">key</span>: <span class="literal">undefined</span>,</span><br><span class="line">            <span class="attr">data</span>: x,</span><br><span class="line">        &#125;</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(loopList.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="comment">// 广度优先</span></span><br><span class="line">        <span class="keyword">const</span> node = loopList.<span class="title function_">pop</span>();</span><br><span class="line">        <span class="keyword">const</span> parent = node.<span class="property">parent</span>;</span><br><span class="line">        <span class="keyword">const</span> key = node.<span class="property">key</span>;</span><br><span class="line">        <span class="keyword">const</span> data = node.<span class="property">data</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化赋值目标，key为undefined则拷贝到父元素，否则拷贝到子元素</span></span><br><span class="line">        <span class="keyword">let</span> res = parent;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> key !== <span class="string">&#x27;undefined&#x27;</span>) &#123;</span><br><span class="line">            res = parent[key] = &#123;&#125;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> k <span class="keyword">in</span> data) &#123;</span><br><span class="line">            <span class="keyword">if</span> (data.<span class="title function_">hasOwnProperty</span>(k)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">typeof</span> data[k] === <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">                    <span class="comment">// 下一次循环</span></span><br><span class="line">                    loopList.<span class="title function_">push</span>(&#123;</span><br><span class="line">                        <span class="attr">parent</span>: res,</span><br><span class="line">                        <span class="attr">key</span>: k,</span><br><span class="line">                        <span class="attr">data</span>: data[k],</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    res[k] = data[k];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于篇幅问题就不过多介绍了，详情请参考下面这篇文章。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxNjY3MjI2Mw==">深拷贝的终极探索（99% 的人都不知道）</span></p>
+</blockquote>
+<h2 id="本期思考题"><a class="markdownIt-Anchor" href="#本期思考题">#</a> 本期思考题</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如何用 JS 实现 JSON.parse?</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a class="markdownIt-Anchor" href="#参考">#</a> 参考</h2>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cDovL2plcnJ5em91LmNvbS9wb3N0cy9kaXZlLWludG8tZGVlcC1jbG9uZS1pbi1qYXZhc2NyaXB0Lw==">深入剖析 JavaScript 的深复制</span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxNjY3MjI2Mw==">深拷贝的终极探索（99% 的人都不知道）</span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9iMDhiYzYxNzE0Yzc=">深入 js 深拷贝对象</span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvSmF2YVNjcmlwdC9SZWZlcmVuY2UvT3BlcmF0b3JzL1NwcmVhZF9zeW50YXg=">MDN 之展开语法</span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvSmF2YVNjcmlwdC9SZWZlcmVuY2UvR2xvYmFsX09iamVjdHMvU3ltYm9s">MDN 之 Symbol</span></p>
+</blockquote>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3l5Z21pbmQvYmxvZw==">https://github.com/yygmind/blog</span></p>
+</blockquote>
+
+      <div class="tags">
+          <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"><i class="ic i-tag"></i> 面试</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2022-06-22 15:37:25" itemprop="dateModified" datetime="2022-06-22T15:37:25+08:00">2022-06-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>Sleeo <i class="ic i-at"><em>@</em></i>Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://sleeowen.github.io/2020/05/14/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%B7%B1%E6%8B%B7%E8%B4%9D/" title="如何实现一个深拷贝">https://sleeowen.github.io/2020/05/14/如何实现一个深拷贝/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2020/05/11/AMD%E3%80%81CMD%E3%80%81CommonJS%E3%80%81ES6Module%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicli3sbvtj20zk0m8x6p.jpg" title="AMD、CMD、CommonJS、ES6Module的区别">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>AMD、CMD、CommonJS、ES6Module的区别</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2020/05/20/call%E3%80%81apply%E3%80%81bind/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipewf5l51j20zk0m8b29.jpg" title="call、apply、bind">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>call、apply、bind</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text"> 引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-more-%E7%AC%AC%E4%B8%80%E6%AD%A5%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text"> 
+第一步：简单实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E6%8B%B7%E8%B4%9D%E6%95%B0%E7%BB%84"><span class="toc-number">3.</span> <span class="toc-text"> 第二步：拷贝数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text"> 第三步：循环引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">4.1.</span> <span class="toc-text"> 1、使用哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84"><span class="toc-number">4.2.</span> <span class="toc-text"> 2、使用数组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%E6%8B%B7%E8%B4%9D-symbol"><span class="toc-number">5.</span> <span class="toc-text"> 第四步：拷贝  Symbol</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80"><span class="toc-number">5.1.</span> <span class="toc-text"> 方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="toc-number">5.2.</span> <span class="toc-text"> 方法二</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%B1%95%E5%BC%80%E8%AF%AD%E6%B3%95%E4%B9%8B%E5%AD%97%E9%9D%A2%E9%87%8F%E6%95%B0%E7%BB%84"><span class="toc-number">5.2.1.</span> <span class="toc-text"> 1、展开语法之字面量数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%B1%95%E5%BC%80%E8%AF%AD%E6%B3%95%E4%B9%8B%E5%AD%97%E9%9D%A2%E9%87%8F%E5%AF%B9%E8%B1%A1"><span class="toc-number">5.2.2.</span> <span class="toc-text"> 2、展开语法之字面量对象</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%E7%A0%B4%E8%A7%A3%E9%80%92%E5%BD%92%E7%88%86%E6%A0%88"><span class="toc-number">6.</span> <span class="toc-text"> 第五步：破解递归爆栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E6%9C%9F%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text"> 本期思考题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">8.</span> <span class="toc-text"> 参考</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Sleeo"
+      data-src="/images/img.png">
+  <p class="name" itemprop="name">Sleeo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">71</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2020/05/11/AMD%E3%80%81CMD%E3%80%81CommonJS%E3%80%81ES6Module%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2020/05/20/call%E3%80%81apply%E3%80%81bind/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/06/25/Event%E4%BA%8B%E4%BB%B6%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/" title="Event事件常见应用">Event事件常见应用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/04/11/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" title="webpack相关问题">webpack相关问题</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/03/tree-shaking/" title="tree-shaking">tree-shaking</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/02/28/Vue%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91/" title="Vue模板编译">Vue模板编译</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/14/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%B7%B1%E6%8B%B7%E8%B4%9D/" title="如何实现一个深拷贝">如何实现一个深拷贝</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/08/10/node%E6%A1%86%E6%9E%B6%E7%AE%80%E5%8D%95%E5%AF%B9%E6%AF%94/" title="node框架简单对比">node框架简单对比</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/04/17/webpack%E9%85%8D%E7%BD%AE/" title="webpack配置">webpack配置</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/07/02/HTTP%E5%8D%8F%E8%AE%AE/" title="HTTP协议">HTTP协议</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/01/12/Vue%E5%92%8CMVVM/" title="Vue和MVVM">Vue和MVVM</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/09/18/flex%E5%B8%83%E5%B1%80/" title="flex布局">flex布局</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sleeo @ Sleeo</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="站点总字数">403k 字</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:06</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2020/05/14/如何实现一个深拷贝/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

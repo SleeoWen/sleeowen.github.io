@@ -1,0 +1,510 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://sleeowen.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Blog" href="https://sleeowen.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Blog" href="https://sleeowen.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="javascript" />
+
+
+<link rel="canonical" href="https://sleeowen.github.io/2020/05/01/js%E6%9F%AF%E9%87%8C%E5%8C%96/">
+
+
+
+  <title>
+js柯里化 |
+Sleeo = Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">js柯里化
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2020-05-01 16:21:12">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2020-05-01T16:21:12+08:00">2020-05-01</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sleeo</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitcxhpij20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclh0m9pdj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclfw2t96j20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicljgocqbj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclh3brzpj20zk0m8ann.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://sleeowen.github.io/2020/05/01/js%E6%9F%AF%E9%87%8C%E5%8C%96/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/img.png">
+    <meta itemprop="name" content="Sleeo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h3 id="前言"><a class="markdownIt-Anchor" href="#前言">#</a> 前言</h3>
+<p>我们在各种算法题以及技术文档中经常会看到柯里化这个词，那么，柯里化到底是什么？它在 js 中如何运用？对我们的编程有什么作用？都 9102 年了，如果你还不知道这些，那么你在面试过程中很可能会被面试官 diss🙄</p>
+<span id="more"></span>
+<hr>
+<h3 id="什么是柯里化currying"><a class="markdownIt-Anchor" href="#什么是柯里化currying">#</a> 什么是柯里化（Currying）</h3>
+<p><em>维基百科</em>的<span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwcyUzQSUyRiUyRnpoLndpa2lwZWRpYS5vcmclMkZ3aWtpJTJGJTI1RTYlMjU5RiUyNUFGJTI1RTklMjU4NyUyNThDJTI1RTUlMjU4QyUyNTk2">解释</span>是：把接收多个参数的函数变换成接收一个单一参数（最初函数的第一个参数）的函数，并返回接受剩余的参数而且返回结果的新函数的技术。其由数学家 Haskell Brooks Curry 提出，并以 curry 命名。</p>
+<p>简单的说，柯里化函数持续地返回一个新函数直到所有的参数用尽为止。这些参数全部保持 “活着” 的状态（通过闭包），然后当柯里化链中的最后一个函数被返回和执行时会全部被用来执行。</p>
+<p>这和<span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwcyUzQSUyRiUyRnJlYWN0LmRvY3NjaGluYS5vcmclMkZkb2NzJTJGaGlnaGVyLW9yZGVyLWNvbXBvbmVudHMuaHRtbA==">高阶组件</span>（Higher-order functions）如出一辙。前者返回一个新函数，后者返回一个新组件。</p>
+<h3 id="举个简单的栗子"><a class="markdownIt-Anchor" href="#举个简单的栗子">#</a> 举个简单的栗子</h3>
+<p>本例使用到的部分 ES6 知识：<span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwJTNBJTJGJTJGZXM2LnJ1YW55aWZlbmcuY29tJTJGJTIzZG9jcyUyRmxldA==">const</span>，<span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwJTNBJTJGJTJGZXM2LnJ1YW55aWZlbmcuY29tJTJGJTIzZG9jcyUyRmZ1bmN0aW9u">arrow function</span>。不了解的同学可先行查看。<br>
+写一个计算三个参数相乘的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">multiply</span> (a, b, c) &#123;</span><br><span class="line">  <span class="keyword">return</span> a * b * c</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">multiply</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p>这是我们第一反应写出来的 demo，也是看起来最简单的实现方法。再来创建一个柯里化版本的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">multiply</span> (a) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">b</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">c</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> a * b * c</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">multiply</span>(<span class="number">1</span>)(<span class="number">2</span>)(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p>这里我们将 multiply (1，2，3) 调用变成了 multiply (1) (2) (3) 调用。<br>
+单独一个函数被转换成了一系列函数。为了得到数字 1、2、3 相乘的结果，这些数字被一个接一个地传递，每个数字预填了下一个函数内联调用。</p>
+<p>我们把 multiply (1) (2) (3) 分割一下来帮助理解：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mul1 = <span class="title function_">multiply</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> mul2 = <span class="title function_">mul1</span>(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">const</span> result = <span class="title function_">mul2</span>(<span class="number">3</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br></pre></td></tr></table></figure>
+<p>当 mul2 使用 3 作为参数调用时，它一起使用了之前已拿到的参数 a=1 和 b=2 进行运算并返回结果 6。</p>
+<p>作为一个嵌套函数，mul2 能够访问到外部的两个函数 multiply 和 mul1 的作用域。这就是为什么 mul2 能利用定义在已经‘离场’的函数中的参数来进行乘法操作的原因。即使这些函数早已返回并且从内存中垃圾回收了，但其变量仍然保持‘活着’(<span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwcyUzQSUyRiUyRnd3dy5saWFveHVlZmVuZy5jb20lMkZ3aWtpJTJGMDAxNDM0NDQ2Njg5ODY3YjI3MTU3ZTg5NmU3NGQ1MWE4OWMyNWNjOGI0M2JkYjMwMDAlMkYwMDE0MzQ0OTkzNDU0MzQ2MWM5ZDVkZmVlYjg0OGY1YjcyYmQwMTJlMTExM2QxNTAwMA==">闭包</span>)。你可以看到 3 个数字每次只有 1 个提供给函数，并且同一时间里一个新函数会被返回，直到所有的数字用尽为止。</p>
+<p><strong>柯里化背后的逻辑就是获取一个函数并派生出一个返回特殊函数的函数</strong>，它实际上是一种思想，或者说是一种程序设计模式。</p>
+<h3 id="柯里化的应用"><a class="markdownIt-Anchor" href="#柯里化的应用">#</a> 柯里化的应用</h3>
+<h4 id="1-编写可以轻松复用和配置的小代码块就像我们使用-npm-一样"><a class="markdownIt-Anchor" href="#1-编写可以轻松复用和配置的小代码块就像我们使用-npm-一样">#</a> 1. 编写可以轻松复用和配置的小代码块，就像我们使用 npm 一样：</h4>
+<p>举个例子，你有一家商店，然后你想给你的优惠顾客 10% 的折扣：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">discount</span> (price, discount) &#123;</span><br><span class="line">  <span class="keyword">return</span> price * discount</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> price = <span class="title function_">discount</span>(<span class="number">500</span>, <span class="number">0.1</span>) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> price = <span class="title function_">discount</span>(<span class="number">1500</span>, <span class="number">0.1</span>) </span><br><span class="line"><span class="keyword">const</span> price = <span class="title function_">discount</span>(<span class="number">2000</span>, <span class="number">0.1</span>) </span><br><span class="line"><span class="keyword">const</span> price = <span class="title function_">discount</span>(<span class="number">50</span>, <span class="number">0.1</span>) </span><br><span class="line"><span class="keyword">const</span> price = <span class="title function_">discount</span>(<span class="number">300</span>, <span class="number">0.1</span>) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">discount</span> (discount) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">price</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> price * discount</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> tenPercentDiscount = <span class="title function_">discount</span>(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">tenPercentDiscount</span>(<span class="number">500</span>) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> twentyPercentDiscount = <span class="title function_">discount</span>(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">twentyPercentDiscount</span>(<span class="number">500</span>) </span><br><span class="line"><span class="title function_">twentyPercentDiscount</span>(<span class="number">3000</span>) </span><br><span class="line"><span class="title function_">twentyPercentDiscount</span>(<span class="number">80000</span>)</span><br></pre></td></tr></table></figure>
+<p>这个例子说明，使用柯里化思想能让我们在遇到只能确定一个参数而无法确定另一个参数时，代码设计编的变得更方便与高效，达到提升性能的目的。</p>
+<h4 id="2-避免频繁调用具有相同参数的函数"><a class="markdownIt-Anchor" href="#2-避免频繁调用具有相同参数的函数">#</a> 2. 避免频繁调用具有相同参数的函数：</h4>
+<p>比如我们有个用来计算体积的函数:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">volume</span> (l, w, h) &#123;</span><br><span class="line">  <span class="keyword">return</span> l * w * h</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">volume</span>(<span class="number">200</span>, <span class="number">30</span>, <span class="number">100</span>) </span><br><span class="line"><span class="title function_">volume</span>(<span class="number">32</span>, <span class="number">45</span>, <span class="number">100</span>) </span><br><span class="line"><span class="title function_">volume</span>(<span class="number">2322</span>, <span class="number">232</span>, <span class="number">100</span>) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">volume</span> (h) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">w</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">l</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> l * w * h</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> hCylinderHeight = <span class="title function_">volume</span>(<span class="number">100</span>)</span><br><span class="line"><span class="title function_">hCylinderHeight</span>(<span class="number">200</span>)(<span class="number">30</span>) </span><br><span class="line"><span class="title function_">hCylinderHeight</span>(<span class="number">2322</span>)(<span class="number">232</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="通用的柯里函数"><a class="markdownIt-Anchor" href="#通用的柯里函数">#</a> 通用的柯里函数</h3>
+<p>让我们建立一个函数来接受任何函数并且返回柯里化版本的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">curry</span> (fn, ...args) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">..._args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fn</span>(...args, ..._args)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们在这里做了什么？我们的 curry 函数接受一个我们想要柯里化的函数（fn）和一个变量（…args）。这里的 rest 操作符用来将参数聚集成一个…args。接下来我们返回一个函数，该函数将其余参数收集为…<em>args。此函数通过 spread 运算符将… args 和…</em> args 作为参数解构传入来调用原始函数 fn，然后将值返回给用户。</p>
+<p>让我们使用我们的 curry 函数用之前的例子来创建一个特殊的函数（一个专门用来计算 100m 长度的物品体积）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">volume</span> (l, h, w) &#123;</span><br><span class="line">  <span class="keyword">return</span> l * h * w</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> hCy = <span class="title function_">curry</span>(volume, <span class="number">100</span>)</span><br><span class="line"><span class="title function_">hCy</span>(<span class="number">200</span>, <span class="number">900</span>) </span><br><span class="line"><span class="title function_">hCy</span>(<span class="number">70</span>, <span class="number">60</span>)</span><br></pre></td></tr></table></figure>
+<p>将类似回调函数的参数传入柯里化函数，能使复杂的问题变得简单！</p>
+<h3 id="使用递归实现-curry-函数"><a class="markdownIt-Anchor" href="#使用递归实现-curry-函数">#</a> 使用递归实现 curry 函数</h3>
+<p>JS 柯里化作为函数式编程的重要一环，频繁在算法题中出现。以上的通用柯里化函数还不够完善，我们希望只给 curry 函数传递一个 fn 就能达到目的，现在我们使用递归来实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">curry</span> (fn) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">c</span> = (<span class="params">...args</span>) =&gt; (args.<span class="property">length</span> === fn.<span class="property">length</span>) ?</span><br><span class="line">          <span class="title function_">fn</span>(...args) : <span class="function">(<span class="params">..._args</span>) =&gt;</span> <span class="title function_">c</span>(...args, ..._args)</span><br><span class="line">  <span class="keyword">return</span> c</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该方法几乎为最简洁、代码行数最少的实现方法了。<br>
+首先我们能确定，实现柯里化的核心就是要确定传入参数的个数，并通通取到。<br>
+其次，我们得知道， <code>fn.length</code>  为 fn 函数接受的参数个数，那么该实现方法就能解读为：<br>
+<strong>不断递归获取传入参数，直到取到的参数个数等于 fn 的参数个数为止，最终将获取到的所有参数传给 fn 并返回执行结果</strong>。</p>
+<h3 id="结语"><a class="markdownIt-Anchor" href="#结语">#</a> 结语</h3>
+<p>柯里化作为一种重要的程序思想，已经广为应用，它使我们应对复杂问题时能提升效率，增强可读性。希望读者都能体会这种思想并运用于实践，相信在提升技术的路上能越走越远，成为一名优秀的工程师！</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC83ZmE5OWE0YmVlOGI=">原文地址</span></p>
+
+      <div class="tags">
+          <a href="/tags/javascript/" rel="tag"><i class="ic i-tag"></i> javascript</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2022-06-22 15:37:25" itemprop="dateModified" datetime="2022-06-22T15:37:25+08:00">2022-06-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>Sleeo <i class="ic i-at"><em>@</em></i>Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://sleeowen.github.io/2020/05/01/js%E6%9F%AF%E9%87%8C%E5%8C%96/" title="js柯里化">https://sleeowen.github.io/2020/05/01/js柯里化/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2020/04/30/webpack%E4%B8%ADmodule-chunk%E5%92%8Cbundle%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclh0m9pdj20zk0m8hdt.jpg" title="webpack中module,chunk和bundle的区别是什么">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>webpack中module,chunk和bundle的区别是什么</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2020/05/03/tree-shaking/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclimtf7dj20zk0m8qav.jpg" title="tree-shaking">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>tree-shaking</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text"> 前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%9F%AF%E9%87%8C%E5%8C%96currying"><span class="toc-number">2.</span> <span class="toc-text"> 什么是柯里化（Currying）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%A0%97%E5%AD%90"><span class="toc-number">3.</span> <span class="toc-text"> 举个简单的栗子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text"> 柯里化的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%BC%96%E5%86%99%E5%8F%AF%E4%BB%A5%E8%BD%BB%E6%9D%BE%E5%A4%8D%E7%94%A8%E5%92%8C%E9%85%8D%E7%BD%AE%E7%9A%84%E5%B0%8F%E4%BB%A3%E7%A0%81%E5%9D%97%E5%B0%B1%E5%83%8F%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8-npm-%E4%B8%80%E6%A0%B7"><span class="toc-number">4.1.</span> <span class="toc-text"> 1. 编写可以轻松复用和配置的小代码块，就像我们使用 npm 一样：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%81%BF%E5%85%8D%E9%A2%91%E7%B9%81%E8%B0%83%E7%94%A8%E5%85%B7%E6%9C%89%E7%9B%B8%E5%90%8C%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">4.2.</span> <span class="toc-text"> 2. 避免频繁调用具有相同参数的函数：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%9A%84%E6%9F%AF%E9%87%8C%E5%87%BD%E6%95%B0"><span class="toc-number">5.</span> <span class="toc-text"> 通用的柯里函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0-curry-%E5%87%BD%E6%95%B0"><span class="toc-number">6.</span> <span class="toc-text"> 使用递归实现 curry 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">7.</span> <span class="toc-text"> 结语</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Sleeo"
+      data-src="/images/img.png">
+  <p class="name" itemprop="name">Sleeo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">71</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2020/04/30/webpack%E4%B8%ADmodule-chunk%E5%92%8Cbundle%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2020/05/03/tree-shaking/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/02/12/Vue%E8%99%9A%E6%8B%9FDOM/" title="Vue虚拟DOM">Vue虚拟DOM</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/04/24/webpack%E5%8A%A8%E6%80%81%E6%87%92%E5%8A%A0%E8%BD%BD/" title="webpack动态懒加载">webpack动态懒加载</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/08/19/js%E6%A0%88/" title="js栈">js栈</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/02/21/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94DNS%E9%A2%84%E8%A7%A3%E6%9E%90/" title="前端性能优化——DNS预解析">前端性能优化——DNS预解析</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/30/%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/" title="手撕代码">手撕代码</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/10/27/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B4%8B%E8%91%B1%E6%A8%A1%E5%9E%8B%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%9C%BA%E5%88%B6/" title="深入理解洋葱模型中间件机制">深入理解洋葱模型中间件机制</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/10/30/Animation/" title="Animation">Animation</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/01/12/Vue%E5%92%8CMVVM/" title="Vue和MVVM">Vue和MVVM</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/21/%E5%AE%9E%E7%8E%B0call/" title="实现call">实现call</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/06/10/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/" title="时间复杂度">时间复杂度</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sleeo @ Sleeo</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="站点总字数">403k 字</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:06</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2020/05/01/js柯里化/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

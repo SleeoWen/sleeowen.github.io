@@ -1,0 +1,573 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://sleeowen.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Blog" href="https://sleeowen.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Blog" href="https://sleeowen.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Vue" />
+
+
+<link rel="canonical" href="https://sleeowen.github.io/2020/01/12/Vue%E5%92%8CMVVM/">
+
+
+
+  <title>
+Vue和MVVM |
+Sleeo = Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">Vue和MVVM
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2020-01-12 23:48:50">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2020-01-12T23:48:50+08:00">2020-01-12</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sleeo</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclg5ms2rj20zk0m8u0x.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclhfehz7j20zk0m8u0x.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giph4fomxoj20zk0m8axp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giph4wqtg4j20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetfk5zwj20zk0m8e81.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://sleeowen.github.io/2020/01/12/Vue%E5%92%8CMVVM/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/img.png">
+    <meta itemprop="name" content="Sleeo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="vuejs"><a class="markdownIt-Anchor" href="#vuejs">#</a> Vue.js</h2>
+<h3 id="vuejs是什么"><a class="markdownIt-Anchor" href="#vuejs是什么">#</a> Vue.js 是什么</h3>
+<ul>
+<li>Vue.js 是一个轻巧、高性能、可组件化的 MVVM 库，拥有非常容易上手的 API；</li>
+<li>Vue.js 是一个构建数据驱动的 Web 界面的库。</li>
+</ul>
+<span id="more"></span>
+<h3 id="vuejs-的特性"><a class="markdownIt-Anchor" href="#vuejs-的特性">#</a> Vue.js 的特性</h3>
+<ol>
+<li>轻量级的框架</li>
+<li>双向数据绑定</li>
+<li>指令</li>
+<li>插件化（组件化）</li>
+</ol>
+<h3 id="mvvm-框架"><a class="markdownIt-Anchor" href="#mvvm-框架">#</a> MVVM 框架</h3>
+<ul>
+<li>MVVM（Model-View-ViewModel）是对 MVC（Model-View-Control）和 MVP（Model-View-Presenter）的进一步改进。</li>
+</ul>
+<blockquote>
+<p>『View』：视图层（UI 用户界面）</p>
+</blockquote>
+<blockquote>
+<p>『ViewModel』：业务逻辑层（一切 js 可视为业务逻辑）</p>
+</blockquote>
+<blockquote>
+<p>『Model』：数据层（存储数据及对数据的处理如增删改查）</p>
+</blockquote>
+<ul>
+<li>MVVM 将数据双向绑定（data-binding）作为核心思想，View 和 Model 之间没有联系，它们通过 ViewModel 这个桥梁进行交互。</li>
+<li>Model 和 ViewModel 之间的交互是双向的，因此 View 的变化会自动同步到 Model，而 Model 的变化也会立即反映到 View 上显示。</li>
+<li>当用户操作 View，ViewModel 感知到变化，然后通知 Model 发生相应改变；反之当 Model 发生改变，ViewModel 也能感知到变化，使 View 作出相应更新。</li>
+<li>Angular 和 Ember 都采用这种模式。</li>
+</ul>
+<h3 id="vue-的开发模式"><a class="markdownIt-Anchor" href="#vue-的开发模式">#</a> Vue 的开发模式</h3>
+<ul>
+<li>通过 script 标签直接引入 vue.js</li>
+<li>通过 Vue 的脚手架工具 vue-cli 来进行一键项目搭建</li>
+</ul>
+<h3 id="vuejs-的优点"><a class="markdownIt-Anchor" href="#vuejs-的优点">#</a> Vue.js 的优点</h3>
+<ul>
+<li>简单轻巧，功能强大，拥有非常容易上手的 API；</li>
+<li>可组件化 和 响应式设计；</li>
+<li>实现数据与结构分离，高性能，易于浏览器的加载速度；</li>
+<li>MVVM 模式，数据双向绑定，减少了 DOM 操作，将更多精力放在数据和业务逻辑上。</li>
+</ul>
+<h3 id="vue的优点"><a class="markdownIt-Anchor" href="#vue的优点">#</a> Vue 的优点</h3>
+<ul>
+<li>低耦合。视图（View）可以独立于 Model 变化和修改，一个 ViewModel 可以绑定到不同的 “View” 上，当 View 变化的时候 Model 可以不变，当 Model 变化的时候 View 也可以不变。</li>
+<li>可重用性。你可以把一些视图逻辑放在一个 ViewModel 里面，让很多 View 重用这段视图逻辑。</li>
+<li>独立开发。开发人员可以专注于业务逻辑和数据的开发（ViewModel），设计人员可以专注于页面设计。</li>
+<li>方便测试。界面素来是比较难于测试的，开发中大部分 Bug 来至于逻辑处理，由于 ViewModel 分离了许多逻辑，可以对 ViewModel 构造单元测试。</li>
+<li>易用 灵活 高效。</li>
+</ul>
+<h2 id="mvvm"><a class="markdownIt-Anchor" href="#mvvm">#</a> MVVM</h2>
+<h3 id="jquery和mvvm的区别"><a class="markdownIt-Anchor" href="#jquery和mvvm的区别">#</a> JQuery 和 MVVM 的区别</h3>
+<ul>
+<li>数据和视图的分离，解耦（开放封闭原则）</li>
+<li>以数据驱动视图，只关心数据变化，DOM 操作被封装</li>
+</ul>
+<h3 id="什么是mvvm"><a class="markdownIt-Anchor" href="#什么是mvvm">#</a> 什么是 MVVM</h3>
+<ul>
+<li>MVVM 是 Model-View-ViewModel 的缩写。MVVM 是一种设计思想。Model 层代表数据模型，也可以在 Model 中定义数据修改和操作的业务逻辑；View 代表 UI 组件，它负责将数据模型转化成 UI 展现出来，ViewModel 是一个同步 View 和 Model 的对象。</li>
+<li>在 MVVM 架构下，View 和 Model 之间并没有直接的联系，而是通过 ViewModel 进行交互，Model 和 ViewModel 之间的交互是双向的， 因此 View 数据的变化会同步到 Model 中，而 Model 数据的变化也会立即反应到 View 上。</li>
+<li>ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而 View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作 DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。</li>
+</ul>
+<h2 id="vue和mvvm"><a class="markdownIt-Anchor" href="#vue和mvvm">#</a> Vue 和 MVVM</h2>
+<ul>
+<li>响应式：vue 如何监听到 data 的每个属性变化？</li>
+<li>模板引擎：vue 的模板如何被解析，指令如何处理？</li>
+<li>渲染：vue 的模板如何被渲染成 html？以及渲染过程</li>
+</ul>
+<h3 id="vue中如何实现响应式"><a class="markdownIt-Anchor" href="#vue中如何实现响应式">#</a> vue 中如何实现响应式</h3>
+<h4 id="什么是响应式"><a class="markdownIt-Anchor" href="#什么是响应式">#</a> 什么是响应式</h4>
+<ul>
+<li>修改 data 属性后，vue 立刻监听到</li>
+<li>data 属性被代理到 vm 上</li>
+</ul>
+<h3 id="objectdefinepropertyobj-prop-desc"><a class="markdownIt-Anchor" href="#objectdefinepropertyobj-prop-desc">#</a> Object.defineProperty(obj, prop, desc)</h3>
+<p><strong>实现响应式的核心函数</strong></p>
+<blockquote>
+<p>Object.defineProperty (obj, prop, desc) 的作用就是直接在一个对象上定义一个新属性，或者修改一个已经存在的属性<br>
+模板中没有的数据，不会走 get 监听，所以也不会走 set 监听，Object.defineProperty 的原则是走 get 才会走 set, 防止无用的数据重复渲染。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> vm = &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;zhangsan&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> key, value</span><br><span class="line"><span class="keyword">for</span> (key <span class="keyword">in</span> data) &#123;</span><br><span class="line">    (<span class="keyword">function</span> (<span class="params">key</span>) &#123;</span><br><span class="line">        <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(vm, key, &#123;</span><br><span class="line">            <span class="attr">get</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;get&#x27;</span>, data[key]) <span class="comment">// 监听</span></span><br><span class="line">                <span class="keyword">return</span> data[key]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">set</span>: <span class="keyword">function</span> (<span class="params">newVal</span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;set&#x27;</span>, newVal) <span class="comment">// 监听</span></span><br><span class="line">                data[key] = newVal</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)(key)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="vue中如何解析模板"><a class="markdownIt-Anchor" href="#vue中如何解析模板">#</a> vue 中如何解析模板</h3>
+<h4 id="模板是什么"><a class="markdownIt-Anchor" href="#模板是什么">#</a> 模板是什么？</h4>
+<ul>
+<li>本质：字符串</li>
+<li>有逻辑，如 v-if v-for 等</li>
+<li>与 html 很像，但有很大区别</li>
+<li>最终还要转化成 html 来显示</li>
+<li>模板最终要装换成 js 代码（render 函数）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//模板</span></span><br><span class="line">    &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;price&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"><span class="comment">//render函数</span></span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="title function_">with</span>(<span class="params"><span class="variable language_">this</span></span>) &#123;  <span class="comment">// this 就是 vm</span></span><br><span class="line">                <span class="keyword">return</span> <span class="title function_">_c</span>(</span><br><span class="line">                    <span class="string">&#x27;div&#x27;</span>,</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">attrs</span>: &#123;<span class="string">&#x27;id&#x27;</span>: <span class="string">&#x27;app&#x27;</span>&#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    [</span><br><span class="line">                        <span class="title function_">_c</span>(<span class="string">&#x27;p&#x27;</span>, [<span class="title function_">_v</span>(<span class="title function_">_s</span>(price))])</span><br><span class="line">                    ]</span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">//在vue源码中搜索code.render，然后alert(code.render)可以看render函数</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>h 函数生成 vdom</li>
+<li>patch 函数渲染成 dom</li>
+</ul>
+<hr>
+<ul>
+<li>h 函数就是 vue 中的 createElement 方法，这个函数作用就是创建虚拟 dom，追踪 dom 变化的</li>
+</ul>
+<h3 id="vue的整个实现流程"><a class="markdownIt-Anchor" href="#vue的整个实现流程">#</a> vue 的整个实现流程</h3>
+<ol>
+<li>解析模板成 render 函数</li>
+<li>响应式开始监听</li>
+<li>首次渲染，显示页面，且绑定依赖</li>
+<li>data 属性变化，触发 rerender</li>
+</ol>
+
+      <div class="tags">
+          <a href="/tags/Vue/" rel="tag"><i class="ic i-tag"></i> Vue</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2022-06-22 15:37:25" itemprop="dateModified" datetime="2022-06-22T15:37:25+08:00">2022-06-22</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>Sleeo <i class="ic i-at"><em>@</em></i>Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://sleeowen.github.io/2020/01/12/Vue%E5%92%8CMVVM/" title="Vue和MVVM">https://sleeowen.github.io/2020/01/12/Vue和MVVM/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2020/01/01/VueRouter/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclhtuo6nj20zk0m8ttm.jpg" title="VueRouter">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>VueRouter</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2020/01/23/Vue%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclxfdlttj20zk0m8npd.jpg" title="Vue的响应式">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Vue的响应式</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vuejs"><span class="toc-number">1.</span> <span class="toc-text"> Vue.js</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vuejs%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.</span> <span class="toc-text"> Vue.js 是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vuejs-%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text"> Vue.js 的特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mvvm-%E6%A1%86%E6%9E%B6"><span class="toc-number">1.3.</span> <span class="toc-text"> MVVM 框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue-%E7%9A%84%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text"> Vue 的开发模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vuejs-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">1.5.</span> <span class="toc-text"> Vue.js 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">1.6.</span> <span class="toc-text"> Vue 的优点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mvvm"><span class="toc-number">2.</span> <span class="toc-text"> MVVM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jquery%E5%92%8Cmvvm%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text"> JQuery 和 MVVM 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFmvvm"><span class="toc-number">2.2.</span> <span class="toc-text"> 什么是 MVVM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue%E5%92%8Cmvvm"><span class="toc-number">3.</span> <span class="toc-text"> Vue 和 MVVM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vue%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text"> vue 中如何实现响应式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="toc-number">3.1.1.</span> <span class="toc-text"> 什么是响应式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objectdefinepropertyobj-prop-desc"><span class="toc-number">3.2.</span> <span class="toc-text"> Object.defineProperty(obj, prop, desc)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue%E4%B8%AD%E5%A6%82%E4%BD%95%E8%A7%A3%E6%9E%90%E6%A8%A1%E6%9D%BF"><span class="toc-number">3.3.</span> <span class="toc-text"> vue 中如何解析模板</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">3.3.1.</span> <span class="toc-text"> 模板是什么？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue%E7%9A%84%E6%95%B4%E4%B8%AA%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B"><span class="toc-number">3.4.</span> <span class="toc-text"> vue 的整个实现流程</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Sleeo"
+      data-src="/images/img.png">
+  <p class="name" itemprop="name">Sleeo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">71</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2020/01/01/VueRouter/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2020/01/23/Vue%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/04/17/webpack%E9%85%8D%E7%BD%AE/" title="webpack配置">webpack配置</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/11/11/Vue%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF/" title="Vue组件通讯">Vue组件通讯</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2021/02/12/%E5%9C%A8%E5%A4%A7%E5%8E%82%E6%98%AF%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%BB%84%E7%BB%87npmscript%E7%9A%84/" title="在大厂是如何高效组织npmscript的">在大厂是如何高效组织npmscript的</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/10/07/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AFEventLoop/" title="事件循环EventLoop">事件循环EventLoop</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/" title="原型链">原型链</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/10/27/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B4%8B%E8%91%B1%E6%A8%A1%E5%9E%8B%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%9C%BA%E5%88%B6/" title="深入理解洋葱模型中间件机制">深入理解洋葱模型中间件机制</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2019/06/11/DOM%E4%BA%8B%E4%BB%B6%E6%B5%81/" title="DOM事件流">DOM事件流</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/07/01/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bcheckbox/" title="element源码解析之checkbox">element源码解析之checkbox</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/05/03/tree-shaking/" title="tree-shaking">tree-shaking</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2020/01/12/Vue%E5%92%8CMVVM/" title="Vue和MVVM">Vue和MVVM</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sleeo @ Sleeo</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="站点总字数">403k 字</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:06</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2020/01/12/Vue和MVVM/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

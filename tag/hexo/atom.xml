@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://sleeowen.github.io</id>
+    <title>Blog • Posts by &#34;hexo&#34; tag</title>
+    <link href="https://sleeowen.github.io" />
+    <updated>2019-01-14T01:57:01.000Z</updated>
+    <category term="javascript" />
+    <category term="css" />
+    <category term="网络安全" />
+    <category term="html" />
+    <category term="Vue" />
+    <category term="http" />
+    <category term="element" />
+    <category term="node" />
+    <category term="Promise" />
+    <category term="webpack" />
+    <category term="hexo" />
+    <category term="前端性能优化" />
+    <category term="面试" />
+    <category term="算法" />
+    <category term="浏览器" />
+    <category term="通信" />
+    <entry>
+        <id>https://sleeowen.github.io/2019/01/14/%E5%88%9D%E5%B0%9Dhexo/</id>
+        <title>初次使用hexo</title>
+        <link rel="alternate" href="https://sleeowen.github.io/2019/01/14/%E5%88%9D%E5%B0%9Dhexo/"/>
+        <content type="html">&lt;p&gt;偶然间发现了 hexo 这个博客搭建工具，于是决定将使用多年的云笔记的内容搬迁至这个博客上，分享我的搬迁经历以及踩过的坑吧～。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;h2 id=&#34;我们开始吧&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#我们开始吧&#34;&gt;#&lt;/a&gt; 我们开始吧&lt;/h2&gt;
+&lt;h3 id=&#34;新建仓库&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#新建仓库&#34;&gt;#&lt;/a&gt; 新建仓库&lt;/h3&gt;
+&lt;p&gt;在 github 新建仓库，如果想要部署在 github 上，要仓库名为 &lt;mark&gt;&lt;user-name&gt;.github.io&lt;/user-name&gt;&lt;/mark&gt; 而不是 user-name ，其中 &lt;mark&gt;&lt;user-name&gt;&lt;/user-name&gt;&lt;/mark&gt; 是你 &lt;mark&gt;github&lt;/mark&gt; 的昵称，要是问为什么，都是眼泪的教训。&lt;/p&gt;
+&lt;h3 id=&#34;安装hexo&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装hexo&#34;&gt;#&lt;/a&gt; 安装 hexo&lt;/h3&gt;
+&lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;npm install -g hexo-cli&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;或者&lt;/p&gt;
+&lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;npm install hexo&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;初始化项目&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#初始化项目&#34;&gt;#&lt;/a&gt; 初始化项目&lt;/h3&gt;
+&lt;p&gt;初始化命令&lt;/p&gt;
+&lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;hexo init&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;运行&lt;/p&gt;
+&lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;hexo server&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;大功告成，访问 &lt;mark&gt;localhost:4000&lt;/mark&gt; 我们就能看到建的博客的效果了！&lt;/p&gt;
+&lt;h3 id=&#34;将hexo部署到github-pages上&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#将hexo部署到github-pages上&#34;&gt;#&lt;/a&gt; 将 Hexo 部署到 GitHub Pages 上&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;将&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL21hcmtldHBsYWNlL3RyYXZpcy1jaQ==&#34;&gt; Travis CI&lt;/span&gt; 添加到你的 GitHub 账户中。&lt;/li&gt;
+&lt;li&gt;前往 GitHub 的 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL3NldHRpbmdzL2luc3RhbGxhdGlvbnM=&#34;&gt;Applications settings&lt;/span&gt;，配置 Travis CI 权限，使其能够访问你的 repository。&lt;/li&gt;
+&lt;li&gt;你应该会被重定向到 Travis CI 的页面。如果没有，请 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly90cmF2aXMtY2kuY29tLw==&#34;&gt;手动前往&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;在浏览器新建一个标签页，前往 GitHub &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL3NldHRpbmdzL3Rva2Vucw==&#34;&gt;新建 Personal Access Token&lt;/span&gt; ，只勾选 repo 的权限并生成一个新的 Token。Token 生成后请复制并保存好。&lt;/li&gt;
+&lt;li&gt;回到 Travis CI，前往你的 repository 的设置页面，在 &lt;strong&gt;Environment Variables&lt;/strong&gt; 下新建一个环境变量，&lt;strong&gt;Name&lt;/strong&gt; 为 GH_TOKEN，&lt;strong&gt;Value&lt;/strong&gt; 为刚才你在 GitHub 生成的 Token。确保 &lt;strong&gt;DISPLAY VALUE IN BUILD LOG&lt;/strong&gt; 保持 &lt;strong&gt;不被勾选&lt;/strong&gt; 避免你的 Token 泄漏。点击 Add 保存。&lt;/li&gt;
+&lt;li&gt;在你的 Hexo 站点文件夹中新建一个 &lt;mark&gt;.travis.yml&lt;/mark&gt; 文件：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo: false&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;language: node_js&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;node_js:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - 10 # use nodejs v10 LTS&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cache: npm&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;branches:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  only:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - master # build master branch only&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;script:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - hexo generate # generate static files&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deploy:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  provider: pages&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  skip-cleanup: true&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  github-token: $GH_TOKEN&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  keep-history: true&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  on:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    branch: master&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  local-dir: public&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;将.travis.yml 推送到 repository 中。Travis CI 应该会自动开始运行，并将生成的文件推送到同一 repository 下的 gh-pages 分支下&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 GitHub 中前往你的 repository 的设置页面，修改 GitHub Pages 的部署分支为 gh-pages。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;完成以上步骤，我们就能在&lt;user-name&gt;.github.io 上看到自己建设的博客了。&lt;/user-name&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;其他配置项&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#其他配置项&#34;&gt;#&lt;/a&gt; 其他配置项&lt;/h3&gt;
+&lt;p&gt;请参考&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9oZXhvLmlvL3poLWNuL2RvY3M=&#34;&gt; hexo 文档&lt;/span&gt;。&lt;/p&gt;
+</content>
+        <category term="hexo" />
+        <updated>2019-01-14T01:57:01.000Z</updated>
+    </entry>
+</feed>
