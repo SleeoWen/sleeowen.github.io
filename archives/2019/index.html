@@ -1,40 +1,25 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-    <head>
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
     <meta charset="utf-8">
-
-    
-
-    <!-- 渲染优化 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="文宇函">
     <meta name="renderer" content="webkit">
-    <meta name="force-rendering" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="HandheldFriendly" content="True" >
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <!--icon-->
-
+    <meta name="copyright" content="文宇函">
     
+    <meta name="keywords" content="hexo,前端,js,vue,web">
     
-    
-    
-    
-
-
-    <!-- meta -->
-
-
-<title>Archive: 2019 | SleeoWen-Blog</title>
-
-
-    <meta name="keywords" content="js,ts,web,h5">
-
-
-
-
-    <!-- OpenGraph -->
- 
+    <meta name="description" content="个人的学习经历">
     <meta name="description" content="个人的学习经历">
 <meta property="og:type" content="website">
 <meta property="og:title" content="SleeoWen-Blog">
@@ -43,397 +28,2293 @@
 <meta property="og:description" content="个人的学习经历">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="文宇函">
-<meta property="article:tag" content="js,ts,web,h5">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="ts">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="h5">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>SleeoWen-Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
 
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
 
     
-<link rel="stylesheet" href="/css/style/main.css">
- 
-
     
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
     
-    
-
-    
-
-     
-
-    <!-- custom head -->
-
-<meta name="generator" content="Hexo 6.2.0"></head>
-
-    <body>
-        <div id="app">
-            <header class="header">
-    <div class="header__left">
-        <a href="/" class="button">
-            <span class="logo__text">Demo</span>
-        </a>
-    </div>
-    <div class="header__right">
-        
-            <div class="navbar__menus">
-                
-                    <a href="/" class="navbar-menu button">首页</a>
-                
-                    <a href="/tags/" class="navbar-menu button">标签</a>
-                
-                    <a href="/archives/" class="navbar-menu button">归档</a>
-                
-                    <a href="/friends/" class="navbar-menu button">友链</a>
-                
-                    <a href="/page/" class="navbar-menu button">Page</a>
-                
-            </div>
-        
-        
-        
-
-        
-        
-
-        
-            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
-            <div class="dropdown-menus" id="dropdown-menus">
-                
-                    <a href="/" class="dropdown-menu button">首页</a>
-                
-                    <a href="/tags/" class="dropdown-menu button">标签</a>
-                
-                    <a href="/archives/" class="dropdown-menu button">归档</a>
-                
-                    <a href="/friends/" class="dropdown-menu button">友链</a>
-                
-                    <a href="/page/" class="dropdown-menu button">Page</a>
-                
-            </div>
-        
-    </div>
+    <a class="home-link" href=/>Sleeo's Blog.</a>
 </header>
+    <div class="wrapper">
+        <div class="site-intro" style="
 
 
-    <div class="cover">
-        <div class="cover__logo">
+
+
+
+
+">
+    
+    <!-- 主页  -->
             
-                <h1>Demo</h1>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
             
-        </div>
-        
-        
-            <div class="cover__intro">
-                <p>Hi, nice to meet you!</p>
- 
-            </div>
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+        </p>
+        <!-- 文章页meta -->
         
     </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
 
-            
-<main class='main'>
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main index-page">
     
-		
-    <div class="post-list">
-        
-            
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        Vuex
-    </h2>
     
-        <h2 id="Vuex是什么？"><a href="#Vuex是什么？" class="headerlink" title="Vuex是什么？"></a>Vuex是什么？</h2><p>VueX 是一个专门为 Vue.js 应用设计的状态管理架构，统一管理和维护各个vue组件的可变化状态(你可以理解成 vue 组件里的某些 data )。</p>
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/12/06/Vuex/" >
+            
+                <span>Vuex</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="Vuex是什么？"><a href="#Vuex是什么？" class="headerlink" title="Vuex是什么？"></a>Vuex是什么？</h2><p>VueX 是一个专门为 Vue.js 应用设计的状态管理架构，统一管理和维护各个vue组件的可变化状态(你可以理解成 vue 组件里的某些 data )。</p>
 <p>Vue有五个核心概念：</p>
 <ul>
 <li>state：基本数据</li>
 <li>getters：从基本数据派生的数据 </li>
 <li>mutations：提交更改数据的方法，同步！ </li>
 <li>actions：像一个装饰器，包裹mutations，使之可以异步。 </li>
-<li>modules：模块化Vuex
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2019/12/" class="post-meta__date button">2019-12-06</a>
-    
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
-<a href="/2019/12/06/Vuex/" class="post-entry__link">Vuex</a>
-                </div>
+<li>modules：模块化Vuex</li></ul>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/06</span>
+            </div>
+            <!-- tags  -->
             
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        Vue组件的高级特性
-    </h2>
+            <div class= abstract-tags >
     
-        <h2 id="自定义v-model"><a href="#自定义v-model" class="headerlink" title="自定义v-model"></a>自定义v-model</h2><h4 id="model-vue"><a href="#model-vue" class="headerlink" title="model.vue"></a>model.vue</h4>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Vue">Vue</a>
     
 </div>
-<div class="post-entry__meta">
-    <a href="/archives/2019/11/" class="post-meta__date button">2019-11-21</a>
-    
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
-<a href="/2019/11/21/Vue%E7%BB%84%E4%BB%B6%E7%9A%84%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7/" class="post-entry__link">Vue组件的高级特性</a>
-                </div>
             
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        Vue组件通讯
-    </h2>
+        </div>
+    </article>
     
-        <h2 id="prop和-emit"><a href="#prop和-emit" class="headerlink" title="prop和$emit"></a>prop和$emit</h2>
     
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2019/11/" class="post-meta__date button">2019-11-11</a>
     
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
-<a href="/2019/11/11/Vue%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF/" class="post-entry__link">Vue组件通讯</a>
-                </div>
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/11/21/Vue%E7%BB%84%E4%BB%B6%E7%9A%84%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7/" >
             
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        Vue基础二
-    </h2>
-    
-        <h2 id="循环渲染"><a href="#循环渲染" class="headerlink" title="循环渲染"></a>循环渲染</h2>
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2019/11/" class="post-meta__date button">2019-11-01</a>
-    
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
-<a href="/2019/11/01/Vue%E5%9F%BA%E7%A1%80%E4%BA%8C/" class="post-entry__link">Vue基础二</a>
-                </div>
+                <span>Vue组件的高级特性</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="自定义v-model"><a href="#自定义v-model" class="headerlink" title="自定义v-model"></a>自定义v-model</h2><h4 id="model-vue"><a href="#model-vue" class="headerlink" title="model.vue"></a>model.vue</h4>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/21</span>
+            </div>
+            <!-- tags  -->
             
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        前端错误监控
-    </h2>
+            <div class= abstract-tags >
     
-        <h2 id="前端错误的分类"><a href="#前端错误的分类" class="headerlink" title="前端错误的分类"></a>前端错误的分类</h2><p>一般来说前端错误分为两类</p>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Vue">Vue</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/11/11/Vue%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF/" >
+            
+                <span>Vue组件通讯</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="prop和-emit"><a href="#prop和-emit" class="headerlink" title="prop和$emit"></a>prop和$emit</h2>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/11</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Vue">Vue</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/11/01/Vue%E5%9F%BA%E7%A1%80%E4%BA%8C/" >
+            
+                <span>Vue基础二</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="循环渲染"><a href="#循环渲染" class="headerlink" title="循环渲染"></a>循环渲染</h2>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/01</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Vue">Vue</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/21/%E5%89%8D%E7%AB%AF%E9%94%99%E8%AF%AF%E7%9B%91%E6%8E%A7/" >
+            
+                <span>前端错误监控</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="前端错误的分类"><a href="#前端错误的分类" class="headerlink" title="前端错误的分类"></a>前端错误的分类</h2><p>一般来说前端错误分为两类</p>
 <ol>
 <li>即时运行错误</li>
 <li>资源加载错误</li>
 </ol>
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2019/10/" class="post-meta__date button">2019-10-21</a>
-    
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-tags__link button"># 前端性能优化</a></div> 
-<a href="/2019/10/21/%E5%89%8D%E7%AB%AF%E9%94%99%E8%AF%AF%E7%9B%91%E6%8E%A7/" class="post-entry__link">前端错误监控</a>
-                </div>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/21</span>
+            </div>
+            <!-- tags  -->
             
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        Vue基础一
-    </h2>
+            <div class= abstract-tags >
     
-        <h2 id="插值表达式"><a href="#插值表达式" class="headerlink" title="插值表达式"></a>插值表达式</h2>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "前端性能优化">前端性能优化</a>
     
 </div>
-<div class="post-entry__meta">
-    <a href="/archives/2019/10/" class="post-meta__date button">2019-10-20</a>
-    
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
-<a href="/2019/10/20/Vue%E5%9F%BA%E7%A1%80%E4%B8%80/" class="post-entry__link">Vue基础一</a>
-                </div>
             
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        页面性能优化
-    </h2>
+        </div>
+    </article>
     
-        <h2 id="页面提升性能的方法有哪些？"><a href="#页面提升性能的方法有哪些？" class="headerlink" title="页面提升性能的方法有哪些？"></a>页面提升性能的方法有哪些？</h2><ol>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/20/Vue%E5%9F%BA%E7%A1%80%E4%B8%80/" >
+            
+                <span>Vue基础一</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="插值表达式"><a href="#插值表达式" class="headerlink" title="插值表达式"></a>插值表达式</h2>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/20</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Vue">Vue</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/11/%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" >
+            
+                <span>页面性能优化</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="页面提升性能的方法有哪些？"><a href="#页面提升性能的方法有哪些？" class="headerlink" title="页面提升性能的方法有哪些？"></a>页面提升性能的方法有哪些？</h2><ol>
 <li>资源压缩合并，减少HTTP请求</li>
 <li>非核心代码异步加载–&gt;异步加载的方式–&gt;异步加载的区别</li>
 <li>利用浏览器缓存–&gt;缓存的分类–&gt;缓存的原理</li>
 <li>使用CDN</li>
-<li>预解析DNS
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2019/10/" class="post-meta__date button">2019-10-11</a>
-    
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-tags__link button"># 前端性能优化</a></div> 
-<a href="/2019/10/11/%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-entry__link">页面性能优化</a>
-                </div>
+<li>预解析DNS</li></ol>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/11</span>
+            </div>
+            <!-- tags  -->
             
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        事件循环EventLoop
-    </h2>
+            <div class= abstract-tags >
     
-        <h2 id="什么是Event-Loop"><a href="#什么是Event-Loop" class="headerlink" title="什么是Event Loop"></a>什么是Event Loop</h2><p><strong>event loop是一个执行模型，在不同的地方有不同的实现。浏览器和NodeJS基于不同的技术实现了各自的Event Loop。</strong></p>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "前端性能优化">前端性能优化</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/07/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AFEventLoop/" >
+            
+                <span>事件循环EventLoop</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="什么是Event-Loop"><a href="#什么是Event-Loop" class="headerlink" title="什么是Event Loop"></a>什么是Event Loop</h2><p><strong>event loop是一个执行模型，在不同的地方有不同的实现。浏览器和NodeJS基于不同的技术实现了各自的Event Loop。</strong></p>
 <ul>
 <li>浏览器的Event Loop是在html5的规范中明确定义。</li>
 <li>NodeJS的Event Loop是基于libuv实现的。可以参考Node的官方文档以及libuv的官方文档。</li>
-<li>libuv已经对Event Loop做出了实现，而HTML5规范中只是定义了浏览器中Event Loop的模型，具体的实现留给了浏览器厂商。
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2019/10/" class="post-meta__date button">2019-10-07</a>
-    
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/javascript/" class="post-tags__link button"># javascript</a></div> 
-<a href="/2019/10/07/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AFEventLoop/" class="post-entry__link">事件循环EventLoop</a>
-                </div>
+<li>libuv已经对Event Loop做出了实现，而HTML5规范中只是定义了浏览器中Event Loop的模型，具体的实现留给了浏览器厂商。</li></ul>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/07</span>
+            </div>
+            <!-- tags  -->
             
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        浏览器渲染原理与过程
-    </h2>
+            <div class= abstract-tags >
     
-        <h2 id="浏览器如何渲染网页"><a href="#浏览器如何渲染网页" class="headerlink" title="浏览器如何渲染网页"></a>浏览器如何渲染网页</h2><h3 id="什么是DOCTYPE"><a href="#什么是DOCTYPE" class="headerlink" title="什么是DOCTYPE"></a>什么是DOCTYPE</h3><p>在w3school上是这么解释的：&lt;!DOCTYPE&gt;声明不是HTML标签，指示web浏览器关于页面使用哪个HTML版本进行编写的指令；在 HTML 4.01 中，<code>&lt;!DOCTYPE&gt;</code> 声明引用 DTD，因为 HTML 4.01 基于 SGML。DTD 规定了标记语言的规则，这样浏览器才能正确地呈现内容。HTML5 不基于 SGML，所以不需要引用 DTD</p>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "javascript">javascript</a>
     
 </div>
-<div class="post-entry__meta">
-    <a href="/archives/2019/09/" class="post-meta__date button">2019-09-27</a>
-    
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" class="post-tags__link button"># 浏览器</a></div> 
-<a href="/2019/09/27/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%87%E7%A8%8B/" class="post-entry__link">浏览器渲染原理与过程</a>
-                </div>
             
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        CSRF和XSS
-    </h2>
+        </div>
+    </article>
     
-        <h2 id="CSRF和XSS"><a href="#CSRF和XSS" class="headerlink" title="CSRF和XSS"></a>CSRF和XSS</h2><p>前端安全主要分为两种：</p>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/09/27/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%87%E7%A8%8B/" >
+            
+                <span>浏览器渲染原理与过程</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="浏览器如何渲染网页"><a href="#浏览器如何渲染网页" class="headerlink" title="浏览器如何渲染网页"></a>浏览器如何渲染网页</h2><h3 id="什么是DOCTYPE"><a href="#什么是DOCTYPE" class="headerlink" title="什么是DOCTYPE"></a>什么是DOCTYPE</h3><p>在w3school上是这么解释的：&lt;!DOCTYPE&gt;声明不是HTML标签，指示web浏览器关于页面使用哪个HTML版本进行编写的指令；在 HTML 4.01 中，<code>&lt;!DOCTYPE&gt;</code> 声明引用 DTD，因为 HTML 4.01 基于 SGML。DTD 规定了标记语言的规则，这样浏览器才能正确地呈现内容。HTML5 不基于 SGML，所以不需要引用 DTD</p>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/27</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "浏览器">浏览器</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/09/03/CSRF%E5%92%8CXSS/" >
+            
+                <span>CSRF和XSS</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="CSRF和XSS"><a href="#CSRF和XSS" class="headerlink" title="CSRF和XSS"></a>CSRF和XSS</h2><p>前端安全主要分为两种：</p>
 <ol>
 <li>CSRF</li>
-<li>XSS
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2019/09/" class="post-meta__date button">2019-09-03</a>
-    
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" class="post-tags__link button"># 网络安全</a></div> 
-<a href="/2019/09/03/CSRF%E5%92%8CXSS/" class="post-entry__link">CSRF和XSS</a>
-                </div>
+<li>XSS</li></ol>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/03</span>
+            </div>
+            <!-- tags  -->
             
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络安全">网络安全</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="page-number" href="/archives/2019/page/3/">3</a><a class="extend next" rel="next" href="/archives/2019/page/2/">NEXT &gt;</a>
+    </nav>
+    
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:wenyuhan2770@foxmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/SleeoWen/SleeoWen-Blog" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 69
+        </div>
+        <!-- search  -->
         
     </div>
     
-        <div class="nav">
-            <div class="nav__prev">
-                
-            </div>
-            <div class="nav__next">
-                
-                    <a href="/archives/2019/page/2/" class="nav__link">
-                        <div>
-                            <div class="nav__label">
-                                Next
-                            </div>
-                            <div class="nav__title">
-                                Page 2
-                            </div>
-                        </div>
-                        <div>
-                            <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
-                        </div>
-                    </a>
-                
-            </div>
-        </div>
-    
-
-
-	
-</main>
-
-            <footer class="footer">
+    <div class="post-archive">
     
     
-
-
     
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/09</span><a class="archive-post-title" href= "/2021/07/09/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/" >性能优化总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/07</span><a class="archive-post-title" href= "/2021/07/07/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%87%BD%E6%95%B0%E5%8F%AA%E8%A2%AB%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1/" >如何让函数只被执行一次</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/2021/06/23/css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96-0/" >css的GPU动画优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/08</span><a class="archive-post-title" href= "/2021/06/08/%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF%E4%B8%8B%E4%BD%BF%E7%94%A8Render%E5%87%BD%E6%95%B0%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEJSX/" >什么场景下使用Render函数，如何配置JSX</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2021/06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/" >使用css的GPU动画优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/31</span><a class="archive-post-title" href= "/2021/03/31/%E4%BB%8E%E4%B8%80%E9%81%93%E8%AE%A9%E6%88%91%E5%A4%B1%E7%9C%A0%E7%9A%84Promise%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90Promise%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82/" >从一道让我失眠的Promise面试题开始，深入分析Promise实现细节</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/12</span><a class="archive-post-title" href= "/2021/02/12/%E5%9C%A8%E5%A4%A7%E5%8E%82%E6%98%AF%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%BB%84%E7%BB%87npmscript%E7%9A%84/" >在大厂是如何高效组织npmscript的</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2020/11/02/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E8%AF%A6%E8%A7%A3%E4%BB%A5%E5%8F%8A%E9%9C%80%E8%A6%81%E5%85%B3%E6%B3%A8%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" >前端优化详解以及需要关注的几个问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/30</span><a class="archive-post-title" href= "/2020/10/30/Animation/" >Animation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/27</span><a class="archive-post-title" href= "/2020/10/27/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B4%8B%E8%91%B1%E6%A8%A1%E5%9E%8B%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%9C%BA%E5%88%B6/" >深入理解洋葱模型中间件机制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2020/10/26/%E5%89%8D%E7%AB%AF%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" >前端状态管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/18</span><a class="archive-post-title" href= "/2020/09/18/flex%E5%B8%83%E5%B1%80/" >flex布局</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/10</span><a class="archive-post-title" href= "/2020/08/10/node%E6%A1%86%E6%9E%B6%E7%AE%80%E5%8D%95%E5%AF%B9%E6%AF%94/" >node框架简单对比</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/vue%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7%EF%BC%88%E4%B8%80%EF%BC%89/" >vue开发技巧（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href= "/2020/07/20/vue%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95-%E4%BA%8B%E4%BB%B6/" >vue兄弟组件间传数据的方法-事件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/12</span><a class="archive-post-title" href= "/2020/07/12/Vue%E7%9A%84Render%E5%87%BD%E6%95%B0/" >Vue的Render函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2020/07/01/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bcheckbox/" >element源码解析之checkbox</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/2020/06/29/element%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bemitter-js/" >element源码解析之emitter.js</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2020/06/15/for%E5%BE%AA%E7%8E%AF%E5%85%A8%E5%AE%B6%E6%A1%B6/" >for循环全家桶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/" >时间复杂度</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2020/05/30/%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/" >手撕代码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/21</span><a class="archive-post-title" href= "/2020/05/21/%E5%AE%9E%E7%8E%B0call/" >实现call</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href= "/2020/05/20/call%E3%80%81apply%E3%80%81bind/" >call、apply、bind</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/14</span><a class="archive-post-title" href= "/2020/05/14/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%B7%B1%E6%8B%B7%E8%B4%9D/" >如何实现一个深拷贝</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/11</span><a class="archive-post-title" href= "/2020/05/11/AMD%E3%80%81CMD%E3%80%81CommonJS%E3%80%81ES6Module%E7%9A%84%E5%8C%BA%E5%88%AB/" >AMD、CMD、CommonJS、ES6Module的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2020/05/07/%E7%AE%97%E6%B3%95%E9%AB%98%E9%A2%91%E9%97%AE%E9%A2%98/" >算法高频问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2020/05/03/tree-shaking/" >tree-shaking</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2020/05/01/js%E6%9F%AF%E9%87%8C%E5%8C%96/" >js柯里化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/webpack%E4%B8%ADmodule-chunk%E5%92%8Cbundle%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88/" >webpack中module,chunk和bundle的区别是什么</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/webpack%E5%8A%A8%E6%80%81%E6%87%92%E5%8A%A0%E8%BD%BD/" >webpack动态懒加载</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2020/04/17/webpack%E9%85%8D%E7%BD%AE/" >webpack配置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2020/04/11/webpack%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" >webpack相关问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2020/04/02/ES6%E4%B8%AD%E7%9A%84Proxy%E3%80%81Reflect%E4%BB%A5%E5%8F%8AVue3-0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%8E%9F%E7%90%86/" >ES6中的Proxy、Reflect以及Vue3.0中的应用原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2020/03/22/%E8%B7%AF%E7%94%B1%E5%8E%9F%E7%90%86/" >路由原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/11</span><a class="archive-post-title" href= "/2020/03/11/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/" >Vue组件渲染过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href= "/2020/02/28/Vue%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91/" >Vue模板编译</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/12</span><a class="archive-post-title" href= "/2020/02/12/Vue%E8%99%9A%E6%8B%9FDOM/" >Vue虚拟DOM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/23</span><a class="archive-post-title" href= "/2020/01/23/Vue%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F/" >Vue的响应式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/12</span><a class="archive-post-title" href= "/2020/01/12/Vue%E5%92%8CMVVM/" >Vue和MVVM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/VueRouter/" >VueRouter</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/06</span><a class="archive-post-title" href= "/2019/12/06/Vuex/" >Vuex</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span><a class="archive-post-title" href= "/2019/11/21/Vue%E7%BB%84%E4%BB%B6%E7%9A%84%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7/" >Vue组件的高级特性</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/11</span><a class="archive-post-title" href= "/2019/11/11/Vue%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF/" >Vue组件通讯</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2019/11/01/Vue%E5%9F%BA%E7%A1%80%E4%BA%8C/" >Vue基础二</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/21</span><a class="archive-post-title" href= "/2019/10/21/%E5%89%8D%E7%AB%AF%E9%94%99%E8%AF%AF%E7%9B%91%E6%8E%A7/" >前端错误监控</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2019/10/20/Vue%E5%9F%BA%E7%A1%80%E4%B8%80/" >Vue基础一</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/2019/10/11/%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" >页面性能优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/07</span><a class="archive-post-title" href= "/2019/10/07/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AFEventLoop/" >事件循环EventLoop</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2019/09/27/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%87%E7%A8%8B/" >浏览器渲染原理与过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/03</span><a class="archive-post-title" href= "/2019/09/03/CSRF%E5%92%8CXSS/" >CSRF和XSS</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/22</span><a class="archive-post-title" href= "/2019/08/22/%E9%80%9A%E4%BF%A1%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" >通信相关问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2019/08/19/js%E6%A0%88/" >js栈</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2019/07/25/js%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" >js的面向对象</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/" >原型链</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/02</span><a class="archive-post-title" href= "/2019/07/02/HTTP%E5%8D%8F%E8%AE%AE/" >HTTP协议</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/2019/06/25/Event%E4%BA%8B%E4%BB%B6%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/" >Event事件常见应用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2019/06/11/DOM%E4%BA%8B%E4%BB%B6%E6%B5%81/" >DOM事件流</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2019/06/01/DOM%E7%BA%A7%E5%88%AB%E4%B8%8EDOM%E4%BA%8B%E4%BB%B6/" >DOM级别与DOM事件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2019/05/03/css%E4%B9%8BBFC/" >css之BFC</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2019/05/01/css%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B/" >css盒子模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href= "/2019/04/19/%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80/" >页面布局</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2019/04/07/%E5%87%BD%E6%95%B0%E7%9A%84%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81/" >函数的防抖和节流</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2019/04/01/vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%BB%A5%E5%8F%8AnextTick%E5%BA%94%E7%94%A8/" >vue生命周期以及nextTick应用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2019/03/22/webp%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" >webp在项目中的应用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href= "/2019/03/02/meta%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" >meta标签使用总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/21</span><a class="archive-post-title" href= "/2019/02/21/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94DNS%E9%A2%84%E8%A7%A3%E6%9E%90/" >前端性能优化——DNS预解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/17</span><a class="archive-post-title" href= "/2019/02/17/promose-all%E5%92%8Cpromise-race/" >promise.all和promise.race</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/05</span><a class="archive-post-title" href= "/2019/02/05/promise%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" >Promise原理和实现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/14</span><a class="archive-post-title" href= "/2019/01/14/%E5%88%9D%E5%B0%9Dhexo/" >初次使用hexo</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="javascript"><span class="iconfont-archer">&#xe606;</span>javascript</span>
+    
+        <span class="sidebar-tag-name" data-tags="css"><span class="iconfont-archer">&#xe606;</span>css</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络安全"><span class="iconfont-archer">&#xe606;</span>网络安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="html"><span class="iconfont-archer">&#xe606;</span>html</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
+    
+        <span class="sidebar-tag-name" data-tags="element"><span class="iconfont-archer">&#xe606;</span>element</span>
+    
+        <span class="sidebar-tag-name" data-tags="Promise"><span class="iconfont-archer">&#xe606;</span>Promise</span>
+    
+        <span class="sidebar-tag-name" data-tags="node"><span class="iconfont-archer">&#xe606;</span>node</span>
+    
+        <span class="sidebar-tag-name" data-tags="webpack"><span class="iconfont-archer">&#xe606;</span>webpack</span>
+    
+        <span class="sidebar-tag-name" data-tags="hexo"><span class="iconfont-archer">&#xe606;</span>hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="前端性能优化"><span class="iconfont-archer">&#xe606;</span>前端性能优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="面试"><span class="iconfont-archer">&#xe606;</span>面试</span>
+    
+        <span class="sidebar-tag-name" data-tags="算法"><span class="iconfont-archer">&#xe606;</span>算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
+    
+        <span class="sidebar-tag-name" data-tags="通信"><span class="iconfont-archer">&#xe606;</span>通信</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "文宇函"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
      
- 
-
- 
-    
-        
-        <p class="footer-copyright">
-            Copyright © 2022 <a href="/">SleeoWen-Blog</a>
-        </p>
-    
-    
-    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
-</footer>
-
-        </div>
-         
-
- 
-
- 
-
- 
-
- 
-
-
-
- 
-
-
-
- 
-
-
-    
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
-
-
-
     </body>
 </html>
+
+
