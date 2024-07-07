@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="前言起因是因为一个基于 vue-cli3.0 的项目突然反馈 vendor 包过大，为了减少用户的白屏时间开始做优化。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack动态懒加载">
+<meta property="og:url" content="http://example.com/2020/04/24/webpack%E5%8A%A8%E6%80%81%E6%87%92%E5%8A%A0%E8%BD%BD/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="前言起因是因为一个基于 vue-cli3.0 的项目突然反馈 vendor 包过大，为了减少用户的白屏时间开始做优化。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/webplan1.png">
+<meta property="og:image" content="http://example.com/webplan2.png">
+<meta property="og:image" content="http://example.com/webplan3.png">
+<meta property="article:published_time" content="2020-04-24T10:23:05.000Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.601Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/webplan1.png">
+  
+  
+  
+  <title>webpack动态懒加载 - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="webpack动态懒加载"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-04-24 18:23" pubdate>
+          2020年4月24日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">webpack动态懒加载</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>起因是因为一个基于 vue-cli3.0 的项目突然反馈 vendor 包过大，为了减少用户的白屏时间开始做优化。</p>
+<span id="more"></span>
+<hr>
+<h4 id="webpack4-的-splitChunk-插件"><a href="#webpack4-的-splitChunk-插件" class="headerlink" title="webpack4 的 splitChunk 插件"></a>webpack4 的 splitChunk 插件</h4><p>用过 vue-cli3.0 的同学应该熟悉，其舍弃了以前常用的 build 文件夹下的<code>webpack.config.js</code>文件配置，配置内容全部放到<code>vue.config.js</code>文件中，实际上关于 webpack 的配置其实和之前大同小异。打包拆分不得不聊到常用的<code>CommonsChunkPlugin</code>。</p>
+<p>旧项目常用的方式就是通过<code>webpack.optimize.CommonsChunkPlugin(opts)</code>，加载该插件进行代码分割。但是其存在很多问题：</p>
+<ul>
+<li>它可能导致下载更多的超过我们使用的代码</li>
+<li>它在异步 chunks 中是低效的</li>
+<li>配置繁琐，很难使用</li>
+<li>难以被理解</li>
+</ul>
+<p>在 webpack4 抛弃了<code>CommonsChunkPlugin</code>，换成了更先进的<code>SplitChunksPlugin</code>。它们的区别就在于，<code>CommonChunksPlugin</code> 会找到多数模块中都共有的东西，并且把它提取出来（common.js），也就意味着如果你加载了 common.js，那么里面可能会存在一些当前模块不需要的东西。</p>
+<p>而 <code>SplitChunksPlugin</code> 采用了完全不同的 heuristics 方法，它会根据模块之间的依赖关系，自动打包出很多很多（而不是单个）通用模块，可以保证加载进来的代码一定是会被依赖到的。</p>
+<p>下面是一个简单的例子，假设我们有 4 个 chunk，分别依赖了以下模块：</p>
+<p><img src="/webplan1.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>根据<code>CommonChunksPlugin</code>的默认配置，会打包成：  </p>
+<p><img src="/webplan2.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>而<code>SplitChunksPlugin</code>会打包成：  </p>
+<p><img src="/webplan3.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>显然进一步优化了空间。</p>
+<p>当然这不是本次讨论的重点，因为 vue-cli3.0 默认情况下已经是使用了<code>SplitChunksPlugin</code>的配置，查看 vue-cli service config 文件夹下的 app.js，有一段链式的 webpackConfig 配置了最终打包的 chunks 配置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">if</span> (isProd &amp;&amp; !process.<span class="hljs-property">env</span>.<span class="hljs-property">CYPRESS_ENV</span>) &#123;<br>  webpackConfig<br>    .<span class="hljs-property">optimization</span>.<span class="hljs-title function_">splitChunks</span>(&#123;<br>      <span class="hljs-attr">cacheGroups</span>: &#123;<br>        <span class="hljs-attr">vendors</span>: &#123;<br>          <span class="hljs-attr">name</span>: <span class="hljs-string">`chunk-vendors`</span>,<br>          <span class="hljs-attr">test</span>: <span class="hljs-regexp">/[\\/]node_modules[\\/]/</span>,<br>          <span class="hljs-attr">priority</span>: -<span class="hljs-number">10</span>,<br>          <span class="hljs-attr">chunks</span>: <span class="hljs-string">&#x27;initial&#x27;</span><br>        &#125;,<br>        <span class="hljs-attr">common</span>: &#123;<br>          <span class="hljs-attr">name</span>: <span class="hljs-string">`chunk-common`</span>,<br>          <span class="hljs-attr">minChunks</span>: <span class="hljs-number">2</span>,<br>          <span class="hljs-attr">priority</span>: -<span class="hljs-number">20</span>,<br>          <span class="hljs-attr">chunks</span>: <span class="hljs-string">&#x27;initial&#x27;</span>,<br>          <span class="hljs-attr">reuseExistingChunk</span>: <span class="hljs-literal">true</span><br>        &#125;<br>      &#125;<br>    &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>通常该默认情况可以满足大部分应用场景，但是考虑我们项目的特殊性，我需要额外提高<code>chunk-vendors</code>的 minChunks 项，让一些偶尔出现但是频率没有太高的依赖滚出 vendors。</p>
+<hr>
+<h4 id="动态懒加载"><a href="#动态懒加载" class="headerlink" title="动态懒加载"></a>动态懒加载</h4><p>先来聊聊 import 和 require 的区别。<br>require&#x2F;exports 出生在野生规范当中，什么叫做野生规范？即这些规范是 JavaScript 社区中的开发者自己草拟的规则，得到了大家的承认或者广泛的应用。比如 CommonJS、AMD、CMD 等等。<br>import&#x2F;export 则是名门正派。TC39 制定的新的 ECMAScript 版本，即 ES6（ES2015）中包含进来。</p>
+<p><code>const PAGE_A = require.ensure([], () =&gt; &#123;require(&quot;a&quot;)&#125;</code>。早期写 vue-router，习惯以这种形式去完成异步加载。后续日常开发中，常用的就是 import from 来引入资源（千万避免全局引入 ui 组件，可能会导致资源包异常的大）webpack 官方就指出，应该用 import 来代替<code>require.ensure</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">determineDate</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;moment&#x27;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">moment</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">moment</span>().<span class="hljs-title function_">format</span>());<br>  &#125;).<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Failed to load moment&#x27;</span>, err);<br>  &#125;);<br>&#125;<br><br><span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./component&#x27;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">Component</span> =&gt;</span> );<br><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">determineDate</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> moment = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;moment&#x27;</span>);<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">format</span>(<span class="hljs-string">&#x27;LLLL&#x27;</span>);<br>&#125;<br><span class="hljs-title function_">determineDate</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">str</span> =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(str));<br></code></pre></td></tr></table></figure>
+
+<p>相比较而言，import 使用了 promise 的封装，只接受一个参数，就是引用包的地址，语法十分简单。</p>
+<p>由于 webpack 需要将所有 import() 的模块都进行单独打包，所以在工程打包阶段，webpack 会进行依赖收集。webpack 会找到所有 import() 的调用，将传入的参数处理成一个正则，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./app&#x27;</span>+path+<span class="hljs-string">&#x27;/util&#x27;</span>) =&gt; <span class="hljs-regexp">/^\.\/app.*\/util$/</span><br></code></pre></td></tr></table></figure>
+
+<p>也就是说，import 参数中的所有变量，都会被替换为【.<em>】，而 webpack 就根据这个正则，查找所有符合条件的包，将其作为 package 进行打包。<br>所以 import 的正确姿势，应该是*<em>尽可能静态化表达包所处的路径，最小化变量控制的区域。</em></em><br>如我们要引用一堆页面组件，可以使用<code>import(&#39;./pages/&#39;+ComponentName)</code>，这样就可以实现引用的封装，同时也避免打包多余的内容。但是 webpack 会保证该路径下所有可能引入的文件是可用的，即会预请求。</p>
+<p>官方指出，在 import 内部添加注释，可以完成 chunkname 命名、打包模式等功能。4.6 + 还支持 Prefetching&#x2F;Preloading 来提前加载 &#x2F; 预加载资源。（prefetch 用于未来会发生的场合，preload 用于当前场合）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span>(<br>  <br>  <br>  <span class="hljs-string">&#x27;module&#x27;</span><br>);<br><br><span class="hljs-keyword">import</span>(<br>  <br>  <br>  <br>  <br>  <br>  <br>  <span class="hljs-string">`./locale/<span class="hljs-subst">$&#123;language&#125;</span>`</span><br>);<br></code></pre></td></tr></table></figure>
+
+<p>的确是可以完美取代 require 了</p>
+<hr>
+<h4 id="分析结果"><a href="#分析结果" class="headerlink" title="分析结果"></a>分析结果</h4><p>借助<code>webpack-bundle-analyzer</code>，可以清晰的查看，打包后之后项目的文件大小以及其构成。对于做性能优化有很大的帮助。具体使用方法不再详述，建议直接移步<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.npmjs.com/package/webpack-bundle-analyzer">官方文档</a>。</p>
+<hr>
+<h4 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h4><p>其实大部分是关于 webpack 的使用方式。老的 require.ensure 也好，新的 import 也好，其实本质还是交给 webpack 去打包处理，在最后选择如何去引入。<br>重要的是 webpack 的配置，即便用了 vue-cli3.0 依然要考虑自定义配置如何去完成，再细化一点就是 import 的引入方式。</p>
+<hr>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://juejin.im/post/5af1677c6fb9a07ab508dabb">一步一步的了解 webpack4 的 splitChunk 插件</a><br><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.zhihu.com/question/56820346">require 和 import 的区别</a><br><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://segmentfault.com/a/1190000015648036">webpack import() 动态加载模块踩坑</a><br><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.npmjs.com/package/webpack-bundle-analyzer">webpack-bundle-analyzer</a></p>
+<p>原文地址 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/54015bf76047">https://www.jianshu.com/p/54015bf76047</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/webpack/" class="print-no-link">#webpack</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>webpack动态懒加载</div>
+      <div>http://example.com/2020/04/24/webpack动态懒加载/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年4月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/30/webpack%E4%B8%ADmodule-chunk%E5%92%8Cbundle%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88/" title="webpack中module,chunk和bundle的区别是什么">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">webpack中module,chunk和bundle的区别是什么</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/17/webpack%E9%85%8D%E7%BD%AE/" title="webpack配置">
+                        <span class="hidden-mobile">webpack配置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

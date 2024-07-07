@@ -1,0 +1,664 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="前言我们在各种算法题以及技术文档中经常会看到柯里化这个词，那么，柯里化到底是什么？它在 js 中如何运用？对我们的编程有什么作用？都 9102 年了，如果你还不知道这些，那么你在面试过程中很可能会被面试官 diss🙄">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js柯里化">
+<meta property="og:url" content="http://example.com/2020/05/01/js%E6%9F%AF%E9%87%8C%E5%8C%96/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="前言我们在各种算法题以及技术文档中经常会看到柯里化这个词，那么，柯里化到底是什么？它在 js 中如何运用？对我们的编程有什么作用？都 9102 年了，如果你还不知道这些，那么你在面试过程中很可能会被面试官 diss🙄">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-01T08:21:12.000Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.601Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>js柯里化 - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="js柯里化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-05-01 16:21" pubdate>
+          2020年5月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">js柯里化</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我们在各种算法题以及技术文档中经常会看到柯里化这个词，那么，柯里化到底是什么？它在 js 中如何运用？对我们的编程有什么作用？都 9102 年了，如果你还不知道这些，那么你在面试过程中很可能会被面试官 diss🙄</p>
+<span id="more"></span>
+<hr>
+<h3 id="什么是柯里化（Currying）"><a href="#什么是柯里化（Currying）" class="headerlink" title="什么是柯里化（Currying）"></a>什么是柯里化（Currying）</h3><p><em>维基百科</em>的<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://zh.wikipedia.org/wiki/%25E6%259F%25AF%25E9%2587%258C%25E5%258C%2596">解释</a>是：把接收多个参数的函数变换成接收一个单一参数（最初函数的第一个参数）的函数，并返回接受剩余的参数而且返回结果的新函数的技术。其由数学家 Haskell Brooks Curry 提出，并以 curry 命名。</p>
+<p>简单的说，柯里化函数持续地返回一个新函数直到所有的参数用尽为止。这些参数全部保持 “活着” 的状态（通过闭包），然后当柯里化链中的最后一个函数被返回和执行时会全部被用来执行。</p>
+<p>这和<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://react.docschina.org/docs/higher-order-components.html">高阶组件</a>（Higher-order functions）如出一辙。前者返回一个新函数，后者返回一个新组件。</p>
+<h3 id="举个简单的栗子"><a href="#举个简单的栗子" class="headerlink" title="举个简单的栗子"></a>举个简单的栗子</h3><p>本例使用到的部分 ES6 知识：<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=http://es6.ruanyifeng.com/%23docs/let">const</a>，<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=http://es6.ruanyifeng.com/%23docs/function">arrow function</a>。不了解的同学可先行查看。<br>写一个计算三个参数相乘的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">multiply</span> (<span class="hljs-params">a, b, c</span>) &#123;<br>  <span class="hljs-keyword">return</span> a * b * c<br>&#125;<br><span class="hljs-title function_">multiply</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这是我们第一反应写出来的 demo，也是看起来最简单的实现方法。再来创建一个柯里化版本的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">multiply</span> (<span class="hljs-params">a</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">b</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">c</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">return</span> a * b * c<br>    &#125;<br>  &#125;<br>&#125;<br><span class="hljs-title function_">multiply</span>(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(<span class="hljs-number">3</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这里我们将 multiply(1，2，3) 调用变成了 multiply (1) (2) (3) 调用。<br>单独一个函数被转换成了一系列函数。为了得到数字 1、2、3 相乘的结果，这些数字被一个接一个地传递，每个数字预填了下一个函数内联调用。</p>
+<p>我们把 multiply (1) (2) (3) 分割一下来帮助理解：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> mul1 = <span class="hljs-title function_">multiply</span>(<span class="hljs-number">1</span>)<br><span class="hljs-keyword">const</span> mul2 = <span class="hljs-title function_">mul1</span>(<span class="hljs-number">2</span>)<br><span class="hljs-keyword">const</span> result = <span class="hljs-title function_">mul2</span>(<span class="hljs-number">3</span>)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result)<br></code></pre></td></tr></table></figure>
+
+<p>当 mul2 使用 3 作为参数调用时，它一起使用了之前已拿到的参数 a&#x3D;1 和 b&#x3D;2 进行运算并返回结果 6。</p>
+<p>作为一个嵌套函数，mul2 能够访问到外部的两个函数 multiply 和 mul1 的作用域。这就是为什么 mul2 能利用定义在已经‘离场’的函数中的参数来进行乘法操作的原因。即使这些函数早已返回并且从内存中垃圾回收了，但其变量仍然保持‘活着’(<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/00143449934543461c9d5dfeeb848f5b72bd012e1113d15000">闭包</a>)。你可以看到 3 个数字每次只有 1 个提供给函数，并且同一时间里一个新函数会被返回，直到所有的数字用尽为止。</p>
+<p><strong>柯里化背后的逻辑就是获取一个函数并派生出一个返回特殊函数的函数</strong>，它实际上是一种思想，或者说是一种程序设计模式。</p>
+<h3 id="柯里化的应用"><a href="#柯里化的应用" class="headerlink" title="柯里化的应用"></a>柯里化的应用</h3><h4 id="1-编写可以轻松复用和配置的小代码块，就像我们使用-npm-一样："><a href="#1-编写可以轻松复用和配置的小代码块，就像我们使用-npm-一样：" class="headerlink" title="1. 编写可以轻松复用和配置的小代码块，就像我们使用 npm 一样："></a>1. 编写可以轻松复用和配置的小代码块，就像我们使用 npm 一样：</h4><p>举个例子，你有一家商店，然后你想给你的优惠顾客 10% 的折扣：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">discount</span> (<span class="hljs-params">price, discount</span>) &#123;<br>  <span class="hljs-keyword">return</span> price * discount<br>&#125;<br><br><span class="hljs-keyword">const</span> price = <span class="hljs-title function_">discount</span>(<span class="hljs-number">500</span>, <span class="hljs-number">0.1</span>) <br><br><br><span class="hljs-keyword">const</span> price = <span class="hljs-title function_">discount</span>(<span class="hljs-number">1500</span>, <span class="hljs-number">0.1</span>) <br><span class="hljs-keyword">const</span> price = <span class="hljs-title function_">discount</span>(<span class="hljs-number">2000</span>, <span class="hljs-number">0.1</span>) <br><span class="hljs-keyword">const</span> price = <span class="hljs-title function_">discount</span>(<span class="hljs-number">50</span>, <span class="hljs-number">0.1</span>) <br><span class="hljs-keyword">const</span> price = <span class="hljs-title function_">discount</span>(<span class="hljs-number">300</span>, <span class="hljs-number">0.1</span>) <br><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">discount</span> (<span class="hljs-params">discount</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">price</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> price * discount<br>  &#125;<br>&#125;<br><span class="hljs-keyword">const</span> tenPercentDiscount = <span class="hljs-title function_">discount</span>(<span class="hljs-number">0.1</span>)<br><br><br><span class="hljs-title function_">tenPercentDiscount</span>(<span class="hljs-number">500</span>) <br><br><br><span class="hljs-keyword">const</span> twentyPercentDiscount = <span class="hljs-title function_">discount</span>(<span class="hljs-number">0.2</span>)<br><br><br><span class="hljs-title function_">twentyPercentDiscount</span>(<span class="hljs-number">500</span>) <br><span class="hljs-title function_">twentyPercentDiscount</span>(<span class="hljs-number">3000</span>) <br><span class="hljs-title function_">twentyPercentDiscount</span>(<span class="hljs-number">80000</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这个例子说明，使用柯里化思想能让我们在遇到只能确定一个参数而无法确定另一个参数时，代码设计编的变得更方便与高效，达到提升性能的目的。</p>
+<h4 id="2-避免频繁调用具有相同参数的函数："><a href="#2-避免频繁调用具有相同参数的函数：" class="headerlink" title="2. 避免频繁调用具有相同参数的函数："></a>2. 避免频繁调用具有相同参数的函数：</h4><p>比如我们有个用来计算体积的函数:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">volume</span> (<span class="hljs-params">l, w, h</span>) &#123;<br>  <span class="hljs-keyword">return</span> l * w * h<br>&#125;<br><br><br><span class="hljs-title function_">volume</span>(<span class="hljs-number">200</span>, <span class="hljs-number">30</span>, <span class="hljs-number">100</span>) <br><span class="hljs-title function_">volume</span>(<span class="hljs-number">32</span>, <span class="hljs-number">45</span>, <span class="hljs-number">100</span>) <br><span class="hljs-title function_">volume</span>(<span class="hljs-number">2322</span>, <span class="hljs-number">232</span>, <span class="hljs-number">100</span>) <br><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">volume</span> (<span class="hljs-params">h</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">w</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">l</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">return</span> l * w * h<br>    &#125;<br>  &#125;<br>&#125;<br><br><br><span class="hljs-keyword">const</span> hCylinderHeight = <span class="hljs-title function_">volume</span>(<span class="hljs-number">100</span>)<br><span class="hljs-title function_">hCylinderHeight</span>(<span class="hljs-number">200</span>)(<span class="hljs-number">30</span>) <br><span class="hljs-title function_">hCylinderHeight</span>(<span class="hljs-number">2322</span>)(<span class="hljs-number">232</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="通用的柯里函数"><a href="#通用的柯里函数" class="headerlink" title="通用的柯里函数"></a>通用的柯里函数</h3><p>让我们建立一个函数来接受任何函数并且返回柯里化版本的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">curry</span> (<span class="hljs-params">fn, ...args</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">..._args</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">fn</span>(...args, ..._args)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们在这里做了什么？我们的 curry 函数接受一个我们想要柯里化的函数（fn）和一个变量（…args）。这里的 rest 操作符用来将参数聚集成一个…args。接下来我们返回一个函数，该函数将其余参数收集为…<em>args。此函数通过 spread 运算符将… args 和…</em> args 作为参数解构传入来调用原始函数 fn，然后将值返回给用户。</p>
+<p>让我们使用我们的 curry 函数用之前的例子来创建一个特殊的函数（一个专门用来计算 100m 长度的物品体积）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">volume</span> (<span class="hljs-params">l, h, w</span>) &#123;<br>  <span class="hljs-keyword">return</span> l * h * w<br>&#125;<br><span class="hljs-keyword">const</span> hCy = <span class="hljs-title function_">curry</span>(volume, <span class="hljs-number">100</span>)<br><span class="hljs-title function_">hCy</span>(<span class="hljs-number">200</span>, <span class="hljs-number">900</span>) <br><span class="hljs-title function_">hCy</span>(<span class="hljs-number">70</span>, <span class="hljs-number">60</span>)<br></code></pre></td></tr></table></figure>
+
+<p>将类似回调函数的参数传入柯里化函数，能使复杂的问题变得简单！</p>
+<h3 id="使用递归实现-curry-函数"><a href="#使用递归实现-curry-函数" class="headerlink" title="使用递归实现 curry 函数"></a>使用递归实现 curry 函数</h3><p>JS 柯里化作为函数式编程的重要一环，频繁在算法题中出现。以上的通用柯里化函数还不够完善，我们希望只给 curry 函数传递一个 fn 就能达到目的，现在我们使用递归来实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">curry</span> (<span class="hljs-params">fn</span>) &#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">c</span> = (<span class="hljs-params">...args</span>) =&gt; (args.<span class="hljs-property">length</span> === fn.<span class="hljs-property">length</span>) ?<br>          <span class="hljs-title function_">fn</span>(...args) : <span class="hljs-function">(<span class="hljs-params">..._args</span>) =&gt;</span> <span class="hljs-title function_">c</span>(...args, ..._args)<br>  <span class="hljs-keyword">return</span> c<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>该方法几乎为最简洁、代码行数最少的实现方法了。<br>首先我们能确定，实现柯里化的核心就是要确定传入参数的个数，并通通取到。<br>其次，我们得知道，<code>fn.length</code>为 fn 函数接受的参数个数，那么该实现方法就能解读为：<br><strong>不断递归获取传入参数，直到取到的参数个数等于 fn 的参数个数为止，最终将获取到的所有参数传给 fn 并返回执行结果</strong>。</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>柯里化作为一种重要的程序思想，已经广为应用，它使我们应对复杂问题时能提升效率，增强可读性。希望读者都能体会这种思想并运用于实践，相信在提升技术的路上能越走越远，成为一名优秀的工程师！</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7fa99a4bee8b">原文地址</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/javascript/" class="print-no-link">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>js柯里化</div>
+      <div>http://example.com/2020/05/01/js柯里化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年5月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/03/tree-shaking/" title="tree-shaking">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">tree-shaking</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/30/webpack%E4%B8%ADmodule-chunk%E5%92%8Cbundle%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88/" title="webpack中module,chunk和bundle的区别是什么">
+                        <span class="hidden-mobile">webpack中module,chunk和bundle的区别是什么</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

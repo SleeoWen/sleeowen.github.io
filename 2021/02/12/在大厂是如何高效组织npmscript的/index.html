@@ -1,0 +1,792 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="原文地址 juejin.cn  众所周知，一个 Javasript 项目的脚本类工具，可以使用 package.json 中的 scripts 字段来组织，简单来说，这就是 npm script。 最典型最常用约定俗成的一个是 npm start，用以启动项目： 123456&#123;  &quot;scripts&quot;: &#123;    &quot;start&quot;: &amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在大厂是如何高效组织npmscript的">
+<meta property="og:url" content="http://example.com/2021/02/12/%E5%9C%A8%E5%A4%A7%E5%8E%82%E6%98%AF%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%BB%84%E7%BB%87npmscript%E7%9A%84/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="原文地址 juejin.cn  众所周知，一个 Javasript 项目的脚本类工具，可以使用 package.json 中的 scripts 字段来组织，简单来说，这就是 npm script。 最典型最常用约定俗成的一个是 npm start，用以启动项目： 123456&#123;  &quot;scripts&quot;: &#123;    &quot;start&quot;: &amp;q">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/48fc28f255b24dc397fd986328ecf644~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/68555f54b5734ebf8a30820f6c7909ef~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5512ac6e65f444b1b26d97f937172741~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b6d03c707b22467da3ecfd3398d8c740~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="article:published_time" content="2021-02-12T09:24:39.000Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.613Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="node">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/48fc28f255b24dc397fd986328ecf644~tplv-k3u1fbpfcp-zoom-1.image">
+  
+  
+  
+  <title>在大厂是如何高效组织npmscript的 - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="在大厂是如何高效组织npmscript的"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-02-12 17:24" pubdate>
+          2021年2月12日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">在大厂是如何高效组织npmscript的</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p> 原文地址 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6945236994247098381?utm_source=gold_browser_extension">juejin.cn</a></p>
+</blockquote>
+<p>众所周知，一个 Javasript 项目的脚本类工具，可以使用 package.json 中的 <code>scripts</code> 字段来组织，简单来说，这就是 <code>npm script</code>。</p>
+<p>最典型最常用约定俗成的一个是 <code>npm start</code>，用以启动项目：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> &#123;<br>    <span class="hljs-string">&quot;start&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;next&quot;</span><br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p>约定俗成的还有很多，如下所列</p>
+<ul>
+<li>npm install</li>
+<li>npm test</li>
+<li>npm publish</li>
+<li>…</li>
+</ul>
+<p>约定俗成的亲儿子脚本自然和其它第三方脚本不一样，如果需要执行它，直接使用 <code>npm</code> 前缀即可，如 <code>npm start</code>，那其它脚本呢？那就需要 <code>npm run</code> 前缀了。而 <code>yarn</code> 就没这么多讲究了，一视同仁。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>npm run &lt;user <span class="hljs-keyword">defined</span>&gt;<br><span class="hljs-variable">$ </span>npm run-script dev<br><br><span class="hljs-comment"># 为了简单方便，等同于</span><br><span class="hljs-variable">$ </span>npm run dev<br><br><span class="hljs-comment"># yarn </span><br><span class="hljs-variable">$ </span>yarn dev<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p>以上是众所周知的，以下讲一讲有可能不是众所周知的</p>
+<h2 id="运行-npm-run-dev-与-npm-start-的区别"><a href="#运行-npm-run-dev-与-npm-start-的区别" class="headerlink" title="运行: npm run dev 与 npm start 的区别"></a>运行: npm run dev 与 npm start 的区别</h2><p>对于一个<strong>纯生成静态页面打包</strong>的前端项目而言，它们是没有多少区别的：生产环境的部署只依赖于构建生成的资源，更不依赖 npm scripts。可见 <a target="_blank" rel="noopener" href="https://shanyue.tech/frontend-engineering/docker.html">如何部署前端项目</a>。</p>
+<p>使用 <code>create-react-app</code> 生成的项目，它的 npm script 中只有 <code>npm start</code></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;start&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;react-scripts start&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;react-scripts build&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;test&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;react-scripts test&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;eject&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;react-scripts eject&quot;</span><br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p>使用 <code>vuepress</code> 生成的项目，它的 npm script 中只有 <code>npm run dev</code></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vuepress dev&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vuepress build&quot;</span><br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p>在一个<strong>面向服务端</strong>的项目中，如 <code>next</code>、<code>nuxt</code> 与 <code>nest</code>。dev 与 start 的区别趋于明显，一个为生产环境，一个为开发环境</p>
+<ul>
+<li>dev: 在开发环境启动项目，一般带有 watch 选项，监听文件变化而重启服务，此时会耗费大量的 CPU 性能，不宜放在生产环境</li>
+<li>start: 在生产环境启动项目</li>
+</ul>
+<p>在 <code>nest</code> 项目中进行配置</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;start&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;nest start&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;nest start --watch&quot;</span><br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h2 id="运行：Script-Hooks-如何把新项目快速跑起来"><a href="#运行：Script-Hooks-如何把新项目快速跑起来" class="headerlink" title="运行：Script Hooks -&gt; 如何把新项目快速跑起来"></a>运行：Script Hooks -&gt; 如何把新项目快速跑起来</h2><p>新人入职新上手项目，如何把它跑起来，这是所有人都会碰到的问题：所有人都是从新手开始的。</p>
+<p>有可能你会脱口而出：<code>npm run dev/npm start</code>，但实际工作中，处处藏坑，往往没这么简单。</p>
+<ol>
+<li>查看是否有 <code>CI/CD</code>，如果有跟着 <code>CI/CD</code> 部署的脚本跑命令</li>
+<li>查看是否有 <code>dockerfile</code>，如果有跟着 <code>dockerfile</code> 跑命令</li>
+<li>查看 npm scripts 中是否有 dev&#x2F;start，尝试 <code>npm run dev/npm start</code></li>
+<li>查看是否有文档，如果有跟着文档走。为啥要把文档放到最后一个？原因你懂的</li>
+</ol>
+<p>但即便是十分谨慎，也有可能遇到以下几个叫苦不迭、浪费了一下午时间的坑:</p>
+<ol>
+<li>前端有可能在<strong>本地环境启动时需要依赖前端构建时所产生的文件</strong>，所以有时需要**先正常部署一遍，再试着按照本地环境启动 (即需要先 <code>npm run build</code> 一下，再 <code>npm run dev/npm start</code>)**。(比如，一次我们的项目 npm run dev 时需要 webpack DllPlugin 构建后的东西）</li>
+<li>别忘了设置环境变量或者配置文件</li>
+</ol>
+<p>因此，设置一个少的 script，可以很好地避免后人踩坑，更重要的是，可以避免后人骂你</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> &#123;<br>    <span class="hljs-string">&quot;start&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npm run dev&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;config&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;node assets &amp;&amp; node config&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;webpack&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-comment">// 设置一个 dev 的钩子，在 npm run dev 前执行，此处有可能不是必须的</span><br>    <span class="hljs-string">&quot;predev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npm run build&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;webpack-dev-server --inline --progress&quot;</span><br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h2 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h2><p>在 npm script 中，对于每一个命令都有 Pre&#x2F;Post 钩子，分别在命令执行前后执行</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml">npm run <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span><br><span class="language-xml"><span class="language-handlebars">pre<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span></span><br><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span></span></span></span><br><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">post<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span></span></span></span></span></span><br><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">复制代码</span></span></span></span></span></span><br></code></pre></td></tr></table></figure>
+
+<p>在工作中，这些钩子与内置的命令为项目提供了简便的操作方式，也提供了更安全的项目操作流程</p>
+<ol>
+<li>装包之后，进行 husky(v5.0) 的设置</li>
+<li>打包之前，清理目标文件件</li>
+<li>发包之前，进行打包构建</li>
+<li>运行之前，准备好资源文件</li>
+</ol>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> &#123;<br>    <span class="hljs-string">&quot;postinstall&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;husky install&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;prebuild&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;rimraf dist&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;webpack&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;predev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npm run assets&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;webpack-dev-server --inline --progress&quot;</span><br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><p>构建打包，基本上所有的项目都含有这个命令，并且默认为 <code>npm run build</code>。</p>
+<p>在 CI 或前端托管平台 Vercel&#x2F;Netlify 中，对于部署前端项目，最重要的一步就是打包。但是有些项目有可能不需要打包，此时可以使用 <code>if-present</code> 参数，代表如果存在该 script，则执行，否则跳过</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript">$ npm <span class="hljs-built_in">run</span> <span class="hljs-comment">--if-present build</span><br>复制代码<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> &#123;<br>    <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;next build&quot;</span><br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h2 id="测试-Script-后缀"><a href="#测试-Script-后缀" class="headerlink" title="测试: Script 后缀"></a>测试: Script 后缀</h2><p>对于完成一件极为复杂的事情，可以使用前缀进行分组组织 npm script，比如测试。</p>
+<ul>
+<li><code>npm run test</code>: 使用 <a target="_blank" rel="noopener" href="https://npm.devtool.tech/mocha">mocha</a> 进行单元测试</li>
+<li><code>npm run test:coverage</code>: 使用 <a target="_blank" rel="noopener" href="https://npm.devtool.tech/nyc">nyc</a> 查看单元测试覆盖率</li>
+<li><code>npm run test:e2e</code>: 使用 <a target="_blank" rel="noopener" href="https://npm.devtool.tech/cypress">cypress</a> 进行 UI 自动化测试</li>
+</ul>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;test&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;mocha&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;test:coverage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;nyc npm test&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;test:e2e&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npm run cy:run --&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;cy:run&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cypress run --config-file cypress/config.json&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-string">&quot;cy:open&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cypress open --config-file cypress/config.json&quot;</span><br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p>对于测试而言，<code>mocha</code> 与 <code>nyc</code> 结合可以很好地进行单元测试，并提供覆盖率报告。</p>
+<p>对于前端 e2e 测试而言，<code>cypress</code> 与 <code>puppeteer</code> 无疑是最流行的框架。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/48fc28f255b24dc397fd986328ecf644~tplv-k3u1fbpfcp-zoom-1.image" srcset="/img/loading.gif" lazyload></p>
+<p>那如何对 Vue&#x2F;React 组件进行更好地测试及文档呢？</p>
+<h2 id="组件测试"><a href="#组件测试" class="headerlink" title="组件测试:"></a>组件测试:</h2><p><a target="_blank" rel="noopener" href="https://storybook.js.org/">storybook</a> 可以更好地对 React&#x2F;Vue 组件进行调试、测试并形成帮助文档。开发基础组件库时，可以配置 <code>npm run storybook</code> 进行更好的测试</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">$ npm <span class="hljs-built_in">run</span> storybook<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> &#123;<br>    <span class="hljs-string">&quot;storybook&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;start-storybook -p 9001 -c .storybook&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;storybook:build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;build-storybook -c .storybook -o .out&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;prepublishOnly&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npm run build&quot;</span><br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/68555f54b5734ebf8a30820f6c7909ef~tplv-k3u1fbpfcp-zoom-1.image" srcset="/img/loading.gif" lazyload></p>
+<h2 id="格式化-Prettier"><a href="#格式化-Prettier" class="headerlink" title="格式化: Prettier"></a>格式化: Prettier</h2><p><a target="_blank" rel="noopener" href="https://npm.devtool.tech/prettier">Prettier</a> 是一款支持多种编程语言，如 html、css、js、graphql、markdown 等并且可与编辑器 (vscode) 深度集成的代码格式化工具。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5512ac6e65f444b1b26d97f937172741~tplv-k3u1fbpfcp-zoom-1.image" srcset="/img/loading.gif" lazyload></p>
+<p>在 npm script 中配置代码格式化如下所示：对 <code>js</code>、<code>css</code>、<code>json</code>、<code>markdown</code> 进行格式化</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span>: &#123;<br>    <span class="hljs-string">//</span> 配置文件: <span class="hljs-string">.prettierrc</span><br>    <span class="hljs-string">//</span> 格式化: <span class="hljs-params">--write</span><br>    <span class="hljs-string">//</span> 文件: *<span class="hljs-string">.js</span><br>    <span class="hljs-string">&quot;prettier&quot;</span>: <span class="hljs-string">&quot;prettier --config .prettierrc --write &#123;.,components,lib,pages&#125;/*.&#123;js,css,json,md&#125;&quot;</span>,<br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p><code>.prettierrc</code> 是 <code>prettier</code> 的配置文件，一般是比较简单的配置，可供配置的 <a target="_blank" rel="noopener" href="https://prettier.io/docs/en/options.html#parser">Prettier Options</a> 也没有很多。</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs actionscript">&#123;<br>  <span class="hljs-string">&quot;singleQuote&quot;</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&quot;printWidth&quot;</span>: <span class="hljs-number">100</span>,<br>  <span class="hljs-string">&quot;semi&quot;</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-string">&quot;arrowParens&quot;</span>: <span class="hljs-string">&quot;avoid&quot;</span><br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h2 id="Lint-代码格式化及质量检查"><a href="#Lint-代码格式化及质量检查" class="headerlink" title="Lint: 代码格式化及质量检查"></a>Lint: 代码格式化及质量检查</h2><p>那 Prettier 与 ESLint&#x2F;StyleLint&#x2F;TSLint 有什么区别？</p>
+<p><code>Prettier</code> 仅仅作代码的格式化，如空格、是否添加分号之类。而 ESLint 之类对代码格式化外，还对代码进行<strong>质量检查</strong>，如 <code>no-unused-vars</code>, <code>no-implicit-globals</code> 等规则。</p>
+<p>JS 与 TS 的质量检查，还是要看 <a target="_blank" rel="noopener" href="https://npm.devtool.tech/eslint">eslint</a>。</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> &#123;<br>    <span class="hljs-string">&quot;lint&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;eslint .&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;lint:fix&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;eslint . --fix&quot;</span><br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p>除了 eslint 之外，还可以对 markdown、gitcommit 进行格式化</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/markdownlint">markdownlint</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@commitlint/cli">commitlint</a></li>
+</ul>
+<h2 id="Git-你好，代码不合格，这里禁止提交"><a href="#Git-你好，代码不合格，这里禁止提交" class="headerlink" title="Git: 你好，代码不合格，这里禁止提交"></a>Git: 你好，代码不合格，这里禁止提交</h2><p>你的代码不合格，为了避免你被他人吐槽，这里不允许提交。这时候 Git Hooks 就派上了用场。</p>
+<p>Git Hooks 中的 <code>precommit hook</code> 会在代码提交之前执行脚本，如果脚本不通过 (Exit Code 不是 0)，则禁止提交。</p>
+<p><a target="_blank" rel="noopener" href="https://npm.devtool.tech/husky">husky</a> 与 <a target="_blank" rel="noopener" href="https://github.com/okonet/lint-staged">lint-staged</a> 是 <code>Git Hooks</code> 的最佳搭配。</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs prolog">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;lint&quot;</span>: <span class="hljs-string">&quot;eslint .&quot;</span>,<br>    <span class="hljs-string">&quot;prettier&quot;</span>: <span class="hljs-string">&quot;prettier --config .prettierrc --write &#123;.,components,lib,pages&#125;/*.&#123;js,css,json,md&#125;&quot;</span>,<br>  &#125;,<br>  <span class="hljs-string">&quot;husky&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;hooks&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;pre-commit&quot;</span>: <span class="hljs-string">&quot;lint-staged&quot;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-string">&quot;lint-staged&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;*.js&quot;</span>: [<br>      <span class="hljs-string">&quot;npm run lint&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;*.&#123;js,css,json,md&#125;&quot;</span>: [<br>      <span class="hljs-string">&quot;npm run prettier&quot;</span><br>    ]<br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h2 id="Outdated-你的依赖已过期"><a href="#Outdated-你的依赖已过期" class="headerlink" title="Outdated: 你的依赖已过期"></a>Outdated: 你的依赖已过期</h2><p>当一个库过期了会怎么样？</p>
+<ul>
+<li>找不到文档，无处下手</li>
+<li>经常有 Bug 由过期库引起，很难修复</li>
+<li>存在安全风险</li>
+</ul>
+<p>没有人会喜欢过期的库。</p>
+<p>使用 <code>npm outdated</code> 可以发现 package.json 中依赖的过期库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ npm outdated<br>Package                            Current  Wanted  Latest  Location                                        Depended by<br>@vuepress/plugin-google-analytics    1.7.1   1.8.2   1.8.2  node_modules/@vuepress/plugin-google-analytics  blog<br>axios                               0.21.0  0.21.1  0.21.1  node_modules/axios                              blog<br>dayjs                                1.9.6  1.10.4  1.10.4  node_modules/dayjs                              blog<br>graphql                             15.4.0  15.5.0  15.5.0  node_modules/graphql                            blog<br>koa                                 2.13.0  2.13.1  2.13.1  node_modules/koa                                blog<br>npm-check-updates                   10.2.2  10.3.1  11.3.0  node_modules/npm-check-updates                  blog<br>vuepress                             1.7.1   1.8.2   1.8.2  node_modules/vuepress                           blog<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p>但是 <code>npm outdated</code> 并不好用，比如如何一键升级？就像应用商店升级所有手机软件一样。</p>
+<p><code>node-check-updates</code> 是加强版的 <code>npm outdated</code>，它最简单的功能是一键升级，细化功能是升级策略与安全升级。ncu 是它的二进制命令</p>
+<figure class="highlight parser3"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs parser3"><span class="language-xml">$ ncu</span><br><span class="language-xml">Checking package.json</span><br><span class="language-xml">[====================] </span><span class="hljs-number">5</span><span class="language-xml">/</span><span class="hljs-number">5</span><span class="language-xml"> </span><span class="hljs-number">100</span><span class="language-xml">%</span><br><span class="language-xml"></span><br><span class="language-xml">express           </span><span class="hljs-number">4.12</span><span class="language-xml">.x  →   </span><span class="hljs-number">4.13</span><span class="language-xml">.x</span><br><span class="language-xml">multer            </span><span class="hljs-keyword">^0.1.8</span><span class="language-xml">  →   </span><span class="hljs-keyword">^1.0.1</span><span class="language-xml"></span><br><span class="language-xml">react-bootstrap  </span><span class="hljs-keyword">^0.22.6</span><span class="language-xml">  →  </span><span class="hljs-keyword">^0.24.0</span><span class="language-xml"></span><br><span class="language-xml">react-a11y        </span><span class="hljs-keyword">^0.1.1</span><span class="language-xml">  →   </span><span class="hljs-keyword">^0.2.6</span><span class="language-xml"></span><br><span class="language-xml">webpack          ~</span><span class="hljs-number">1.9</span><span class="hljs-number">.10</span><span class="language-xml">  →  ~</span><span class="hljs-number">1.10</span><span class="hljs-number">.5</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">Run ncu -u to upgrade package.json</span><br><span class="language-xml">复制代码</span><br></code></pre></td></tr></table></figure>
+
+<p>使用 <code>ncu --doctor</code>，在升级每一个依赖时会对项目进行测试，如果测试通过则安装依赖成功，否则回退到原先版本</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs stata">$ ncu --doctor -<span class="hljs-keyword">u</span><br>npm install<br>npm <span class="hljs-keyword">run</span> <span class="hljs-keyword">test</span><br>ncu -<span class="hljs-keyword">u</span><br>npm install<br>npm <span class="hljs-keyword">run</span> <span class="hljs-keyword">test</span><br>Failing tests found:<br>/projects/myproject/<span class="hljs-keyword">test</span>.js:13<br>  throw new <span class="hljs-keyword">Error</span>(&#x27;<span class="hljs-keyword">Test</span> failed!&#x27;)<br>  ^<br>Now let&#x27;s identify the culprit, shall we?<br>Restoring package.json<br>Restoring package-lock.json<br>npm install<br>npm install --<span class="hljs-keyword">no</span>-<span class="hljs-keyword">save</span> react@16.0.0<br>npm <span class="hljs-keyword">run</span> <span class="hljs-keyword">test</span><br>  ✓ react 15.0.0 → 16.0.0<br>npm install --<span class="hljs-keyword">no</span>-<span class="hljs-keyword">save</span> react-redux@7.0.0<br>npm <span class="hljs-keyword">run</span> <span class="hljs-keyword">test</span><br>  ✗ react-redux 6.0.0 → 7.0.0<br>Saving partially upgraded package.json<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p>在 npm script 中进行配置 ncu:</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> &#123;<br>    <span class="hljs-string">&quot;ncu&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ncu&quot;</span><br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h2 id="Audit-你的依赖存在安全风险"><a href="#Audit-你的依赖存在安全风险" class="headerlink" title="Audit: 你的依赖存在安全风险"></a>Audit: 你的依赖存在安全风险</h2><p>当某一个 package 存在安全风险时，这时候就要小心了，毕竟谁也不想自己的网站被攻击。唯一的解决办法就是 package 升级版本。就像 Github 的机器人这样:</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b6d03c707b22467da3ecfd3398d8c740~tplv-k3u1fbpfcp-zoom-1.image" srcset="/img/loading.gif" lazyload></p>
+<p>那使用 ncu 把所有依赖包升级到最新还会有安全风险吗？</p>
+<p>会有，因为 ncu 只会把 package.json 中的依赖升级到最新，而不会把 lock file 中的依赖升级到最新。</p>
+<p><code>npm audit</code> 可以发现项目中的风险库，并使用 <code>npm audit fix</code> 进行修复。</p>
+<p>然而美中不足，<code>npm audit</code> 的精准度没有 <code>yarn audit</code> 高。</p>
+<p>再美中不足，<code>yarn audit</code> 并不支持 <code>yarn audit fix</code> 自动修复</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">$ <span class="hljs-built_in">npm</span> audit<br><br>$ <span class="hljs-built_in">npm</span> audit fix<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p><code>snyk</code> 是一个检查包风险的一个服务，他提供了命令行工具检测风险，可以使用它代替 <code>npm audit</code>。他也有缺陷，依赖一个服务，可以根据容器自建或者使用 SASS。</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs 1c">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> &#123;<br>    <span class="hljs-string">&quot;audit&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;snyk test&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;audit:fix&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;snyk protect&quot;</span><br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h2 id="Size-控制你的-bundle-大小"><a href="#Size-控制你的-bundle-大小" class="headerlink" title="Size: 控制你的 bundle 大小"></a>Size: 控制你的 bundle 大小</h2><p><a target="_blank" rel="noopener" href="https://github.com/ai/size-limit/">size limit</a> 与 <a target="_blank" rel="noopener" href="https://github.com/siddharthkp/bundlesize">bundle size</a> 都是可以控制 bundle 体积的两个工具，不过 size-limit 对启动时间也有更强的支持。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs css">&#123;<br>  &quot;scripts&quot;: &#123;<br>    &quot;size&quot;: <span class="hljs-string">&quot;size-limit&quot;</span>,<br>    <span class="hljs-string">&quot;analyze&quot;</span>: <span class="hljs-string">&quot;size-limit --why&quot;</span><br>  &#125;,<br>  &quot;size-limit&quot;: [<br>    &#123;<br>      &quot;<span class="hljs-selector-tag">path</span>&quot;: <span class="hljs-string">&quot;dist/promise-utils.cjs.production.min.js&quot;</span>,<br>      <span class="hljs-string">&quot;limit&quot;</span>: <span class="hljs-string">&quot;10 KB&quot;</span><br>    &#125;,<br>    &#123;<br>      &quot;<span class="hljs-selector-tag">path</span>&quot;: <span class="hljs-string">&quot;dist/promise-utils.esm.js&quot;</span>,<br>      <span class="hljs-string">&quot;limit&quot;</span>: <span class="hljs-string">&quot;10 KB&quot;</span><br>    &#125;<br>  ]<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在工作中高效使用 npm script，可以极高效率与代码质量，本文中涉及到的 package 如下所示</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/husky">husky</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/mocha">mocha</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/nyc">nyc</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/cypress">cypress</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/puppeteer">puppeteer</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/storybook">storybook</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/prettier">prettier</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/eslint">eslint</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/markdownlint">markdownlint</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/@commitlint/cli">@commitlint&#x2F;cli</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/lint-staged">lint-staged</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/husky">husky</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/npm-check-updates">npm-check-updates</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/lerna">lerna</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/size-limit">size-limit</a></li>
+<li><a target="_blank" rel="noopener" href="https://npm.devtool.tech/bundle-size">bundle-size</a></li>
+</ul>
+<p>你可以在 <a target="_blank" rel="noopener" href="https://npm.devtool.tech/">npm devtool</a> 中找到更多有趣有用的库</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/node/" class="print-no-link">#node</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>在大厂是如何高效组织npmscript的</div>
+      <div>http://example.com/2021/02/12/在大厂是如何高效组织npmscript的/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年2月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/03/31/%E4%BB%8E%E4%B8%80%E9%81%93%E8%AE%A9%E6%88%91%E5%A4%B1%E7%9C%A0%E7%9A%84Promise%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90Promise%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82/" title="从一道让我失眠的Promise面试题开始，深入分析Promise实现细节">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">从一道让我失眠的Promise面试题开始，深入分析Promise实现细节</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/02/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E8%AF%A6%E8%A7%A3%E4%BB%A5%E5%8F%8A%E9%9C%80%E8%A6%81%E5%85%B3%E6%B3%A8%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" title="前端优化详解以及需要关注的几个问题">
+                        <span class="hidden-mobile">前端优化详解以及需要关注的几个问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

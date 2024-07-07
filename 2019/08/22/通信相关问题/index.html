@@ -1,0 +1,669 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="同源策略以及限制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通信相关问题">
+<meta property="og:url" content="http://example.com/2019/08/22/%E9%80%9A%E4%BF%A1%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="同源策略以及限制">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-22T08:11:16.000Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.617Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="通信">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>通信相关问题 - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="通信相关问题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-08-22 16:11" pubdate>
+          2019年8月22日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">通信相关问题</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="同源策略以及限制"><a href="#同源策略以及限制" class="headerlink" title="同源策略以及限制"></a>同源策略以及限制</h2><span id="more"></span>
+<h3 id="同源策略的含义"><a href="#同源策略的含义" class="headerlink" title="同源策略的含义"></a>同源策略的含义</h3><ol>
+<li>协议相同</li>
+<li>域名相同</li>
+<li>端口相同 举例来说，<code>http://www.example.com/dir/page.html</code>这个网址，协议是http:&#x2F;&#x2F;，域名是<a target="_blank" rel="noopener" href="http://www.example.com,端口是80(默认端口可以省略)./">www.example.com，端口是80（默认端口可以省略）。</a></li>
+<li><code>http://www.example.com/dir2/other.html</code>  ：同源</li>
+<li><code>http://example.com/dir/other.html</code>：不同源（域名不同）</li>
+<li><code>http://v2.www.example.com/dir/other.html</code>：不同源（域名不同）</li>
+<li><code>http://www.example.com:81/dir/other.html</code>：不同源（端口不同）</li>
+</ol>
+<h3 id="同源的目的以及限制"><a href="#同源的目的以及限制" class="headerlink" title="同源的目的以及限制"></a>同源的目的以及限制</h3><p>举个例子：<br>比如一个恶意网站的页面通过iframe嵌入了银行的登录页面（二者不同源），如果没有同源限制，恶意网页上的javascript脚本就可以在用户登录银行的时候获取用户名和密码。</p>
+<p>在浏览器中，script，img、iframe、link等标签都可以加载跨域资源，而不受同源限制，但浏览器限制了JavaScript的权限使其不能读、写加载的内容。</p>
+<h3 id="同源策略的作用范围"><a href="#同源策略的作用范围" class="headerlink" title="同源策略的作用范围"></a>同源策略的作用范围</h3><p>同源策略限制了客户端javascript代码的部分行为</p>
+<ol>
+<li>Cookie、LocalStorage 和 IndexDB 无法读取。</li>
+<li>DOM 无法获得。</li>
+<li>AJAX 请求不能发送。</li>
+</ol>
+<h2 id="前后端通信方式"><a href="#前后端通信方式" class="headerlink" title="前后端通信方式"></a>前后端通信方式</h2><ol>
+<li>ajax</li>
+<li>Websocket</li>
+<li>CORS</li>
+</ol>
+<h3 id="AJAX实现"><a href="#AJAX实现" class="headerlink" title="AJAX实现"></a>AJAX实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * [json 实现ajax的json]</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span>  &#123;<span class="hljs-type">[type]</span>&#125; options [description]</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">[type]</span>&#125;         [description]</span><br><span class="hljs-comment"> */</span><br> util.<span class="hljs-property">json</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">options</span>) &#123;<br>     <span class="hljs-keyword">var</span> opt = &#123;<br>         <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>         <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;get&#x27;</span>,<br>         <span class="hljs-attr">data</span>: &#123;&#125;,<br>         <span class="hljs-attr">success</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;&#125;,<br>         <span class="hljs-attr">error</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;&#125;,<br>     &#125;;<br>     util.<span class="hljs-title function_">extend</span>(opt, options);<br>     <span class="hljs-keyword">if</span> (opt.<span class="hljs-property">url</span>) &#123;<br>         <span class="hljs-keyword">var</span> xhr = <span class="hljs-title class_">XMLHttpRequest</span><br>            ? <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>()<br>            : <span class="hljs-keyword">new</span> <span class="hljs-title class_">ActiveXObject</span>(<span class="hljs-string">&#x27;Microsoft.XMLHTTP&#x27;</span>);<br>         <span class="hljs-keyword">var</span> data = opt.<span class="hljs-property">data</span>,<br>             url = opt.<span class="hljs-property">url</span>,<br>             type = opt.<span class="hljs-property">type</span>.<span class="hljs-title function_">toUpperCase</span>(),<br>             dataArr = [];<br>         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> k <span class="hljs-keyword">in</span> data) &#123;<br>             dataArr.<span class="hljs-title function_">push</span>(k + <span class="hljs-string">&#x27;=&#x27;</span> + data[k]);<br>         &#125;<br>         <span class="hljs-keyword">if</span> (type === <span class="hljs-string">&#x27;GET&#x27;</span>) &#123;<br>             url = url + <span class="hljs-string">&#x27;?&#x27;</span> + dataArr.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&amp;&#x27;</span>);<br>             xhr.<span class="hljs-title function_">open</span>(type, url.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/\?$/g</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-literal">true</span>);<br>             xhr.<span class="hljs-title function_">send</span>();<br>         &#125;<br>         <span class="hljs-keyword">if</span> (type === <span class="hljs-string">&#x27;POST&#x27;</span>) &#123;<br>             xhr.<span class="hljs-title function_">open</span>(type, url, <span class="hljs-literal">true</span>);<br>             xmlhttp.<span class="hljs-title function_">setRequestHeader</span>(<span class="hljs-string">&#x27;Content-type&#x27;</span>, <span class="hljs-string">&#x27;application/x-www-form-urlencoded&#x27;</span>);<br>             xhr.<span class="hljs-title function_">send</span>(dataArr.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&amp;&#x27;</span>));<br>         &#125;<br>         xhr.<span class="hljs-property">onload</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>             <span class="hljs-keyword">if</span> (xhr.<span class="hljs-property">status</span> === <span class="hljs-number">200</span> || xhr.<span class="hljs-property">status</span> === <span class="hljs-number">304</span>) &#123;<br>                 <span class="hljs-keyword">var</span> res;<br>                 <span class="hljs-keyword">if</span> (opt.<span class="hljs-property">success</span> &amp;&amp; opt.<span class="hljs-property">success</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Function</span>) &#123;<br>                     res = xhr.<span class="hljs-property">responseText</span>;<br>                     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> res ==== <span class="hljs-string">&#x27;string&#x27;</span>) &#123;<br>                         res = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(res);<br>                         opt.<span class="hljs-property">success</span>.<span class="hljs-title function_">call</span>(xhr, res);<br>                     &#125;<br>                 &#125;<br>             &#125; <span class="hljs-keyword">else</span> &#123;<br>                 <span class="hljs-keyword">if</span> (opt.<span class="hljs-property">error</span> &amp;&amp; opt.<span class="hljs-property">error</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Function</span>) &#123;<br>                     opt.<span class="hljs-property">error</span>.<span class="hljs-title function_">call</span>(xhr, res);<br>                 &#125;<br>             &#125;<br>         &#125;;<br>     &#125;<br> &#125;;<br><br></code></pre></td></tr></table></figure>
+<p><strong>在封装ajax请求时，要注意是否兼容IE浏览器。</strong></p>
+<h2 id="跨域通信的方式"><a href="#跨域通信的方式" class="headerlink" title="跨域通信的方式"></a>跨域通信的方式</h2><ol>
+<li>JSONP</li>
+<li>Hash</li>
+<li>postMessage</li>
+<li>WebSocket</li>
+<li>CORS</li>
+</ol>
+<h3 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * [function jsonp]</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span>  &#123;<span class="hljs-type">[type]</span>&#125; url      [description]</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span>  &#123;<span class="hljs-type">[type]</span>&#125; onsucess [description]</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span>  &#123;<span class="hljs-type">[type]</span>&#125; onerror  [description]</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span>  &#123;<span class="hljs-type">[type]</span>&#125; charset  [description]</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">[type]</span>&#125;          [description]</span><br><span class="hljs-comment"> */</span><br>util.<span class="hljs-property">jsonp</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">url, onsuccess, onerror, charset</span>) &#123;<br>    <span class="hljs-keyword">var</span> callbackName = util.<span class="hljs-title function_">getName</span>(<span class="hljs-string">&#x27;tt_player&#x27;</span>);<br>    <span class="hljs-variable language_">window</span>[callbackName] = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">if</span> (onsuccess &amp;&amp; util.<span class="hljs-title function_">isFunction</span>(onsuccess)) &#123;<br>            <span class="hljs-title function_">onsuccess</span>(<span class="hljs-variable language_">arguments</span>[<span class="hljs-number">0</span>]);<br>        &#125;<br>    &#125;;<br>    <span class="hljs-keyword">var</span> script = util.<span class="hljs-title function_">createScript</span>(url + <span class="hljs-string">&#x27;&amp;callback=&#x27;</span> + callbackName, charset);<br>    script.<span class="hljs-property">onload</span> = script.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">if</span> (!script.<span class="hljs-property">readyState</span> || <span class="hljs-regexp">/loaded|complete/</span>.<span class="hljs-title function_">test</span>(script.<span class="hljs-property">readyState</span>)) &#123;<br>            script.<span class="hljs-property">onload</span> = script.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-literal">null</span>;<br>            <span class="hljs-comment">// 移除该script的 DOM 对象</span><br>            <span class="hljs-keyword">if</span> (script.<span class="hljs-property">parentNode</span>) &#123;<br>                script.<span class="hljs-property">parentNode</span>.<span class="hljs-title function_">removeChild</span>(script);<br>            &#125;<br>            <span class="hljs-comment">// 删除函数或变量</span><br>            <span class="hljs-variable language_">window</span>[callbackName] = <span class="hljs-literal">null</span>;<br>        &#125;<br>    &#125;;<br>    script.<span class="hljs-property">onerror</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">if</span> (onerror &amp;&amp; util.<span class="hljs-title function_">isFunction</span>(onerror)) &#123;<br>            <span class="hljs-title function_">onerror</span>();<br>        &#125;<br>    &#125;;<br>   <span class="hljs-comment">//添加标签获取js</span><br>    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&#x27;head&#x27;</span>)[<span class="hljs-number">0</span>].<span class="hljs-title function_">appendChild</span>(script);<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+<p>我的理解就是伪装成script标签的请求，获取内容，实现跨域请求。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://www.abc.com/?data=name&amp;callback=jsonp&quot;</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+<p>请求时需要在后面添加callback的返回，<code>callback=jsonp</code>,这个是作为函数名返回，本地必须有个同名的函数才能使用。</p>
+<p>该函数应该注册在window对象上。 </p>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 利用hash，场景是当前页面 A 通过iframe或frame嵌入了跨域的页面 B</span><br><span class="hljs-comment">// 在A中伪代码如下：</span><br><span class="hljs-keyword">var</span> B = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&#x27;iframe&#x27;</span>);<br>B.<span class="hljs-property">src</span> = B.<span class="hljs-property">src</span> + <span class="hljs-string">&#x27;#&#x27;</span> + <span class="hljs-string">&#x27;data&#x27;</span>;<br><span class="hljs-comment">// 在B中的伪代码如下</span><br><span class="hljs-variable language_">window</span>.<span class="hljs-property">onhashchange</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">var</span> data = <span class="hljs-variable language_">window</span>.<span class="hljs-property">location</span>.<span class="hljs-property">hash</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="postMessage"><a href="#postMessage" class="headerlink" title="postMessage"></a>postMessage</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// postMessage</span><br><span class="hljs-comment">// 窗口A(http:A.com)向跨域的窗口B(http:B.com)发送信息</span><br><span class="hljs-title class_">Bwindow</span>.<span class="hljs-title function_">postMessage</span>(<span class="hljs-string">&#x27;data&#x27;</span>, <span class="hljs-string">&#x27;http://B.com&#x27;</span>);<br><span class="hljs-comment">// 在窗口B中监听</span><br><span class="hljs-title class_">Awindow</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;message&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event.<span class="hljs-property">origin</span>);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event.<span class="hljs-property">source</span>);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(event.<span class="hljs-property">data</span>);<br>&#125;, <span class="hljs-literal">false</span>);<br><br></code></pre></td></tr></table></figure>
+<h3 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js">     <br><span class="hljs-keyword">var</span> ws = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocket</span>(<span class="hljs-string">&#x27;wss://echo.websocket.org&#x27;</span>);<br><br>ws.<span class="hljs-property">onopen</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">evt</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Connection open ...&#x27;</span>);<br>    ws.<span class="hljs-title function_">send</span>(<span class="hljs-string">&#x27;Hello WebSockets!&#x27;</span>);<br>&#125;;<br><br>ws.<span class="hljs-property">onmessage</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">evt</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Received Message: &#x27;</span>, evt.<span class="hljs-property">data</span>);<br>    ws.<span class="hljs-title function_">close</span>();<br>&#125;;<br><br>ws.<span class="hljs-property">onclose</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">evt</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Connection closed.&#x27;</span>);<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2017/05/websocket.html">Websocket【参考资料】</a></p>
+<p>ws和wss，前者未加密后者加密</p>
+<h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><span class="hljs-comment">// url（必选），options（可选）</span><br><span class="hljs-title function_">fetch</span>(<span class="hljs-string">&#x27;/some/url/&#x27;</span>, &#123;<br>    <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;get&#x27;</span>,<br>&#125;).<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) &#123;<br><br>&#125;).<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>  <span class="hljs-comment">// 出错了，等价于 then 的第二个参数，但这样更好用更直观</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>请求头中添加这个<br><code>Access-Control-Allow-Origin: http://api.bob.com</code></p>
+<p> <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/04/cors.html">CORS【参考资料】</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%80%9A%E4%BF%A1/" class="print-no-link">#通信</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>通信相关问题</div>
+      <div>http://example.com/2019/08/22/通信相关问题/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年8月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/09/03/CSRF%E5%92%8CXSS/" title="CSRF和XSS">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CSRF和XSS</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/08/19/js%E6%A0%88/" title="js栈">
+                        <span class="hidden-mobile">js栈</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

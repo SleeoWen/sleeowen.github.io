@@ -1,0 +1,685 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="原型链的介绍什么是原型？js中，任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。 什么是原型链？  原型链的核心就是依赖对象的_proto_的指向，当自身不存在的属性时，就一层层的扒出创建对象的构造函数，直至到Object">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原型链">
+<meta property="og:url" content="http://example.com/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="原型链的介绍什么是原型？js中，任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。 什么是原型链？  原型链的核心就是依赖对象的_proto_的指向，当自身不存在的属性时，就一层层的扒出创建对象的构造函数，直至到Object">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/yuanxing.png">
+<meta property="og:image" content="http://example.com/gouzao.png">
+<meta property="article:published_time" content="2019-07-24T08:19:43.000Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.609Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/yuanxing.png">
+  
+  
+  
+  <title>原型链 - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="原型链"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-07-24 16:19" pubdate>
+          2019年7月24日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">原型链</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="原型链的介绍"><a href="#原型链的介绍" class="headerlink" title="原型链的介绍"></a>原型链的介绍</h2><h3 id="什么是原型？"><a href="#什么是原型？" class="headerlink" title="什么是原型？"></a>什么是原型？</h3><p>js中，任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。</p>
+<h3 id="什么是原型链？"><a href="#什么是原型链？" class="headerlink" title="什么是原型链？"></a>什么是原型链？</h3><p>  原型链的核心就是依赖对象的_proto_的指向，当自身不存在的属性时，就一层层的扒出创建对象的构造函数，直至到Object时，就没有_proto_指向了。</p>
+<span id="more"></span>
+<h2 id="创建对象的方法"><a href="#创建对象的方法" class="headerlink" title="创建对象的方法"></a>创建对象的方法</h2><ol>
+<li>字面量<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> a = &#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;demo&#x27;</span> &#125;;<br></code></pre></td></tr></table></figure></li>
+<li>字面量（使用了Object的构造方法）<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> b = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>(&#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;demo&#x27;</span> &#125;);<br></code></pre></td></tr></table></figure></li>
+<li>构造函数<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> func = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = <span class="hljs-string">&#x27;demo&#x27;</span>;<br>&#125;<br><span class="hljs-keyword">var</span> c = <span class="hljs-keyword">new</span> <span class="hljs-title function_">func</span>();<br></code></pre></td></tr></table></figure></li>
+<li>Object.create<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> demo = &#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;demo&#x27;</span> &#125;;<br><span class="hljs-keyword">var</span> d = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(demo);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="创建对象的过程"><a href="#创建对象的过程" class="headerlink" title="创建对象的过程"></a>创建对象的过程</h3><p><strong>首先，当我们声明一个function关键字的方法时，会为这个方法添加一个prototype属性，指向默认的原型对象，并且此prototype的constructor属性也指向方法对象。此二个属性会在创建对象时被对象的属性引用。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Hello</span>(<span class="hljs-params"></span>) &#123;<br>	&#125;<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Hello</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>); <span class="hljs-comment">// Object &#123;&#125; -- &gt; 内部的constructor 指向Hello方法</span><br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Hello</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">constructor</span>); <span class="hljs-comment">// function Hello()&#123;&#125;</span><br></code></pre></td></tr></table></figure>
+<p><strong>我们如果用Hello创建一个对象h，看这个对象有什么属性。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">   <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h.<span class="hljs-property">constructor</span>); <span class="hljs-comment">// function Hello()&#123;&#125;</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">getPrototypeOf</span>(h)==<span class="hljs-title class_">Hello</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>); <span class="hljs-comment">// true  备注：getPrototypeOf是获取_proto_</span><br></code></pre></td></tr></table></figure>
+<p> 我们惊喜的发现，new出来的对象，它的constructor指向了方法对象，它的_proto_和prototype相等。</p>
+<p>  即new一个对象，它的_proto_属性指向了方法的prototype属性，并且constructor指向了prototype的constructor属性。</p>
+<h3 id="创建对象的过程-1"><a href="#创建对象的过程-1" class="headerlink" title="创建对象的过程"></a>创建对象的过程</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Hehe</span>(<span class="hljs-params">name</span>) &#123;<br>		<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>	&#125;<br>	<span class="hljs-keyword">var</span> h = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Hehe</span>(<span class="hljs-string">&quot;笑你妹&quot;</span>);<br>	<span class="hljs-comment">//伪代码:</span><br>	<span class="hljs-keyword">function</span> <span class="hljs-title function_">newObj</span>(<span class="hljs-params">name</span>)&#123;<br>		 <span class="hljs-keyword">var</span> obj = &#123;&#125;;<br>		 obj.<span class="hljs-property">__proto__</span> = <span class="hljs-title class_">Hehe</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>; <br>		 obj.<span class="hljs-property">constructor</span> = <span class="hljs-title class_">Hehe</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">constructor</span>;<br>		 <span class="hljs-keyword">var</span> result = <span class="hljs-title class_">Hehe</span>.<span class="hljs-title function_">call</span>(obj, name);<br>		 <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> result===<span class="hljs-string">&#x27;object&#x27;</span>&amp;&amp; result!=<span class="hljs-literal">null</span> ? result : obj;  <span class="hljs-comment">//当无返回对象或默认时返回obj。</span><br>	&#125;<br>	<span class="hljs-keyword">var</span> hh = <span class="hljs-title function_">newObj</span>(<span class="hljs-string">&quot;笑你妹&quot;</span>);<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(hh);<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h);<br>	<span class="hljs-comment">//虽然hh!=h,但是可以看到这个hh就和h的结构一样了。</span><br><br></code></pre></td></tr></table></figure>
+<p><strong>过程：先创建一个空对象，设置一个_proto_指向方法的原型，设置constructor，用新对象做this指向方法，返回新对象。</strong></p>
+<h2 id="原型以及原型链关系"><a href="#原型以及原型链关系" class="headerlink" title="原型以及原型链关系"></a>原型以及原型链关系</h2><p><img src="/yuanxing.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/gouzao.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><blockquote>
+<p>任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params"></span>) &#123;<br>	&#125;<br>	<span class="hljs-keyword">var</span> p = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>();<br>	<span class="hljs-comment">//方法才有prototype,普通对象无prototype</span><br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Person</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>); <span class="hljs-comment">// Object&#123;&#125; </span><br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(p.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>); <span class="hljs-comment">// undifined</span><br>	<br>	<span class="hljs-comment">//任何对象都是有构造函数的,Person这种方法的构造函数是Function。</span><br>	<span class="hljs-comment">//备注:constructor很容易被改变，一般不用它，此处只是打印下列对象的构造函数是什么。</span><br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(p.<span class="hljs-property">constructor</span>); <span class="hljs-comment">//function Person()&#123;&#125;  </span><br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Person</span>.<span class="hljs-property">constructor</span>); <span class="hljs-comment">//function Function()&#123;&#125; </span><br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(&#123;&#125;.<span class="hljs-property">constructor</span>); <span class="hljs-comment">// function Object()&#123;&#125;</span><br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-property">constructor</span>); <span class="hljs-comment">// function Function() &#123;&#125;</span><br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>([].<span class="hljs-property">constructor</span>);  <span class="hljs-comment">//function Array()&#123;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><blockquote>
+<p> 用function声明的都是函数，而如果直接调用的话，那么Person()就是一个普通函数，只有用函数new产生对象时，这个函数才是new出来对象的构造函数。</p>
+</blockquote>
+<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><blockquote>
+<p>原型链的核心就是依赖对象的_proto_的指向，当自身不存在的属性时，就一层层的扒出创建对象的构造函数，直至到Object时，就没有_proto_指向了。</p>
+</blockquote>
+<p>属性搜索原则：</p>
+<ol>
+<li>当访问一个对象的成员的时候，会现在自身找有没有,如果找到直接使用。</li>
+<li>如果没有找到，则去原型链指向的对象的构造函数的prototype中找，找到直接使用，没找到就返回undifined或报错。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params">name</span>)&#123;<br>           <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>    &#125;<br>    <span class="hljs-keyword">var</span> p = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>();<br>    <span class="hljs-comment">//p ---&gt; Person.prototype ---&gt;Object.prototype----&gt;null</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//原型继承的基本案例</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params">name, age</span>) &#123;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span> = age;<br>&#125;<br><span class="hljs-comment">//1.直接替换原型对象 </span><br><span class="hljs-keyword">var</span> parent = &#123;<br>	sayHello : <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;方式1：替换原型对象&quot;</span>);<br>	&#125;<br>&#125;<br><span class="hljs-title class_">Person</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = parent;<br><span class="hljs-keyword">var</span> p = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-number">50</span>);<br>p.<span class="hljs-title function_">sayHello</span>();<br><span class="hljs-comment">//2.混入式原型继承</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;.............混入式原型继承..............&quot;</span>);<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Student</span>(<span class="hljs-params">name, age</span>) &#123;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span> = age;<br>&#125;<br><span class="hljs-keyword">var</span> parent2 = &#123;<br>	sayHello : <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;方式2：原型继承之混入式加载成员&quot;</span>);<br>	&#125;<br>&#125;<br><span class="hljs-keyword">for</span> ( <span class="hljs-keyword">var</span> k <span class="hljs-keyword">in</span> parent2) &#123;<br>	<span class="hljs-title class_">Student</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>[k] = parent2[k];<br>&#125;<br><span class="hljs-keyword">var</span> p = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>(<span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-number">50</span>);<br>p.<span class="hljs-title function_">sayHello</span>();<br></code></pre></td></tr></table></figure>
+<h3 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h3><p><strong>instanceof运算符用来判断一个构造函数的prototype属性所指向的对象是否存在另外一个要检测对象的原型链上</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">c; <span class="hljs-comment">// function &#123;name: &quot;demo&quot;&#125;</span><br>c <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Object</span>; <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+<p>为什么会是true呢？？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js">   c; <span class="hljs-comment">// function &#123;name: &quot;demo&quot;&#125;</span><br>c <span class="hljs-keyword">instanceof</span> func; <span class="hljs-comment">// true</span><br>c.<span class="hljs-property">__proto__</span> === func.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>; <span class="hljs-comment">// true</span><br>func.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">__proto__</span> === <span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>; <span class="hljs-comment">// true</span><br>c <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Object</span>; <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+<p><strong>所以，instanceof不能用来判断对象的类型！！！</strong>  </p>
+<p>那么我们用什么来判断对象的类型呢？</p>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">   c.<span class="hljs-property">__proto__</span>.<span class="hljs-property">constructor</span>===func <span class="hljs-comment">// true</span><br>c.<span class="hljs-property">__proto__</span>.<span class="hljs-property">constructor</span>===<span class="hljs-title class_">Object</span> <span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure>
+<h2 id="new-运算符"><a href="#new-运算符" class="headerlink" title="new 运算符"></a>new 运算符</h2><p>当我们用new运算符new一个构造函数产生一个实例时，比如说： var obj &#x3D; new Func 时，其背后的步骤是这样的：</p>
+<ol>
+<li>创建一个继承自 Func.prototype 的新对象；</li>
+<li>执行构造函数 Func ，执行的时候，相应的传参会被传入，同时上下文(this)会被指定为第一步创建的新实例；</li>
+<li>如果构造函数返回了一个“对象”,那么这个对象会取代步骤1中new出来的实例被返回。如果构造函数没有返回对象,那么new出来的结果为步骤1创建的对象。</li>
+</ol>
+<p><strong>注意：new Func 等同于new Func()，只能用在不传递任何参数的情况。</strong></p>
+<h3 id="new的模拟实现"><a href="#new的模拟实现" class="headerlink" title="new的模拟实现"></a>new的模拟实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//new运算符原理实现</span><br><span class="hljs-keyword">var</span> new1 = <span class="hljs-keyword">function</span>(<span class="hljs-params">fun</span>)&#123;<br>    <span class="hljs-keyword">var</span> newObj = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(fun.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>);<br>    <span class="hljs-keyword">var</span> returnObj = fun.<span class="hljs-title function_">call</span>(newObj);<br>    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> returnObj === <span class="hljs-string">&#x27;object&#x27;</span>)&#123;<br>        <span class="hljs-keyword">return</span> returnObj<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">return</span> newObj<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>其中  var newObj  &#x3D; Object.create(fun.prototype)  的意思是：创建一个新对象newObj，并让<code>newObj.__proto__ </code>指向 fun，即  <code>newObj.__proto__=== fun </code>返回true。<br><strong>方法的使用</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> strObj = <span class="hljs-title function_">new1</span>(<span class="hljs-title class_">String</span>);<br><span class="hljs-title function_">alert</span>(strObj <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">String</span>); <span class="hljs-comment">//true</span><br><span class="hljs-title function_">alert</span>(strObj.<span class="hljs-property">__proto__</span>.<span class="hljs-property">constructor</span> === <span class="hljs-title class_">String</span>); <span class="hljs-comment">//true</span><br></code></pre></td></tr></table></figure>
+<p><strong>可以看到，new1函数的运行效果和new运算符是一样的。我们继续给String的原型上添加一个方法，看看new1函数得到的strObj能否继承到这个方法：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">String</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">defineByN</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;我是自定义方法&quot;</span>);<br>&#125;<br>strObj.<span class="hljs-title function_">defineByN</span>();  <span class="hljs-comment">//弹出“我是自定义方法”</span><br></code></pre></td></tr></table></figure>
+<p>可以看到new1函数得到的strObj继承了到这个方法。</p>
+<h2 id="问题：为什么Object-create创建的对象和其他几种不一样呢？"><a href="#问题：为什么Object-create创建的对象和其他几种不一样呢？" class="headerlink" title="问题：为什么Object.create创建的对象和其他几种不一样呢？"></a>问题：为什么Object.create创建的对象和其他几种不一样呢？</h2><p>因为使用原型链进行的创造对象。</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">d.__proto__<span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span>demo<span class="hljs-comment">; // true</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/javascript/" class="print-no-link">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>原型链</div>
+      <div>http://example.com/2019/07/24/原型链/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年7月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/07/25/js%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" title="js的面向对象">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">js的面向对象</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/07/02/HTTP%E5%8D%8F%E8%AE%AE/" title="HTTP协议">
+                        <span class="hidden-mobile">HTTP协议</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

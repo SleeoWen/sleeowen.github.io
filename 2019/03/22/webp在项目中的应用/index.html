@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="什么是webp？WebP格式，谷歌开发的一种旨在加快图片加载速度的图片格式。图片压缩体积大约只有JPEG的2&#x2F;3，并能节省大量的服务器宽带资源和数据空间。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webp在项目中的应用">
+<meta property="og:url" content="http://example.com/2019/03/22/webp%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="什么是webp？WebP格式，谷歌开发的一种旨在加快图片加载速度的图片格式。图片压缩体积大约只有JPEG的2&#x2F;3，并能节省大量的服务器宽带资源和数据空间。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/yasuo.webp">
+<meta property="og:image" content="http://example.com/jianrong.webp">
+<meta property="og:image" content="http://example.com/taobao.webp">
+<meta property="og:image" content="http://example.com/liucheng.webp">
+<meta property="article:published_time" content="2019-03-22T03:11:26.000Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.605Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/yasuo.webp">
+  
+  
+  
+  <title>webp在项目中的应用 - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="webp在项目中的应用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-03-22 11:11" pubdate>
+          2019年3月22日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">webp在项目中的应用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="什么是webp？"><a href="#什么是webp？" class="headerlink" title="什么是webp？"></a>什么是webp？</h2><p>WebP格式，谷歌开发的一种旨在加快图片加载速度的图片格式。图片压缩体积大约只有JPEG的2&#x2F;3，并能节省大量的服务器宽带资源和数据空间。</p>
+<span id="more"></span>
+
+<h2 id="为什么要用webp"><a href="#为什么要用webp" class="headerlink" title="为什么要用webp"></a>为什么要用webp</h2><ol>
+<li>减小图片加载资源的大小、节省用户流量资源</li>
+<li>降低服务器流量资源</li>
+</ol>
+<h3 id="压缩率"><a href="#压缩率" class="headerlink" title="压缩率"></a>压缩率</h3><p><img src="/yasuo.webp" srcset="/img/loading.gif" lazyload alt="yasuo"></p>
+<h2 id="webp兼容性情况"><a href="#webp兼容性情况" class="headerlink" title="webp兼容性情况"></a>webp兼容性情况</h2><p><img src="/jianrong.webp" srcset="/img/loading.gif" lazyload alt="yasuo"><br>结果：谷歌全面支持、安卓浏览器从4.2开始支持。那么在页面中对于安卓用户中图片资源加载大小会有大幅度下降。</p>
+<h2 id="webp在各大网站的使用"><a href="#webp在各大网站的使用" class="headerlink" title="webp在各大网站的使用"></a>webp在各大网站的使用</h2><p>淘宝中大量使用webp。<br><img src="/taobao.webp" srcset="/img/loading.gif" lazyload alt="yasuo"><br>各大cdn也是支持webp图片格式输出。</p>
+<h2 id="项目中的实践"><a href="#项目中的实践" class="headerlink" title="项目中的实践"></a>项目中的实践</h2><p><img src="/liucheng.webp" srcset="/img/loading.gif" lazyload alt="yasuo"> </p>
+<h3 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h3><h4 id="webp兼容性如何检测？"><a href="#webp兼容性如何检测？" class="headerlink" title="webp兼容性如何检测？"></a>webp兼容性如何检测？</h4><ol>
+<li>通过js浏览器端判断是否支持webp<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">check_webp_feature</span>(<span class="hljs-params">feature, callback</span>) &#123;<br>    <span class="hljs-keyword">var</span> kTestImages = &#123;<br>        <span class="hljs-attr">lossy</span>: <span class="hljs-string">&quot;UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA&quot;</span>,<br>        <span class="hljs-attr">lossless</span>: <span class="hljs-string">&quot;UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==&quot;</span>,<br>        <span class="hljs-attr">alpha</span>: <span class="hljs-string">&quot;UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==&quot;</span>,<br>        <span class="hljs-attr">animation</span>: <span class="hljs-string">&quot;UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA&quot;</span><br>    &#125;;<br>    <span class="hljs-keyword">var</span> img = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Image</span>();<br>    img.<span class="hljs-property">onload</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">var</span> result = (img.<span class="hljs-property">width</span> &gt; <span class="hljs-number">0</span>) &amp;&amp; (img.<span class="hljs-property">height</span> &gt; <span class="hljs-number">0</span>);<br>        <span class="hljs-title function_">callback</span>(feature, result);<br>    &#125;;<br>    img.<span class="hljs-property">onerror</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-title function_">callback</span>(feature, <span class="hljs-literal">false</span>);<br>    &#125;;<br>    img.<span class="hljs-property">src</span> = <span class="hljs-string">&quot;data:image/webp;base64,&quot;</span> + kTestImages[feature];<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>浏览器向服务端发起请求的时候accept 会带上image&#x2F;webp 信息，在服务端判断是否支持webp。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js">map $http_accept $webp_suffix &#123;<br>        <span class="hljs-keyword">default</span>   <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-string">&quot;~*webp&quot;</span>  <span class="hljs-string">&quot;.webp&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>通过nginx中map方法，查找是否有webp字段，如果有设置$webp_suffix 为.webp值。通过该值就可以来判断是否支持webp。如果支持写入cookie，前端通过检测cookie做判断，是否加载webp图片。</p>
+<p>nginx 中设置cookie代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">location / &#123;<br>  <span class="hljs-keyword">if</span> ($webp_suffix ~* webp) &#123;<br>    add_header Set-Cookie <span class="hljs-string">&#x27;webpAvaile=true; path= /; expires=3153600&#x27;</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="在开发中使用"><a href="#在开发中使用" class="headerlink" title="在开发中使用"></a>在开发中使用</h3><h4 id="sass中使用"><a href="#sass中使用" class="headerlink" title="sass中使用"></a>sass中使用</h4><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-keyword">@mixin</span> webpbg(<span class="hljs-variable">$url</span>) &#123;<br>    <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">url</span>(<span class="hljs-variable">$url</span>);<br>    <span class="hljs-keyword">@at-root</span> .webpa &amp; &#123;<br>        <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">url</span>(<span class="hljs-variable">$url</span>+<span class="hljs-string">&#x27;.webp&#x27;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>scss文件使用  </p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-keyword">@include</span> webpbg(<span class="hljs-string">&#x27;../image/header.jpg&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<h4 id="html中使用"><a href="#html中使用" class="headerlink" title="html中使用"></a>html中使用</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">picture</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;img&quot;</span> &gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;img&quot;</span> <span class="hljs-attr">srcset</span>=<span class="hljs-string">&quot;images/banner.jpg.webp&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;image/webp&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;img&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;headImg&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;images/banner.jpg&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">picture</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="生成webp资源"><a href="#生成webp资源" class="headerlink" title="生成webp资源"></a>生成webp资源</h4><p>使用webpack的loader</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> imagemin = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;imagemin&#x27;</span>);<br><span class="hljs-keyword">var</span> imageminWebp = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;imagemin-webp&#x27;</span>);<br><span class="hljs-keyword">var</span> loaderUtils = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;loader-utils&#x27;</span>);<br> <br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">content</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">cacheable</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">cacheable</span>();<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">emitFile</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&quot;emitFile is required from module system&quot;</span>);<br>    <span class="hljs-keyword">var</span> callback = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">async</span>();<br>    <span class="hljs-keyword">var</span> options = loaderUtils.<span class="hljs-title function_">getOptions</span>(<span class="hljs-variable language_">this</span>);<br> <br>    <span class="hljs-comment">// 写入原文件</span><br>    <span class="hljs-keyword">var</span> url = loaderUtils.<span class="hljs-title function_">interpolateName</span>(<span class="hljs-variable language_">this</span>, options.<span class="hljs-property">name</span> || <span class="hljs-string">&quot;[hash].[ext]&quot;</span>, &#123;<br>        <span class="hljs-attr">content</span>: content,<br>        <span class="hljs-attr">regExp</span>: options.<span class="hljs-property">regExp</span><br>    &#125;);<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emitFile</span>(url, content);<br> <br>    <span class="hljs-comment">// 如果源文件比较小，则没必要转换为webp格式的图片，直接使用callback传递给下一个loader处理</span><br>    <span class="hljs-keyword">var</span> limit;<br>    <span class="hljs-keyword">if</span> (options.<span class="hljs-property">limit</span>) &#123;<br>        limit = <span class="hljs-built_in">parseInt</span>(options.<span class="hljs-property">limit</span>, <span class="hljs-number">10</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (limit &lt;= <span class="hljs-number">0</span> || content.<span class="hljs-property">length</span> &lt; limit) &#123;<br>        <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, &#123; <span class="hljs-attr">buffer</span>: content, url &#125;)<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br> <br>    <span class="hljs-comment">// 根据options内容生成webpOptions</span><br>    <span class="hljs-keyword">var</span> webpOptions = &#123;<br>        <span class="hljs-attr">preset</span>: options.<span class="hljs-property">preset</span> || <span class="hljs-string">&#x27;default&#x27;</span>,<br>        <span class="hljs-attr">quality</span>: options.<span class="hljs-property">quality</span> || <span class="hljs-number">75</span>,<br>        <span class="hljs-attr">alphaQuality</span>: options.<span class="hljs-property">alphaQuality</span> || <span class="hljs-number">100</span>,<br>        <span class="hljs-attr">method</span>: options.<span class="hljs-property">method</span> || <span class="hljs-number">1</span>,<br>        <span class="hljs-attr">sns</span>: options.<span class="hljs-property">sns</span> || <span class="hljs-number">80</span>,<br>        <span class="hljs-attr">autoFilter</span>: options.<span class="hljs-property">autoFilter</span> || <span class="hljs-literal">false</span>,<br>        <span class="hljs-attr">sharpness</span>: options.<span class="hljs-property">sharpness</span> || <span class="hljs-number">0</span>,<br>        <span class="hljs-attr">lossless</span>: options.<span class="hljs-property">lossless</span> || <span class="hljs-literal">false</span>,<br>    &#125;;<br>    <span class="hljs-keyword">if</span> (options.<span class="hljs-property">size</span>) &#123;<br>        webpOptions.<span class="hljs-property">size</span> = options.<span class="hljs-property">size</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (options.<span class="hljs-property">filter</span>) &#123;<br>        webpOptions.<span class="hljs-property">filter</span> = options.<span class="hljs-property">filter</span>;<br>    &#125;<br> <br>    <span class="hljs-comment">// 生成的webp图片的名称为原图片的名称后面追加.webp,</span><br>    <span class="hljs-comment">// 例如：xxx.jpg.webp, 方便在css预处理器中的使用</span><br>    <span class="hljs-keyword">var</span> webpUrl = url + <span class="hljs-string">&#x27;.webp&#x27;</span>;<br>    <span class="hljs-comment">// 原图片异步转换为webp的图片</span><br>    imagemin.<span class="hljs-title function_">buffer</span>(content, &#123; <span class="hljs-attr">plugins</span>: [<span class="hljs-title function_">imageminWebp</span>(webpOptions)] &#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">file</span> =&gt;</span> &#123;<br>        <span class="hljs-comment">// 写入webp图片并调用callback</span><br>        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">emitFile</span>(webpUrl, file);<br>        <span class="hljs-comment">// 传递给svg-placrholder-loader，继续处理成placeholder</span><br>        <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, &#123; <span class="hljs-attr">buffer</span>: content, url, webpUrl &#125;);<br> <br>        <span class="hljs-comment">/* 如果要单独使用的话，可以使用该注释部分的代码</span><br><span class="hljs-comment">        const exportJson = &#x27;module.exports = &#123; &#x27; +</span><br><span class="hljs-comment">            &#x27;&quot;originSrc&quot;: __webpack_public_path__ + &quot;&#x27; + url +</span><br><span class="hljs-comment">            &#x27;&quot; , &quot;webpSrc&quot;: __webpack_public_path__ + &quot;&#x27; + webpUrl +</span><br><span class="hljs-comment">            &#x27;&quot;&#x27; +</span><br><span class="hljs-comment">            &#x27; &#125;;&#x27;;</span><br><span class="hljs-comment">        callback(null, exportJson);   </span><br><span class="hljs-comment">        */</span>  <br>    &#125;).<span class="hljs-title function_">catch</span>(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br>        <span class="hljs-title function_">callback</span>(err);<br>    &#125;);<br> <br>&#125;;<br> <br><span class="hljs-comment">// 要求webpack传入原始的buffer，方便处理图片</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-property">raw</span> = <span class="hljs-literal">true</span>;<br></code></pre></td></tr></table></figure>
+
+<p>nginx生成<br>实现过程，对支持webp的请求设置cookies。利用nginx检测图片请求是否存在，如果不存在通过lua调用imageMagic创建webp图片并返回。需要注意的是nginx需要安装lua支持的模块。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java">user  root; # nginx 用户权限 执行lua创建图片命令需要读写权限<br># ...<br>http &#123;<br>    include       mime.types;<br>    server &#123;<br>        listen       <span class="hljs-number">80</span>;<br>        server_name  webp.leewr.com;<br>        root         /home/leewr/mono/app/<span class="hljs-keyword">public</span>/december;<br>        location / &#123;<br>            <span class="hljs-keyword">if</span> ($webp_suffix ~* webp) &#123;<br>                add_header Set-Cookie <span class="hljs-string">&#x27;webpAvaile=true; path= /;&#x27;</span>;<br>            &#125;<br>        &#125;<br>        location ~* ^(.+\.(jpg|png|jpeg|gif))(.webp)$ &#123; # 正则匹配图片 paht/name.jpg.webp 格式的图片请求<br>            <span class="hljs-keyword">if</span> (!-f $request_filename) &#123; # 如果图片不存在<br>                access_log /usr/local/nginx/logs/december.log main; # 设置日志文件<br>                set $request_filepath /home/leewr/mono/app/<span class="hljs-keyword">public</span>/december/$<span class="hljs-number">1</span>; # 图片真实路径变量<br>                set $ext $<span class="hljs-number">3</span>; # 设置图片扩展名$ext变量<br>                content_by_lua_file lua/webp.lua; # 调用nginx/lua目录下的webp.lua文件<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>下面看lua, lua 中代码非常简单。定义command命令，调用系统os.execute(command)执行convert图片转换命令。convert是ImageMagic的命令。.. lua 中字符串连接。ngx.var.ext是nginx中定义的变量。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">local</span> command<br>command = <span class="hljs-string">&quot;convert &quot;</span> ..ngx.var.request_filepath.. <span class="hljs-string">&quot; &quot;</span> ..ngx.var.request_filepath..ngx.var.ext<br>os.execute(command)<br>ngx.exec(ngx.var.request_uri)<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/73ca9e8b986a">原文地址</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/html/" class="print-no-link">#html</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>webp在项目中的应用</div>
+      <div>http://example.com/2019/03/22/webp在项目中的应用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年3月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/04/01/vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%BB%A5%E5%8F%8AnextTick%E5%BA%94%E7%94%A8/" title="vue生命周期以及nextTick应用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vue生命周期以及nextTick应用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/03/02/meta%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" title="meta标签使用总结">
+                        <span class="hidden-mobile">meta标签使用总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

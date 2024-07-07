@@ -1,0 +1,739 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="什么是Event Loopevent loop是一个执行模型，在不同的地方有不同的实现。浏览器和NodeJS基于不同的技术实现了各自的Event Loop。  浏览器的Event Loop是在html5的规范中明确定义。 NodeJS的Event Loop是基于libuv实现的。可以参考Node的官方文档以及libuv的官方文档。 libuv已经对Event Loop做出了实现，而HTML5规范中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事件循环EventLoop">
+<meta property="og:url" content="http://example.com/2019/10/07/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AFEventLoop/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="什么是Event Loopevent loop是一个执行模型，在不同的地方有不同的实现。浏览器和NodeJS基于不同的技术实现了各自的Event Loop。  浏览器的Event Loop是在html5的规范中明确定义。 NodeJS的Event Loop是基于libuv实现的。可以参考Node的官方文档以及libuv的官方文档。 libuv已经对Event Loop做出了实现，而HTML5规范中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/eventloop1.png">
+<meta property="og:image" content="http://example.com/eventloop2.png">
+<meta property="og:image" content="http://example.com/eventloop3.png">
+<meta property="og:image" content="http://example.com/eventloop4.png">
+<meta property="og:image" content="http://example.com/eventloop5.png">
+<meta property="article:published_time" content="2019-10-07T03:27:31.000Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.609Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/eventloop1.png">
+  
+  
+  
+  <title>事件循环EventLoop - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="事件循环EventLoop"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-10-07 11:27" pubdate>
+          2019年10月7日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">事件循环EventLoop</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="什么是Event-Loop"><a href="#什么是Event-Loop" class="headerlink" title="什么是Event Loop"></a>什么是Event Loop</h2><p><strong>event loop是一个执行模型，在不同的地方有不同的实现。浏览器和NodeJS基于不同的技术实现了各自的Event Loop。</strong></p>
+<ul>
+<li>浏览器的Event Loop是在html5的规范中明确定义。</li>
+<li>NodeJS的Event Loop是基于libuv实现的。可以参考Node的官方文档以及libuv的官方文档。</li>
+<li>libuv已经对Event Loop做出了实现，而HTML5规范中只是定义了浏览器中Event Loop的模型，具体的实现留给了浏览器厂商。 <span id="more"></span></li>
+</ul>
+<h2 id="宏队列和微队列"><a href="#宏队列和微队列" class="headerlink" title="宏队列和微队列"></a>宏队列和微队列</h2><h3 id="宏队列"><a href="#宏队列" class="headerlink" title="宏队列"></a>宏队列</h3><p><strong>宏队列，macrotask，也叫tasks。</strong></p>
+<p>一些异步任务的回调会依次进入macro task queue，等待后续被调用，这些异步任务包括：</p>
+<ul>
+<li>setTimeout</li>
+<li>setInterval</li>
+<li>setImmediate (Node独有)</li>
+<li>requestAnimationFrame (浏览器独有)</li>
+<li>I&#x2F;O</li>
+<li>UI rendering (浏览器独有)</li>
+</ul>
+<h3 id="微队列"><a href="#微队列" class="headerlink" title="微队列"></a>微队列</h3><p><strong>微队列，microtask，也叫jobs。</strong></p>
+<p>另一些异步任务的回调会依次进入micro task queue，等待后续被调用，这些异步任务包括：</p>
+<ul>
+<li>process.nextTick (Node独有)</li>
+<li>Promise</li>
+<li>Object.observe</li>
+<li>MutationObserver</li>
+</ul>
+<h2 id="浏览器的Event-Loop"><a href="#浏览器的Event-Loop" class="headerlink" title="浏览器的Event Loop"></a>浏览器的Event Loop</h2><p><img src="/eventloop1.png" srcset="/img/loading.gif" lazyload alt="image"><br>这张图将浏览器的Event Loop完整的描述了出来，我来讲执行一个JavaScript代码的具体流程：</p>
+<ol>
+<li>执行全局Script同步代码，这些同步代码有一些是同步语句，有一些是异步语句（比如setTimeout等）；</li>
+<li>全局Script代码执行完毕后，调用栈Stack会清空；</li>
+<li>从微队列microtask queue中取出位于队首的回调任务，放入调用栈Stack中执行，执行完后microtask queue长度减1；</li>
+<li>继续取出位于队首的任务，放入调用栈Stack中执行，以此类推，直到直到把microtask queue中的所有任务都执行完毕。注意，如果在执行microtask的过程中，又产生了microtask，那么会加入到队列的末尾，也会在这个周期被调用执行；</li>
+<li>microtask queue中的所有任务都执行完毕，此时microtask queue为空队列，调用栈Stack也为空；</li>
+<li>取出宏队列macrotask queue中位于队首的任务，放入Stack中执行；</li>
+<li>执行完毕后，调用栈Stack为空；</li>
+<li>重复第3-7个步骤；</li>
+<li>重复第3-7个步骤；</li>
+<li>…</li>
+</ol>
+<p><strong>可以看到，这就是浏览器的事件循环Event Loop</strong><br>这里归纳3个重点：</p>
+<ol>
+<li>宏队列macrotask一次只从队列中取一个任务执行，执行完后就去执行微任务队列中的任务；</li>
+<li>微任务队列中所有的任务都会被依次取出来执行，知道microtask queue为空；</li>
+<li>图中没有画UI rendering的节点，因为这个是由浏览器自行判断决定的，但是只要执行UI rendering，它的节点是在执行完所有的microtask之后，下一个macrotask之前，紧跟着执行UI render。</li>
+</ol>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><h4 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>);<br><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>);<br>  <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">3</span>)<br>  &#125;);<br>&#125;);<br><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">4</span>)<br>  <span class="hljs-title function_">resolve</span>(<span class="hljs-number">5</span>)<br>&#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data);<br>&#125;)<br><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">6</span>);<br>&#125;)<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">7</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 正确答案</span><br><span class="hljs-number">1</span><br><span class="hljs-number">4</span><br><span class="hljs-number">7</span><br><span class="hljs-number">5</span><br><span class="hljs-number">2</span><br><span class="hljs-number">3</span><br><span class="hljs-number">6</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>);<br><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>);<br>  <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">3</span>)<br>  &#125;);<br>&#125;);<br><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">4</span>)<br>  <span class="hljs-title function_">resolve</span>(<span class="hljs-number">5</span>)<br>&#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data);<br>  <br>  <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">6</span>)<br>  &#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">7</span>)<br>    <br>    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">8</span>)<br>    &#125;, <span class="hljs-number">0</span>);<br>  &#125;);<br>&#125;)<br><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">9</span>);<br>&#125;)<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">10</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 正确答案</span><br><span class="hljs-number">1</span><br><span class="hljs-number">4</span><br><span class="hljs-number">10</span><br><span class="hljs-number">5</span><br><span class="hljs-number">6</span><br><span class="hljs-number">7</span><br><span class="hljs-number">2</span><br><span class="hljs-number">3</span><br><span class="hljs-number">9</span><br><span class="hljs-number">8</span><br></code></pre></td></tr></table></figure>
+<p>**在执行微队列microtask queue中任务的时候，如果又产生了microtask，那么会继续添加到队列的末尾，也会在这个周期执行，直到microtask queue为空停止。<br>**<br>注：当然如果你在microtask中不断的产生microtask，那么其他宏任务macrotask就无法执行了，但是这个操作也不是无限的，拿NodeJS中的微任务process.nextTick()来说，它的上限是1000个，后面我们会讲到。</p>
+<p>浏览器的Event Loop就说到这里，下面我们看一下NodeJS中的Event Loop，它更复杂一些，机制也不太一样。</p>
+<h2 id="NodeJS中的Event-Loop"><a href="#NodeJS中的Event-Loop" class="headerlink" title="NodeJS中的Event Loop"></a>NodeJS中的Event Loop</h2><p>NodeJS的Event Loop中，执行宏队列的回调任务有6个阶段，如下图：</p>
+<p><img src="/eventloop2.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>各个阶段执行的任务如下：</p>
+<ul>
+<li><strong>timers阶段</strong>：这个阶段执行setTimeout和setInterval预定的callback</li>
+<li><strong>I&#x2F;O callback阶段</strong>：执行除了close事件的callbacks、被timers设定的callbacks、setImmediate()设定的callbacks这些之外的callbacks</li>
+<li><strong>idle, prepare阶段</strong>：仅node内部使用</li>
+<li><strong>poll阶段</strong>：获取新的I&#x2F;O事件，适当的条件下node将阻塞在这里</li>
+<li><strong>check阶段</strong>：执行setImmediate()设定的callbacks</li>
+<li><strong>close callbacks阶段</strong>：执行socket.on(‘close’, ….)这些callbacks</li>
+</ul>
+<h4 id="NodeJS中宏队列主要有4个"><a href="#NodeJS中宏队列主要有4个" class="headerlink" title="NodeJS中宏队列主要有4个"></a>NodeJS中宏队列主要有4个</h4><p>由上面的介绍可以看到，回调事件主要位于4个macrotask queue中：</p>
+<ol>
+<li>Timers Queue</li>
+<li>IO Callbacks Queue</li>
+<li>Check Queue</li>
+<li>Close Callbacks Queue</li>
+</ol>
+<p>这4个都属于宏队列，但是在浏览器中，可以认为只有一个宏队列，所有的macrotask都会被加到这一个宏队列中，但是在NodeJS中，不同的macrotask会被放置在不同的宏队列中。</p>
+<h4 id="NodeJS中微队列主要有2个："><a href="#NodeJS中微队列主要有2个：" class="headerlink" title="NodeJS中微队列主要有2个："></a>NodeJS中微队列主要有2个：</h4><ol>
+<li>Next Tick Queue：是放置process.nextTick(callback)的回调任务的</li>
+<li>Other Micro Queue：放置其他microtask，比如Promise等</li>
+</ol>
+<p>在浏览器中，也可以认为只有一个微队列，所有的microtask都会被加到这一个微队列中，但是在NodeJS中，不同的microtask会被放置在不同的微队列中。</p>
+<p>具体可以通过下图加深一下理解：</p>
+<p><img src="/eventloop3.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>大体解释一下NodeJS的Event Loop过程：</p>
+<ol>
+<li>执行全局Script的同步代码</li>
+<li>执行microtask微任务，先执行所有Next Tick Queue中的所有任务，再执行Other Microtask Queue中的所有任务</li>
+<li>开始执行macrotask宏任务，共6个阶段，从第1个阶段开始执行相应每一个阶段macrotask中的所有任务，注意，这里是所有每个阶段宏任务队列的所有任务，在浏览器的Event Loop中是只取宏队列的第一个任务出来执行，每一个阶段的macrotask任务执行完毕后，开始执行微任务，也就是步骤2</li>
+<li>Timers Queue -&gt; 步骤2 -&gt; I&#x2F;O Queue -&gt; 步骤2 -&gt; Check Queue -&gt; 步骤2 -&gt; Close Callback Queue -&gt; 步骤2 -&gt; Timers Queue ……</li>
+<li>这就是Node的Event Loop</li>
+</ol>
+<h4 id="关于NodeJS的macrotask-queue和microtask-queue"><a href="#关于NodeJS的macrotask-queue和microtask-queue" class="headerlink" title="关于NodeJS的macrotask queue和microtask queue"></a>关于NodeJS的macrotask queue和microtask queue</h4><p><img src="/eventloop4.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/eventloop5.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;start&#x27;</span>);<br><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;          <span class="hljs-comment">// callback1</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">111</span>);<br>  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;        <span class="hljs-comment">// callback2</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">222</span>);<br>  &#125;, <span class="hljs-number">0</span>);<br>  <span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> &#123;      <span class="hljs-comment">// callback3</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">333</span>);<br>  &#125;)<br>  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> &#123;  <span class="hljs-comment">// callback4</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">444</span>);  <br>  &#125;)<br>&#125;, <span class="hljs-number">0</span>);<br><br><span class="hljs-title function_">setImmediate</span>(<span class="hljs-function">() =&gt;</span> &#123;        <span class="hljs-comment">// callback5</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">555</span>);<br>  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> &#123;  <span class="hljs-comment">// callback6</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">666</span>);  <br>  &#125;)<br>&#125;)<br><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;          <span class="hljs-comment">// callback7              </span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">777</span>);<br>  process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> &#123;  <span class="hljs-comment">// callback8</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">888</span>);   <br>  &#125;)<br>&#125;, <span class="hljs-number">0</span>);<br><br>process.<span class="hljs-title function_">nextTick</span>(<span class="hljs-function">() =&gt;</span> &#123;    <span class="hljs-comment">// callback9</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">999</span>);  <br>&#125;)<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;end&#x27;</span>);<br><br></code></pre></td></tr></table></figure>
+<h4 id="结果-2"><a href="#结果-2" class="headerlink" title="结果"></a>结果</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 正确答案</span><br>start<br>end<br><span class="hljs-number">999</span><br><span class="hljs-number">111</span><br><span class="hljs-number">777</span><br><span class="hljs-number">444</span><br><span class="hljs-number">888</span><br><span class="hljs-number">555</span><br><span class="hljs-number">333</span><br><span class="hljs-number">666</span><br><span class="hljs-number">222</span><br></code></pre></td></tr></table></figure>
+<h3 id="setTimeout-对比-setImmediate"><a href="#setTimeout-对比-setImmediate" class="headerlink" title="setTimeout 对比 setImmediate"></a>setTimeout 对比 setImmediate</h3><ul>
+<li>setTimeout(fn, 0)在Timers阶段执行，并且是在poll阶段进行判断是否达到指定的timer时间才会执行</li>
+<li>setImmediate(fn)在Check阶段执行</li>
+</ul>
+<p>两者的执行顺序要根据当前的执行环境才能确定：</p>
+<ul>
+<li>如果两者都在主模块(main module)调用，那么执行先后取决于进程性能，顺序随机</li>
+<li>如果两者都不在主模块调用，即在一个I&#x2F;O Circle中调用，那么setImmediate的回调永远先执行，因为会先到Check阶段</li>
+</ul>
+<h3 id="setImmediate-对比-process-nextTick"><a href="#setImmediate-对比-process-nextTick" class="headerlink" title="setImmediate 对比 process.nextTick"></a>setImmediate 对比 process.nextTick</h3><ul>
+<li>setImmediate(fn)的回调任务会插入到宏队列Check Queue中</li>
+<li>process.nextTick(fn)的回调任务会插入到微队列Next Tick Queue中</li>
+<li>process.nextTick(fn)调用深度有限制，上限是1000，而setImmedaite则没有</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>浏览器的Event Loop和NodeJS的Event Loop是不同的，实现机制也不一样，不要混为一谈。</li>
+<li>浏览器可以理解成只有1个宏任务队列和1个微任务队列，先执行全局Script代码，执行完同步代码调用栈清空后，从微任务队列中依次取出所有的任务放入调用栈执行，微任务队列清空后，从宏任务队列中只取位于队首的任务放入调用栈执行，注意这里和Node的区别，只取一个，然后继续执行微队列中的所有任务，再去宏队列取一个，以此构成事件循环。</li>
+<li>NodeJS可以理解成有4个宏任务队列和2个微任务队列，但是执行宏任务时有6个阶段。先执行全局Script代码，执行完同步代码调用栈清空后，先从微任务队列Next Tick Queue中依次取出所有的任务放入调用栈中执行，再从微任务队列Other Microtask Queue中依次取出所有的任务放入调用栈中执行。Node 在新版本中，也是每个 Macrotask 执行完后，就去执行 Microtask 了，和浏览器的模型一致。</li>
+<li>MacroTask包括： setTimeout、setInterval、 setImmediate(Node)、requestAnimation(浏览器)、IO、UI rendering</li>
+<li>Microtask包括： process.nextTick(Node)、Promise、Object.observe、MutationObserver</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/javascript/" class="print-no-link">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>事件循环EventLoop</div>
+      <div>http://example.com/2019/10/07/事件循环EventLoop/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年10月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/10/11/%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" title="页面性能优化">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">页面性能优化</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/09/27/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%87%E7%A8%8B/" title="浏览器渲染原理与过程">
+                        <span class="hidden-mobile">浏览器渲染原理与过程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

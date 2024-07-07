@@ -1,0 +1,741 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="HTTP协议HTTP协议的主要特点 支持客户&#x2F;服务器模式。 简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。 灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。 无连接：无连接的含">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP协议">
+<meta property="og:url" content="http://example.com/2019/07/02/HTTP%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="HTTP协议HTTP协议的主要特点 支持客户&#x2F;服务器模式。 简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。 灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。 无连接：无连接的含">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/qingqiuti.png">
+<meta property="og:image" content="http://example.com/qingqiudemo.jpg">
+<meta property="og:image" content="http://example.com/xiangying.jpg">
+<meta property="article:published_time" content="2019-07-02T10:42:57.000Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.529Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="http">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/qingqiuti.png">
+  
+  
+  
+  <title>HTTP协议 - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTTP协议"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-07-02 18:42" pubdate>
+          2019年7月2日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTTP协议</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h2><h3 id="HTTP协议的主要特点"><a href="#HTTP协议的主要特点" class="headerlink" title="HTTP协议的主要特点"></a>HTTP协议的主要特点</h3><ol>
+<li>支持客户&#x2F;服务器模式。</li>
+<li>简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。<br>由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</li>
+<li>灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。</li>
+<li>无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
+<li>无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。<span id="more"></span></li>
+</ol>
+<h3 id="HTTP协议报文"><a href="#HTTP协议报文" class="headerlink" title="HTTP协议报文"></a>HTTP协议报文</h3><h4 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h4><h5 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h5><p>请求行由请求方法字段、URL字段和HTTP协议版本字段3个字段组成，它们用空格分隔。比如 GET &#x2F;data&#x2F;info.html HTTP&#x2F;1.1</p>
+<p>方法字段就是HTTP使用的请求方法，比如常见的GET&#x2F;POST</p>
+<p>其中HTTP协议版本有两种：HTTP1.0&#x2F;HTTP1.1 可以这样区别：</p>
+<p>HTTP1.0对于每个连接都只能传送一个请求和响应，请求就会关闭，HTTP1.0没有Host字段;而HTTP1.1在同一个连接中可以传送多个请求和响应，多个请求可以重叠和同时进行，HTTP1.1必须有Host字段。</p>
+<h5 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h5><p>HTTP客户程序(例如浏览器)，向服务器发送请求的时候必须指明请求类型(一般是GET或者 POST)。如有必要，客户程序还可以选择发送其他的请求头。大多数请求头并不是必需的，但Content-Length除外。对于POST请求来说 Content-Length必须出现。</p>
+<p>常见的请求头字段含义：</p>
+<p>Accept： 浏览器可接受的MIME类型。</p>
+<p>Accept-Charset：浏览器可接受的字符集。</p>
+<p>Accept-Encoding：浏览器能够进行解码的数据编码方式，比如gzip。Servlet能够向支持gzip的浏览器返回经gzip编码的HTML页面。许多情形下这可以减少5到10倍的下载时间。</p>
+<p>Accept-Language：浏览器所希望的语言种类，当服务器能够提供一种以上的语言版本时要用到。</p>
+<p>Authorization：授权信息，通常出现在对服务器发送的WWW-Authenticate头的应答中。</p>
+<p>Content-Length：表示请求消息正文的长度。</p>
+<p>Host： 客户机通过这个头告诉服务器，想访问的主机名。Host头域指定请求资源的Intenet主机和端口号，必须表示请求url的原始服务器或网关的位置。HTTP&#x2F;1.1请求必须包含主机头域，否则系统会以400状态码返回。</p>
+<p>If-Modified-Since：客户机通过这个头告诉服务器，资源的缓存时间。只有当所请求的内容在指定的时间后又经过修改才返回它，否则返回304“Not Modified”应答。</p>
+<p>Referer：客户机通过这个头告诉服务器，它是从哪个资源来访问服务器的(防盗链)。包含一个URL，用户从该URL代表的页面出发访问当前请求的页面。</p>
+<p>User-Agent：User-Agent头域的内容包含发出请求的用户信息。浏览器类型，如果Servlet返回的内容与浏览器类型有关则该值非常有用。</p>
+<p>Cookie：客户机通过这个头可以向服务器带数据，这是最重要的请求头信息之一。</p>
+<p>Pragma：指定“no-cache”值表示服务器必须返回一个刷新后的文档，即使它是代理服务器而且已经有了页面的本地拷贝。</p>
+<p>From：请求发送者的email地址，由一些特殊的Web客户程序使用，浏览器不会用到它。</p>
+<p>Connection：处理完这次请求后是否断开连接还是继续保持连接。如果Servlet看到这里的值为“Keep- Alive”，或者看到请求使用的是HTTP 1.1(HTTP 1.1默认进行持久连接)，它就可以利用持久连接的优点，当页面包含多个元素时(例如Applet，图片)，显著地减少下载所需要的时间。要实现这一点，Servlet需要在应答中发送一个Content-Length头，最简单的实现方法是：先把内容写入 ByteArrayOutputStream，然后在正式写出内容之前计算它的大小。</p>
+<p>Range：Range头域可以请求实体的一个或者多个子范围。例如，</p>
+<p>表示头500个字节：bytes&#x3D;0-499</p>
+<p>表示第二个500字节：bytes&#x3D;500-999</p>
+<p>表示最后500个字节：bytes&#x3D;-500</p>
+<p>表示500字节以后的范围：bytes&#x3D;500-</p>
+<p>第一个和最后一个字节：bytes&#x3D;0-0,-1</p>
+<p>同时指定几个范围：bytes&#x3D;500-600,601-999</p>
+<p>但是服务器可以忽略此请求头，如果无条件GET包含Range请求头，响应会以状态码206(PartialContent)返回而不是以200 (OK)。</p>
+<p>UA-Pixels，UA-Color，UA-OS，UA-CPU：由某些版本的IE浏览器所发送的非标准的请求头，表示屏幕大小、颜色深度、操作系统和CPU类型。</p>
+<h5 id="空行"><a href="#空行" class="headerlink" title="空行"></a>空行</h5><p>它的作用是通过一个空行，告诉服务器请求头部到此为止。</p>
+<h5 id="请求体"><a href="#请求体" class="headerlink" title="请求体"></a>请求体</h5><p>若方法字段是GET，则此项为空，没有数据</p>
+<p>若方法字段是POST,则通常来说此处放置的就是要提交的数据</p>
+<p>比如要使用POST方法提交一个表单，其中有user字段中数据为“admin”, password字段为123456，那么这里的请求数据就是 user&#x3D;admin&amp;password&#x3D;123456，使用&amp;来连接各个字段。</p>
+<p><img src="/qingqiuti.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/qingqiudemo.jpg" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h4 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h4><h5 id="状态行"><a href="#状态行" class="headerlink" title="状态行"></a>状态行</h5><p>响应行一般由协议版本、状态码及其描述组成 比如 HTTP&#x2F;1.1 200 OK</p>
+<p>其中协议版本HTTP&#x2F;1.1或者HTTP&#x2F;1.0，200就是它的状态码，OK则为它的描述。</p>
+<p>&#x2F;&#x2F;常见状态码：</p>
+<p>100~199：表示成功接收请求，要求客户端继续提交下一次请求才能完成整个处理过程。</p>
+<p>200~299：表示成功接收请求并已完成整个处理过程。常用200</p>
+<p>300~399：为完成请求，客户需进一步细化请求。例如：请求的资源已经移动一个新地址、常用302(意味着你请求我，我让你去找别人),307和304(我不给你这个资源，自己拿缓存)</p>
+<p>400~499：客户端的请求有错误，常用404(意味着你请求的资源在web服务器中没有)403(服务器拒绝访问，权限不够)</p>
+<p>500~599：服务器端出现错误，常用500</p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/5053660?fr=aladdin">更加详细的状态码</a></p>
+<h5 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h5><p>响应头用于描述服务器的基本信息，以及数据的描述，服务器通过这些数据的描述信息，可以通知客户端如何处理等一会儿它回送的数据。</p>
+<p>设置HTTP响应头往往和状态码结合起来。例如，有好几个表示“文档位置已经改变”的状态代码都伴随着一个Location头，而401(Unauthorized)状态代码则必须伴随一个WWW-Authenticate头。然而，即使在没有设置特殊含义的状态代码时，指定应答头也是很有用的。应答头可以用来完成：设置Cookie，指定修改日期，指示浏览器按照指定的间隔刷新页面，声明文档的长度以便利用持久HTTP连接，……等等许多其他任务。</p>
+<p>常见的响应头字段含义：</p>
+<p>Allow：服务器支持哪些请求方法(如GET、POST等)。</p>
+<p>Content-Encoding：文档的编码(Encode)方法。只有在解码之后才可以得到Content-Type头指定的内容类型。利用gzip压缩文档能够显著地减少HTML文档的下载时间。Java的GZIPOutputStream可以很方便地进行gzip压缩，但只有Unix上的Netscape和Windows上的IE4、IE5才支持它。因此，Servlet应该通过查看Accept-Encoding头(即request.getHeader(“Accept- Encoding”))检查浏览器是否支持gzip，为支持gzip的浏览器返回经gzip压缩的HTML页面，为其他浏览器返回普通页面。</p>
+<p>Content-Length：表示内容长度。只有当浏览器使用持久HTTP连接时才需要这个数据。如果你想要利用持久连接的优势，可以把输出文档写入 ByteArrayOutputStram，完成后查看其大小，然后把该值放入Content-Length头，最后通过byteArrayStream.writeTo(response.getOutputStream()发送内容。</p>
+<p>Content- Type：表示后面的文档属于什么MIME类型。Servlet默认为text&#x2F;plain，但通常需要显式地指定为text&#x2F;html。由于经常要设置 Content-Type，因此HttpServletResponse提供了一个专用的方法setContentType。</p>
+<p>Date：当前的GMT时间，例如，Date:Mon,31Dec200104:25:57GMT。Date描述的时间表示世界标准时，换算成本地时间，需要知道用户所在的时区。你可以用setDateHeader来设置这个头以避免转换时间格式的麻烦。</p>
+<p>Expires：告诉浏览器把回送的资源缓存多长时间，-1或0则是不缓存。</p>
+<p>Last-Modified：文档的最后改动时间。客户可以通过If-Modified-Since请求头提供一个日期，该请求将被视为一个条件GET，只有改动时间迟于指定时间的文档才会返回，否则返回一个304(Not Modified)状态。Last-Modified也可用setDateHeader方法来设置。</p>
+<p>Location：这个头配合302状态码使用，用于重定向接收者到一个新URI地址。表示客户应当到哪里去提取文档。Location通常不是直接设置的，而是通过HttpServletResponse的sendRedirect方法，该方法同时设置状态代码为302。</p>
+<p>Refresh：告诉浏览器隔多久刷新一次，以秒计。</p>
+<p>Server：服务器通过这个头告诉浏览器服务器的类型。Server响应头包含处理请求的原始服务器的软件信息。此域能包含多个产品标识和注释，产品标识一般按照重要性排序。Servlet一般不设置这个值，而是由Web服务器自己设置。</p>
+<p>Set-Cookie：设置和页面关联的Cookie。Servlet不应使用response.setHeader(“Set-Cookie”, …)，而是应使用HttpServletResponse提供的专用方法addCookie。</p>
+<p>Transfer-Encoding：告诉浏览器数据的传送格式。</p>
+<p>WWW-Authenticate：客户应该在Authorization头中提供什么类型的授权信息?在包含401(Unauthorized)状态行的应答中这个头是必需的。例如，response.setHeader(“WWW-Authenticate”, “BASIC realm&#x3D;\”executives\”“)。注意Servlet一般不进行这方面的处理，而是让Web服务器的专门机制来控制受密码保护页面的访问。</p>
+<p>注：设置应答头最常用的方法是HttpServletResponse的setHeader，该方法有两个参数，分别表示应答头的名字和值。和设置状态代码相似，设置应答头应该在发送任何文档内容之前进行。</p>
+<p>setDateHeader方法和setIntHeadr方法专门用来设置包含日期和整数值的应答头，前者避免了把Java时间转换为GMT时间字符串的麻烦，后者则避免了把整数转换为字符串的麻烦。</p>
+<p>HttpServletResponse还提供了许多设置</p>
+<p>setContentType：设置Content-Type头。大多数Servlet都要用到这个方法。</p>
+<p>setContentLength：设置Content-Length头。对于支持持久HTTP连接的浏览器来说，这个函数是很有用的。</p>
+<p>addCookie：设置一个Cookie(Servlet API中没有setCookie方法，因为应答往往包含多个Set-Cookie头)。</p>
+<h5 id="空行-1"><a href="#空行-1" class="headerlink" title="空行"></a>空行</h5><p>它的作用是通过一个空行，告诉服务器请求头部到此为止。</p>
+<h5 id="响应体"><a href="#响应体" class="headerlink" title="响应体"></a>响应体</h5><p>响应体就是响应的消息体，如果是纯数据就是返回纯数据，如果请求的是HTML页面，那么返回的就是HTML代码，如果是JS就是JS代码，如此之类。</p>
+<p><img src="/xiangying.jpg" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h3 id="HTTP方法"><a href="#HTTP方法" class="headerlink" title="HTTP方法"></a>HTTP方法</h3><ol>
+<li>GET：获取资源</li>
+<li>POST：传输资源</li>
+<li>PUT：更新资源</li>
+<li>DELETE：删除资源</li>
+<li>HEAD：获取报文首部</li>
+</ol>
+<h3 id="POST请求和GET请求的区别"><a href="#POST请求和GET请求的区别" class="headerlink" title="POST请求和GET请求的区别"></a>POST请求和GET请求的区别</h3><ul>
+<li>GET在浏览器回退时是无害的，而POST会再次提交请求。</li>
+<li>GET产生的URL地址可以被收藏，而POST不可以。</li>
+<li>GET请求会被浏览器主动缓存，而POST不会，除非手动设置。</li>
+<li>GET请求只能进行url编码，而POST支持多种编码方式。</li>
+<li>GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。</li>
+<li>GET请求在URL中传送的参数是有长度限制的，而POST没有。</li>
+<li>对参数的数据类型，GET只接受ASCII字符，而POST没有限制。</li>
+<li>GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。</li>
+<li>GET参数通过URL传递，POST放在Request body中。</li>
+</ul>
+<h3 id="HTTP连接"><a href="#HTTP连接" class="headerlink" title="HTTP连接"></a>HTTP连接</h3><h4 id="HTTP持久连接"><a href="#HTTP持久连接" class="headerlink" title="HTTP持久连接"></a>HTTP持久连接</h4><p>HTTP协议采用“请求-应答”模式，当使用普通模式，即非Keep-Alive模式时，每个请求&#x2F;应答客户和服务器都要新建一个连接，完成后立即断开连接（HTTP协议为无连接的协议。</p>
+<p>当使用Keep-Alive模式（又称持久连接，连接重用）时，Keep-Alive功能使客户端到服务器端的连接持续有效，当出现服务器的后继请求时，Keep-Alive功能避免了建立或者重新建立连接。</p>
+<p><strong>只有http1.1开始支持持久连接</strong></p>
+<h4 id="管线化"><a href="#管线化" class="headerlink" title="管线化"></a>管线化</h4><p>在使用持久连接的情况下，某个连接上的消息传递是这样的：<br>请求1-&gt;响应1-&gt;请求2-&gt;响应2-&gt;请求3-&gt;响应3</p>
+<p>管线化，则消息的传递变成这样：<br>请求1-&gt;请求2-&gt;请求3-&gt;响应1-&gt;响应2-&gt;响应3</p>
+<h4 id="管线化的特点"><a href="#管线化的特点" class="headerlink" title="管线化的特点"></a>管线化的特点</h4><ol>
+<li><p>管线化机制通过持久连接完成，仅HTTP&#x2F;1.1 支持此技术</p>
+</li>
+<li><p>只有GET和HEAD请求可以进行管线化，而POST则有所限制  </p>
+</li>
+<li><p>初次创建连接时不应启动管线机制，因为对方(服务器)不一定支持HTTP&#x2F;1.1版本的协议  </p>
+</li>
+<li><p>管线化不会影响响应到来的顺序，如上面的例子所示，响应返回的顺序并未改变</p>
+</li>
+<li><p>HTTP &#x2F;1.1要求服务器端支持管线化，但并不要求服务器端也对响应进行管线化处理，只是要求对于管线化的请求不失败即可  </p>
+</li>
+<li><p>由于.上面提到的服务器端问题，开启管线化很可能并不会带来大幅度的性能提升，而且很多服务器端和代理程序对管线化的支持并不好，因此现代浏览器如<strong>Chrome和Firefox</strong> 默认并未开启管线化支持</p>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/http/" class="print-no-link">#http</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTTP协议</div>
+      <div>http://example.com/2019/07/02/HTTP协议/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年7月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/" title="原型链">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">原型链</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/06/25/Event%E4%BA%8B%E4%BB%B6%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/" title="Event事件常见应用">
+                        <span class="hidden-mobile">Event事件常见应用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

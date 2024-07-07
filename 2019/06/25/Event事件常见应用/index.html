@@ -1,0 +1,650 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="Event 对象W3C的说法是： Event 对象代表事件的状态，比如事件在其中发生的元素、键盘按键的状态、鼠标的位置、鼠标按钮的状态。 事件通常与函数结合使用，函数不会在事件发生前被执行！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Event事件常见应用">
+<meta property="og:url" content="http://example.com/2019/06/25/Event%E4%BA%8B%E4%BB%B6%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="Event 对象W3C的说法是： Event 对象代表事件的状态，比如事件在其中发生的元素、键盘按键的状态、鼠标的位置、鼠标按钮的状态。 事件通常与函数结合使用，函数不会在事件发生前被执行！">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-25T09:20:41.000Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.529Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="html">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Event事件常见应用 - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Event事件常见应用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-06-25 17:20" pubdate>
+          2019年6月25日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          980 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Event事件常见应用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Event-对象"><a href="#Event-对象" class="headerlink" title="Event 对象"></a>Event 对象</h2><p>W3C的说法是：</p>
+<p>Event 对象代表事件的状态，比如事件在其中发生的元素、键盘按键的状态、鼠标的位置、鼠标按钮的状态。</p>
+<p>事件通常与函数结合使用，函数不会在事件发生前被执行！</p>
+<span id="more"></span>
+<h2 id="几种常见事件"><a href="#几种常见事件" class="headerlink" title="几种常见事件"></a>几种常见事件</h2><p><strong>event.preventDefault()</strong> :阻止默认事件  </p>
+<p><strong>event.stopPropagation()</strong>:阻止冒泡  </p>
+<p><strong>event.stopImmediatePropagation()</strong>:按优先级阻止执行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">            <span class="hljs-selector-tag">p</span> &#123; <span class="hljs-attribute">height</span>: <span class="hljs-number">30px</span>; <span class="hljs-attribute">width</span>: <span class="hljs-number">150px</span>; <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#ccf</span>; &#125;</span><br><span class="language-css">            <span class="hljs-selector-tag">div</span> &#123;<span class="hljs-attribute">height</span>: <span class="hljs-number">30px</span>; <span class="hljs-attribute">width</span>: <span class="hljs-number">150px</span>; <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#cfc</span>; &#125;</span><br><span class="language-css">        </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>paragraph<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">            <span class="hljs-keyword">const</span> p = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;p&#x27;</span>)</span><br><span class="language-javascript">            p.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> &#123;</span><br><span class="language-javascript">              <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;我是p元素上被绑定的第一个监听函数&quot;</span>);</span><br><span class="language-javascript">            &#125;, <span class="hljs-literal">false</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">            p.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> &#123;</span><br><span class="language-javascript">              <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;我是p元素上被绑定的第二个监听函数&quot;</span>);</span><br><span class="language-javascript">              event.<span class="hljs-title function_">stopImmediatePropagation</span>();</span><br><span class="language-javascript">              <span class="hljs-comment">// 执行stopImmediatePropagation方法,阻止click事件冒泡,并且阻止p元素上绑定的其他click事件的事件监听函数的执行.</span></span><br><span class="language-javascript">            &#125;, <span class="hljs-literal">false</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">            p.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>,<span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> &#123;</span><br><span class="language-javascript">              <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;我是p元素上被绑定的第三个监听函数&quot;</span>);</span><br><span class="language-javascript">              <span class="hljs-comment">// 该监听函数排在上个函数后面，该函数不会被执行</span></span><br><span class="language-javascript">            &#125;, <span class="hljs-literal">false</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">            <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;div&quot;</span>).<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> &#123;</span><br><span class="language-javascript">              <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;我是div元素,我是p元素的上层元素&quot;</span>);</span><br><span class="language-javascript">              <span class="hljs-comment">// p元素的click事件没有向上冒泡，该函数不会被执行</span></span><br><span class="language-javascript">            &#125;, <span class="hljs-literal">false</span>);</span><br><span class="language-javascript">        </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>event.currentTarget</strong>:当前绑定的事件（父级元素）</p>
+<p><strong>event.target</strong>:绑定的事件</p>
+<p>以上两者主要用于事件委托中。<br><strong>事件委托就是利用冒泡的原理，将事件加到 父元素 或 祖先元素上，触发执行效果。</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;myLinks&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;goSomewhere&quot;</span>&gt;</span>Go somewhere<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;doSomething&quot;</span>&gt;</span>Do something<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;sayHi&quot;</span>&gt;</span>Say hi<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>正常情况下添加点击事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> item1 = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;goSomewhere&quot;</span>);<br>    <span class="hljs-keyword">var</span> item2 = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;doSomething&quot;</span>);<br>    <span class="hljs-keyword">var</span> item3 = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;sayHi&quot;</span>);<br> <br>    item1.<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>      location.<span class="hljs-property">href</span> = <span class="hljs-string">&quot;http://www.baidu.com&quot;</span>;<br>    &#125;;<br>    item2.<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-string">&quot;事件委托&quot;</span>;<br>    &#125;;<br>    item3.<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;hi&quot;</span>);<br>    &#125;;<br><br></code></pre></td></tr></table></figure>
+<p>使用事件委托</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">document</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>     <span class="hljs-keyword">var</span> target = event.<span class="hljs-property">target</span>;<br>     <span class="hljs-keyword">switch</span> (target.<span class="hljs-property">id</span>) &#123;<br>       <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;doSomething&quot;</span>:<br>         <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-string">&quot;事件委托&quot;</span>;<br>         <span class="hljs-keyword">break</span>;<br>       <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;goSomewhere&quot;</span>:<br>         location.<span class="hljs-property">href</span> = <span class="hljs-string">&quot;http://www.baidu.com&quot;</span>;<br>         <span class="hljs-keyword">break</span>;<br>       <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;sayHi&quot;</span>: <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;hi&quot;</span>);<br>         <span class="hljs-keyword">break</span>;<br>     &#125;<br>   &#125;)<br></code></pre></td></tr></table></figure>
+<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> eventCus = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Event</span>(<span class="hljs-string">&#x27;custome&#x27;</span>);<br>ev.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;custome&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;自定义事件&#x27;</span>);<br>&#125;);<br>ev.<span class="hljs-title function_">dispatchEvent</span>(eve);<br></code></pre></td></tr></table></figure>
+<p>自定义事件也可以使用<code>customEvent</code></p>
+<p>区别在于能够传递数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">createEvent</span>(<span class="hljs-params">params, eventName = <span class="hljs-string">&#x27;mock-event&#x27;</span></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CustomEvent</span>(eventName, &#123; <span class="hljs-attr">detail</span>: params &#125;);<br>&#125;<br><br><span class="hljs-keyword">const</span> event = <span class="hljs-title function_">createEvent</span>(&#123; <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;0010&#x27;</span> &#125;);<br></code></pre></td></tr></table></figure>
+<p>这里值得注意，需要把想要传递的参数包裹在一个包含detail属性的对象，否则传递的参数不会被挂载？（这里不太确定，我试过传id和params都不会生效）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;mock-event&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">&#123; detail: &#123; id &#125; &#125;</span>) =&gt;</span> &#123;<br>           <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;id&#x27;</span>,id) <span class="hljs-comment">// 会在控制台打印0010</span><br>       &#125;);<br></code></pre></td></tr></table></figure>
+<h2 id="DOM事件流的补充"><a href="#DOM事件流的补充" class="headerlink" title="DOM事件流的补充"></a>DOM事件流的补充</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>DOM事件流<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><br>	<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;ev&quot;</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">				<span class="hljs-selector-id">#ev</span> &#123;</span><br><span class="language-css">					<span class="hljs-attribute">width</span>: <span class="hljs-number">300px</span>;</span><br><span class="language-css">					<span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;</span><br><span class="language-css">					<span class="hljs-attribute">background-color</span>: red;</span><br><span class="language-css">					<span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;</span><br><span class="language-css">					<span class="hljs-attribute">text-align</span>: center;</span><br><span class="language-css">					<span class="hljs-attribute">line-height</span>: <span class="hljs-number">100px</span>;</span><br><span class="language-css">				&#125;</span><br><span class="language-css">			</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br>			目标元素<br>		<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">			<span class="hljs-keyword">var</span> ev = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;ev&#x27;</span>);</span><br><span class="language-javascript">			<span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(</span><br><span class="language-javascript">				<span class="hljs-string">&#x27;click&#x27;</span>,</span><br><span class="language-javascript">				<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">					<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;window捕获阶段&#x27;</span>);</span><br><span class="language-javascript">				&#125;,</span><br><span class="language-javascript">				<span class="hljs-literal">true</span></span><br><span class="language-javascript">			);</span><br><span class="language-javascript">			<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">addEventListener</span>(</span><br><span class="language-javascript">				<span class="hljs-string">&#x27;click&#x27;</span>,</span><br><span class="language-javascript">				<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">					<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;doc捕获阶段&#x27;</span>);</span><br><span class="language-javascript">				&#125;,</span><br><span class="language-javascript">				<span class="hljs-literal">true</span></span><br><span class="language-javascript">			);</span><br><span class="language-javascript">			<span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>.<span class="hljs-title function_">addEventListener</span>(</span><br><span class="language-javascript">				<span class="hljs-string">&#x27;click&#x27;</span>,</span><br><span class="language-javascript">				<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">					<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;html捕获阶段&#x27;</span>);</span><br><span class="language-javascript">				&#125;,</span><br><span class="language-javascript">				<span class="hljs-literal">true</span></span><br><span class="language-javascript">			);</span><br><span class="language-javascript">			<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">addEventListener</span>(</span><br><span class="language-javascript">				<span class="hljs-string">&#x27;click&#x27;</span>,</span><br><span class="language-javascript">				<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">					<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;body捕获阶段&#x27;</span>);</span><br><span class="language-javascript">				&#125;,</span><br><span class="language-javascript">				<span class="hljs-literal">true</span></span><br><span class="language-javascript">			);</span><br><span class="language-javascript">			ev.<span class="hljs-title function_">addEventListener</span>(</span><br><span class="language-javascript">				<span class="hljs-string">&#x27;click&#x27;</span>,</span><br><span class="language-javascript">				<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">					<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;div捕获阶段&#x27;</span>);</span><br><span class="language-javascript">				&#125;,</span><br><span class="language-javascript">				<span class="hljs-literal">true</span></span><br><span class="language-javascript">            );</span><br><span class="language-javascript">            <span class="hljs-keyword">var</span> eve=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Event</span>(<span class="hljs-string">&#x27;test&#x27;</span>);</span><br><span class="language-javascript">            ev.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;test&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">                <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;自定义事件&#x27;</span>);</span><br><span class="language-javascript">            &#125;);</span><br><span class="language-javascript">            ev.<span class="hljs-title function_">dispatchEvent</span>(eve);</span><br><span class="language-javascript">		</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/html/" class="print-no-link">#html</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Event事件常见应用</div>
+      <div>http://example.com/2019/06/25/Event事件常见应用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年6月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/07/02/HTTP%E5%8D%8F%E8%AE%AE/" title="HTTP协议">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTTP协议</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/06/11/DOM%E4%BA%8B%E4%BB%B6%E6%B5%81/" title="DOM事件流">
+                        <span class="hidden-mobile">DOM事件流</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

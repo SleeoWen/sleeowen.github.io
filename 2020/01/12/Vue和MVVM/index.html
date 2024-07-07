@@ -1,0 +1,716 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="Vue.jsVue.js是什么 Vue.js 是一个轻巧、高性能、可组件化的 MVVM 库，拥有非常容易上手的 API； Vue.js是一个构建数据驱动的 Web 界面的库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue和MVVM">
+<meta property="og:url" content="http://example.com/2020/01/12/Vue%E5%92%8CMVVM/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="Vue.jsVue.js是什么 Vue.js 是一个轻巧、高性能、可组件化的 MVVM 库，拥有非常容易上手的 API； Vue.js是一个构建数据驱动的 Web 界面的库。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-01-12T15:48:50.000Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.533Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Vue和MVVM - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Vue和MVVM"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-01-12 23:48" pubdate>
+          2020年1月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Vue和MVVM</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Vue-js"><a href="#Vue-js" class="headerlink" title="Vue.js"></a>Vue.js</h2><h3 id="Vue-js是什么"><a href="#Vue-js是什么" class="headerlink" title="Vue.js是什么"></a>Vue.js是什么</h3><ul>
+<li>Vue.js 是一个轻巧、高性能、可组件化的 MVVM 库，拥有非常容易上手的 API；</li>
+<li>Vue.js是一个构建数据驱动的 Web 界面的库。</li>
+</ul>
+<span id="more"></span>
+<h3 id="Vue-js-的特性"><a href="#Vue-js-的特性" class="headerlink" title="Vue.js 的特性"></a>Vue.js 的特性</h3><ol>
+<li>轻量级的框架</li>
+<li>双向数据绑定</li>
+<li>指令</li>
+<li>插件化（组件化）</li>
+</ol>
+<h3 id="MVVM-框架"><a href="#MVVM-框架" class="headerlink" title="MVVM 框架"></a>MVVM 框架</h3><ul>
+<li>MVVM（Model-View-ViewModel）是对 MVC（Model-View-Control）和 MVP（Model-View-Presenter）的进一步改进。<blockquote>
+<p>『View』：视图层（UI 用户界面）</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>『ViewModel』：业务逻辑层（一切 js 可视为业务逻辑）</p>
+</blockquote>
+<blockquote>
+<p>『Model』：数据层（存储数据及对数据的处理如增删改查）</p>
+</blockquote>
+<ul>
+<li>MVVM 将数据双向绑定（data-binding）作为核心思想，View 和 Model 之间没有联系，它们通过 ViewModel 这个桥梁进行交互。</li>
+<li>Model 和 ViewModel 之间的交互是双向的，因此 View 的变化会自动同步到 Model，而 Model 的变化也会立即反映到 View 上显示。</li>
+<li>当用户操作 View，ViewModel 感知到变化，然后通知 Model 发生相应改变；反之当 Model 发生改变，ViewModel 也能感知到变化，使 View 作出相应更新。</li>
+<li>Angular 和 Ember 都采用这种模式。</li>
+</ul>
+<h3 id="Vue-的开发模式"><a href="#Vue-的开发模式" class="headerlink" title="Vue 的开发模式"></a>Vue 的开发模式</h3><ul>
+<li>通过 script 标签直接引入 vue.js</li>
+<li>通过 Vue 的脚手架工具 vue-cli 来进行一键项目搭建</li>
+</ul>
+<h3 id="Vue-js-的优点"><a href="#Vue-js-的优点" class="headerlink" title="Vue.js 的优点"></a>Vue.js 的优点</h3><ul>
+<li>简单轻巧，功能强大，拥有非常容易上手的 API；</li>
+<li>可组件化 和 响应式设计；</li>
+<li>实现数据与结构分离，高性能，易于浏览器的加载速度；</li>
+<li>MVVM 模式，数据双向绑定，减少了 DOM 操作，将更多精力放在数据和业务逻辑上。</li>
+</ul>
+<h3 id="Vue的优点"><a href="#Vue的优点" class="headerlink" title="Vue的优点"></a>Vue的优点</h3><ul>
+<li>低耦合。视图（View）可以独立于 Model 变化和修改，一个 ViewModel 可以绑定到不同的 “View” 上，当 View 变化的时候 Model 可以不变，当 Model 变化的时候 View 也可以不变。</li>
+<li>可重用性。你可以把一些视图逻辑放在一个 ViewModel 里面，让很多 View 重用这段视图逻辑。</li>
+<li>独立开发。开发人员可以专注于业务逻辑和数据的开发（ViewModel），设计人员可以专注于页面设计。</li>
+<li>方便测试。界面素来是比较难于测试的，开发中大部分 Bug 来至于逻辑处理，由于 ViewModel 分离了许多逻辑，可以对 ViewModel 构造单元测试。</li>
+<li>易用 灵活 高效。</li>
+</ul>
+<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><h3 id="JQuery和MVVM的区别"><a href="#JQuery和MVVM的区别" class="headerlink" title="JQuery和MVVM的区别"></a>JQuery和MVVM的区别</h3><ul>
+<li>数据和视图的分离，解耦（开放封闭原则）</li>
+<li>以数据驱动视图，只关心数据变化，DOM操作被封装</li>
+</ul>
+<h3 id="什么是MVVM"><a href="#什么是MVVM" class="headerlink" title="什么是MVVM"></a>什么是MVVM</h3><ul>
+<li>MVVM 是 Model-View-ViewModel 的缩写。MVVM 是一种设计思想。Model 层代表数据模型，也可以在 Model 中定义数据修改和操作的业务逻辑；View 代表 UI 组件，它负责将数据模型转化成 UI 展现出来，ViewModel 是一个同步 View 和 Model 的对象。</li>
+<li>在 MVVM 架构下，View 和 Model 之间并没有直接的联系，而是通过 ViewModel 进行交互，Model 和 ViewModel 之间的交互是双向的， 因此 View 数据的变化会同步到 Model 中，而 Model 数据的变化也会立即反应到 View 上。</li>
+<li>ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。</li>
+</ul>
+<h2 id="Vue和MVVM"><a href="#Vue和MVVM" class="headerlink" title="Vue和MVVM"></a>Vue和MVVM</h2><ul>
+<li>响应式：vue如何监听到data的每个属性变化？</li>
+<li>模板引擎：vue的模板如何被解析，指令如何处理？</li>
+<li>渲染：vue的模板如何被渲染成html？以及渲染过程</li>
+</ul>
+<h3 id="vue中如何实现响应式"><a href="#vue中如何实现响应式" class="headerlink" title="vue中如何实现响应式"></a>vue中如何实现响应式</h3><h4 id="什么是响应式"><a href="#什么是响应式" class="headerlink" title="什么是响应式"></a>什么是响应式</h4><ul>
+<li>修改data属性后，vue立刻监听到</li>
+<li>data属性被代理到vm上</li>
+</ul>
+<h3 id="Object-defineProperty-obj-prop-desc"><a href="#Object-defineProperty-obj-prop-desc" class="headerlink" title="Object.defineProperty(obj, prop, desc)"></a>Object.defineProperty(obj, prop, desc)</h3><p><strong>实现响应式的核心函数</strong></p>
+<blockquote>
+<p>Object.defineProperty(obj, prop, desc)的作用就是直接在一个对象上定义一个新属性，或者修改一个已经存在的属性<br>模板中没有的数据，不会走get监听，所以也不会走set监听，Object.defineProperty的原则是走get才会走set,防止无用的数据重复渲染。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> vm = &#123;&#125;<br><span class="hljs-keyword">var</span> data = &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;zhangsan&#x27;</span>,<br>    <span class="hljs-attr">age</span>: <span class="hljs-number">20</span><br>&#125;<br><br><span class="hljs-keyword">var</span> key, value<br><span class="hljs-keyword">for</span> (key <span class="hljs-keyword">in</span> data) &#123;<br>    (<span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) &#123;<br>        <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(vm, key, &#123;<br>            <span class="hljs-attr">get</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>                <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;get&#x27;</span>, data[key]) <span class="hljs-comment">// 监听</span><br>                <span class="hljs-keyword">return</span> data[key]<br>            &#125;,<br>            <span class="hljs-attr">set</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">newVal</span>) &#123;<br>                <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;set&#x27;</span>, newVal) <span class="hljs-comment">// 监听</span><br>                data[key] = newVal<br>            &#125;<br>        &#125;)<br>    &#125;)(key)<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="vue中如何解析模板"><a href="#vue中如何解析模板" class="headerlink" title="vue中如何解析模板"></a>vue中如何解析模板</h3><h4 id="模板是什么？"><a href="#模板是什么？" class="headerlink" title="模板是什么？"></a>模板是什么？</h4><ul>
+<li>本质：字符串</li>
+<li>有逻辑，如v-if v-for等</li>
+<li>与html很像，但有很大区别</li>
+<li>最终还要转化成html来显示</li>
+<li>模板最终要装换成js代码（render函数）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//模板</span><br>    &lt;div id=<span class="hljs-string">&quot;app&quot;</span>&gt;<br>        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123;price&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br>    &lt;/div&gt;<br><span class="hljs-comment">//render函数</span><br>        <span class="hljs-keyword">function</span> <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>            <span class="hljs-title function_">with</span>(<span class="hljs-params"><span class="hljs-variable language_">this</span></span>) &#123;  <span class="hljs-comment">// this 就是 vm</span><br>                <span class="hljs-keyword">return</span> <span class="hljs-title function_">_c</span>(<br>                    <span class="hljs-string">&#x27;div&#x27;</span>,<br>                    &#123;<br>                        <span class="hljs-attr">attrs</span>: &#123;<span class="hljs-string">&#x27;id&#x27;</span>: <span class="hljs-string">&#x27;app&#x27;</span>&#125;<br>                    &#125;,<br>                    [<br>                        <span class="hljs-title function_">_c</span>(<span class="hljs-string">&#x27;p&#x27;</span>, [<span class="hljs-title function_">_v</span>(<span class="hljs-title function_">_s</span>(price))])<br>                    ]<br>                )<br>            &#125;<br>        &#125;<br><span class="hljs-comment">//在vue源码中搜索code.render，然后alert(code.render)可以看render函数</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>h函数生成vdom</li>
+<li>patch函数渲染成dom</li>
+</ul>
+<hr>
+<ul>
+<li>h函数就是vue中的createElement方法，这个函数作用就是创建虚拟dom，追踪dom变化的</li>
+</ul>
+<h3 id="vue的整个实现流程"><a href="#vue的整个实现流程" class="headerlink" title="vue的整个实现流程"></a>vue的整个实现流程</h3><ol>
+<li>解析模板成render函数</li>
+<li>响应式开始监听</li>
+<li>首次渲染，显示页面，且绑定依赖</li>
+<li>data属性变化，触发rerender</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Vue/" class="print-no-link">#Vue</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Vue和MVVM</div>
+      <div>http://example.com/2020/01/12/Vue和MVVM/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年1月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/01/23/Vue%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F/" title="Vue的响应式">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Vue的响应式</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/01/01/VueRouter/" title="VueRouter">
+                        <span class="hidden-mobile">VueRouter</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
