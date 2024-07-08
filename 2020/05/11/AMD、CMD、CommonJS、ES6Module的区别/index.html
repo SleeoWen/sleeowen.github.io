@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="icon" href="/images/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,7 +19,7 @@
     <meta name="description" content="前言回想起之前的一次面试， 第一轮面试官问我 AMD 和 CMD 的区别，我只回答说 AMD 是提前加载，CMD 是按需加载。第二轮面试官又问了我 CommonJS 和 ES6 Module 的区别，emmm…，我大致回答说新的比旧的好~~，虽然面试官并没有说什么，不过显然这样的答案并不是有助于面试、有助于自己的技术积累的。 所以有必要进行一次梳理，以便更清晰地了解它们的特点及差异。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AMD、CMD、CommonJS、ES6Module的区别">
-<meta property="og:url" content="http://example.com/2020/05/11/AMD%E3%80%81CMD%E3%80%81CommonJS%E3%80%81ES6Module%E7%9A%84%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:url" content="https://sleeowen.github.io/2020/05/11/AMD%E3%80%81CMD%E3%80%81CommonJS%E3%80%81ES6Module%E7%9A%84%E5%8C%BA%E5%88%AB/index.html">
 <meta property="og:site_name" content="SleeoWen-Blog">
 <meta property="og:description" content="前言回想起之前的一次面试， 第一轮面试官问我 AMD 和 CMD 的区别，我只回答说 AMD 是提前加载，CMD 是按需加载。第二轮面试官又问了我 CommonJS 和 ES6 Module 的区别，emmm…，我大致回答说新的比旧的好~~，虽然面试官并没有说什么，不过显然这样的答案并不是有助于面试、有助于自己的技术积累的。 所以有必要进行一次梳理，以便更清晰地了解它们的特点及差异。">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"sleeowen.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -345,7 +345,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>AMD、CMD、CommonJS、ES6Module的区别</div>
-      <div>http://example.com/2020/05/11/AMD、CMD、CommonJS、ES6Module的区别/</div>
+      <div>https://sleeowen.github.io/2020/05/11/AMD、CMD、CommonJS、ES6Module的区别/</div>
     </div>
     <div class="license-meta">
       
