@@ -1,0 +1,770 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文宇函">
+  <meta name="keywords" content="js,ts,web,h5">
+  
+    <meta name="description" content="本文介绍了 React 18 版本中 Suspense 组件和新增 SuspenseList 组件的使用以及相关属性的用法。并且和 18 之前的版本做了对比，介绍了新特性的一些优势。 一、回顾 Suspense 用法早在 React 16 版本，就可以使用 React.lazy 配合 Suspense 来进行代码拆分，我们来回顾一下之前的用法。  在编写 User 组件，在 User 组件中进行网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React18-Suspense和SuspenseList">
+<meta property="og:url" content="http://example.com/2024/07/08/React18-Suspense%E5%92%8CSuspenseList/index.html">
+<meta property="og:site_name" content="SleeoWen-Blog">
+<meta property="og:description" content="本文介绍了 React 18 版本中 Suspense 组件和新增 SuspenseList 组件的使用以及相关属性的用法。并且和 18 之前的版本做了对比，介绍了新特性的一些优势。 一、回顾 Suspense 用法早在 React 16 版本，就可以使用 React.lazy 配合 Suspense 来进行代码拆分，我们来回顾一下之前的用法。  在编写 User 组件，在 User 组件中进行网">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/react.jpeg">
+<meta property="article:published_time" content="2024-07-08T09:52:23.000Z">
+<meta property="article:modified_time" content="2024-07-08T09:58:05.600Z">
+<meta property="article:author" content="文宇函">
+<meta property="article:tag" content="js,ts,web,h5">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/react.jpeg">
+  
+  
+  
+  <title>React18-Suspense和SuspenseList - SleeoWen-Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>SleeoWen-Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/images/post-bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="React18-Suspense和SuspenseList"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-08 17:52" pubdate>
+          2024年7月8日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">React18-Suspense和SuspenseList</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>本文介绍了 React 18 版本中 <code>Suspense</code> 组件和新增 <code>SuspenseList</code> 组件的使用以及相关属性的用法。并且和 18 之前的版本做了对比，介绍了新特性的一些优势。</p>
+<h2 id="一、回顾-Suspense-用法"><a href="#一、回顾-Suspense-用法" class="headerlink" title="一、回顾 Suspense 用法"></a>一、回顾 Suspense 用法</h2><p>早在 React 16 版本，就可以使用 <code>React.lazy</code> 配合 <code>Suspense</code> 来进行代码拆分，我们来回顾一下之前的用法。</p>
+<ol>
+<li><p>在编写 <code>User</code> 组件，在 <code>User</code> 组件中进行网络请求，获取数据</p>
+<p><code>User.jsx</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; useState, useEffect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><br><span class="hljs-comment">// 网络请求，获取 user 数据</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">requestUser</span> = id =&gt;<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span><br>        <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">resolve</span>(&#123; id, <span class="hljs-attr">name</span>: <span class="hljs-string">`用户<span class="hljs-subst">$&#123;id&#125;</span>`</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">10</span> + id &#125;), id * <span class="hljs-number">1000</span>)<br>    );<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">User</span> = props =&gt; &#123;<br>    <span class="hljs-keyword">const</span> [user, setUser] = <span class="hljs-title function_">useState</span>(&#123;&#125;);<br><br>    <span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-title function_">requestUser</span>(props.<span class="hljs-property">id</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> <span class="hljs-title function_">setUser</span>(res));<br>    &#125;, [props.<span class="hljs-property">id</span>]);<br> <br>    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>当前用户是: &#123;user.name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;<br>&#125;;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">User</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 App 组件中通过 <code>React.lazy</code> 的方式加载 <code>User</code> 组件（使用时需要用 <code>Suspense</code> 组件包裹起来哦）</p>
+<p><code>App.jsx</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">ReactDOM</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-dom&quot;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title class_">User</span> = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./User&quot;</span>));<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">App</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>    <span class="hljs-keyword">return</span> (<br>        <span class="language-xml"><span class="hljs-tag">&lt;&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">React.Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">&#123;</span>&lt;<span class="hljs-attr">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>&#125;&gt;</span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">User</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#123;1&#125;</span> /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">React.Suspense</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/&gt;</span></span><br>    );<br>&#125;;<br><br><span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">createRoot</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;root&quot;</span>)).<span class="hljs-title function_">render</span>(<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span>);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>效果图：</p>
+<p><img src="data:image/webp;base64,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" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>此时，可以看到 User 组件在加载出来之前会 <code>loading</code> 一下，虽然进行了代码拆分，但还是有两个美中不足的地方</p>
+<ul>
+<li><p>需要在 <code>User</code> 组件中进行一些列的操作：定义 <code>state</code> ，<code>effect</code> 中发请求，然后修改 <code>state</code>，触发 <code>render</code></p>
+</li>
+<li><p>虽然看到 <code>loading</code> 展示了出来，但是仅仅只是组件加载完成，内部的请求以及用户想要看到的真实数据还没有处理完成</p>
+</li>
+</ul>
+<blockquote>
+<p>Ok, 带着这两个问题，我们继续向下探索。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="二、Suspense-的实现原理"><a href="#二、Suspense-的实现原理" class="headerlink" title="二、Suspense 的实现原理"></a>二、Suspense 的实现原理</h2><h3 id="内部流程"><a href="#内部流程" class="headerlink" title="内部流程"></a>内部流程</h3><ul>
+<li><p><code>Suspense</code> 让子组件在渲染之前进行等待，并在等待时显示 fallback 的内容</p>
+</li>
+<li><p><code>Suspense</code> 内的组件子树比组件树的其他部分拥有更低的优先级</p>
+</li>
+<li><p>执行流程</p>
+<ul>
+<li><p>在 <code>render</code> 函数中可以使用异步请求数据</p>
+</li>
+<li><p><code>react</code> 会从我们的缓存中读取</p>
+</li>
+<li><p>如果缓存命中，直接进行 <code>render</code></p>
+</li>
+<li><p>如果没有缓存，会抛出一个 <code>promise</code> 异常</p>
+</li>
+<li><p>当 <code>promise</code> 完成后，<code>react</code> 会重新进行 <code>render</code>，把数据展示出来</p>
+</li>
+<li><p>完全同步写法，没有任何异步 <code>callback</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="简易版代码实现"><a href="#简易版代码实现" class="headerlink" title="简易版代码实现"></a>简易版代码实现</h3><ul>
+<li><p>子组件没有加载完成时，会抛出一个 <code>promise</code> 异常</p>
+</li>
+<li><p>监听 <code>promise</code>，状态变更后，更新 <code>state</code>，触发组件更新，重新渲染子组件</p>
+</li>
+<li><p>展示子组件内容</p>
+</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-string">&quot;react&quot;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Suspense</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br>    state = &#123;<br>        loading: <span class="hljs-literal">false</span>,<br>    &#125;;<br><br>    componentDidCatch(error) &#123;<br>        <span class="hljs-keyword">if</span> (error &amp;&amp; typeof error.<span class="hljs-keyword">then</span> === <span class="hljs-string">&quot;function&quot;</span>) &#123;<br>            error.<span class="hljs-keyword">then</span>(() =&gt; &#123;<br>                <span class="hljs-keyword">this</span>.setState(&#123; loading: <span class="hljs-literal">true</span> &#125;);<br>            &#125;);<br>            <span class="hljs-keyword">this</span>.setState(&#123; loading: <span class="hljs-literal">false</span> &#125;);<br>        &#125;<br>    &#125;<br><br>    render() &#123;<br>        const &#123; fallback, children &#125; = <span class="hljs-keyword">this</span>.props;<br>        const &#123; loading &#125; = <span class="hljs-keyword">this</span>.state;<br>        <span class="hljs-keyword">return</span> loading ? fallback : children;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-type">Suspense</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="三、新版-User-组件编写方式"><a href="#三、新版-User-组件编写方式" class="headerlink" title="三、新版 User 组件编写方式"></a>三、新版 User 组件编写方式</h2><p>针对上面我们说的两个问题，来修改一下我们的 <code>User</code> 组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">User</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params">props</span>) =&gt; &#123;<br>    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-title function_">requestUser</span>(props.<span class="hljs-property">id</span>);<br>    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>当前用户是: &#123;user.name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>多希望 <code>User</code> 组件能这样写，省去了很多冗余的代码，并且能够在请求完成之前统一展示 <code>fallback</code></p>
+<p>但是我们又不能直接使用 <code>async</code>、<code>await</code> 去编写组件。这时候怎么办呢？</p>
+<p>结合上面我们讲述的 <code>Suspense</code> 实现原理，那我们可以封装一层 <code>promise</code>，请求中，我们将 <code>promise</code> 作为异常抛出，请求完成展示结果。</p>
+<p><code>wrapPromise</code> 函数的含义：</p>
+<ul>
+<li><p>接受一个 <code>promise</code> 作为参数</p>
+</li>
+<li><p>定义了 <code>promise</code> 状态和结果</p>
+</li>
+<li><p>返回一个包含 <code>read</code> 方法的对象</p>
+</li>
+<li><p>调用 <code>read</code> 方法时，会根据 <code>promise</code> 当前的状态去判断抛出异常还是返回结果。</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrapPromise</span>(<span class="hljs-params">promise</span>) &#123;<br>    <span class="hljs-keyword">let</span> status = <span class="hljs-string">&quot;pending&quot;</span>;<br>    <span class="hljs-keyword">let</span> result;<br>    <span class="hljs-keyword">let</span> suspender = promise.<span class="hljs-title function_">then</span>(<br>        <span class="hljs-function">(<span class="hljs-params">r</span>) =&gt;</span> &#123;<br>            status = <span class="hljs-string">&quot;success&quot;</span>;<br>            result = r;<br>        &#125;,<br>        <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;<br>            status = <span class="hljs-string">&quot;error&quot;</span>;<br>            result = e;<br>        &#125;<br>    );<br>    <span class="hljs-keyword">return</span> &#123;<br>        <span class="hljs-title function_">read</span>(<span class="hljs-params"></span>) &#123;<br>            <span class="hljs-keyword">if</span> (status === <span class="hljs-string">&quot;pending&quot;</span>) &#123;<br>                <span class="hljs-keyword">throw</span> suspender;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (status === <span class="hljs-string">&quot;error&quot;</span>) &#123;<br>                <span class="hljs-keyword">throw</span> result;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (status === <span class="hljs-string">&quot;success&quot;</span>) &#123;<br>                <span class="hljs-keyword">return</span> result;<br>            &#125;<br>        &#125;,<br>    &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>使用 <code>wrapPromise</code> 重新改写一下 <code>User</code> 组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 网络请求，获取 user 数据</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">requestUser</span> = (<span class="hljs-params">id</span>) =&gt;<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span><br>        <span class="hljs-built_in">setTimeout</span>(<br>            <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">resolve</span>(&#123; id, <span class="hljs-attr">name</span>: <span class="hljs-string">`用户<span class="hljs-subst">$&#123;id&#125;</span>`</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">10</span> + id &#125;),<br>            id * <span class="hljs-number">1000</span><br>        )<br>    );<br><br><span class="hljs-keyword">const</span> resourceMap = &#123;<br>    <span class="hljs-number">1</span>: <span class="hljs-title function_">wrapPromise</span>(<span class="hljs-title function_">requestUser</span>(<span class="hljs-number">1</span>)),<br>&#125;;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">User</span> = (<span class="hljs-params">props</span>) =&gt; &#123;<br>    <span class="hljs-keyword">const</span> resource = resourceMap[props.<span class="hljs-property">id</span>];<br>    <span class="hljs-keyword">const</span> user = resource.<span class="hljs-title function_">read</span>();<br>    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>当前用户是: &#123;user.name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>这时候可以看到界面首先展示 <code>loading</code>，请求结束后，直接将数据展示出来。不需要编写副作用代码，也不需要在组件内进行 <code>loading</code> 的判断。</p>
+<p><img src="data:image/webp;base64,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" srcset="/img/loading.gif" lazyload></p>
+<h2 id="四、SuspenseList"><a href="#四、SuspenseList" class="headerlink" title="四、SuspenseList"></a>四、SuspenseList</h2><p>上面我们讲述了 <code>Suspense</code> 的用法，那如果有多个 <code>Suspense</code> 同时存在时，我们想控制他们的展示顺序以及展示方式，应该怎么做呢？</p>
+<p>React 中也提供了一个新的组件：<code>SuspenseList</code></p>
+<h3 id="SuspenseList-属性"><a href="#SuspenseList-属性" class="headerlink" title="SuspenseList 属性"></a>SuspenseList 属性</h3><p><code>SuspenseList</code> 组件接受三个属性</p>
+<ul>
+<li><p><code>revealOrder</code>: 子 <code>Suspense</code> 的加载顺序</p>
+<ul>
+<li><p>forwards: 从前向后展示，无论请求的速度快慢都会等前面的先展示</p>
+</li>
+<li><p>Backwards: 从后向前展示，无论请求的速度快慢都会等后面的先展示</p>
+</li>
+<li><p>together: 所有的 Suspense 都准备好之后同时显示</p>
+</li>
+</ul>
+</li>
+<li><p>tail: 指定如何显示 <code>SuspenseList</code> 中未准备好的 <code>Suspense</code></p>
+<ul>
+<li><p>不设置：默认加载所有 Suspense 对应的 fallback</p>
+</li>
+<li><p>collapsed：仅展示列表中下一个 Suspense 的 fallback</p>
+</li>
+<li><p>hidden: 未准备好的项目不限时任何信息</p>
+</li>
+</ul>
+</li>
+<li><p>children: 子元素</p>
+<ul>
+<li><p>子元素可以是任意 React 元素</p>
+</li>
+<li><p><strong>当子元素中包含非 <code>Suspense</code> 组件时，且未设置 <code>tail</code> 属性，那么此时所有的 <code>Suspense</code> 元素必定是同时加载，设置 <code>revealOrder</code> 属性也无效。当设置 <code>tail</code> 属性后，无论是 <code>collapsed</code> 还是 <code>hidden</code>，<code>revealOrder</code> 属性即可生效</strong></p>
+</li>
+<li><p>子元素中多个 <code>Suspense</code> 不会相互阻塞</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="SuspenseList-使用"><a href="#SuspenseList-使用" class="headerlink" title="SuspenseList 使用"></a>SuspenseList 使用</h3><p><code>User</code> 组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrapPromise</span>(<span class="hljs-params">promise</span>) &#123;<br>    <span class="hljs-keyword">let</span> status = <span class="hljs-string">&quot;pending&quot;</span>;<br>    <span class="hljs-keyword">let</span> result;<br>    <span class="hljs-keyword">let</span> suspender = promise.<span class="hljs-title function_">then</span>(<br>        <span class="hljs-function">(<span class="hljs-params">r</span>) =&gt;</span> &#123;<br>            status = <span class="hljs-string">&quot;success&quot;</span>;<br>            result = r;<br>        &#125;,<br>        <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;<br>            status = <span class="hljs-string">&quot;error&quot;</span>;<br>            result = e;<br>        &#125;<br>    );<br>    <span class="hljs-keyword">return</span> &#123;<br>        <span class="hljs-title function_">read</span>(<span class="hljs-params"></span>) &#123;<br>            <span class="hljs-keyword">if</span> (status === <span class="hljs-string">&quot;pending&quot;</span>) &#123;<br>                <span class="hljs-keyword">throw</span> suspender;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (status === <span class="hljs-string">&quot;error&quot;</span>) &#123;<br>                <span class="hljs-keyword">throw</span> result;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (status === <span class="hljs-string">&quot;success&quot;</span>) &#123;<br>                <span class="hljs-keyword">return</span> result;<br>            &#125;<br>        &#125;,<br>    &#125;;<br>&#125;<br><br><span class="hljs-comment">// 网络请求，获取 user 数据</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">requestUser</span> = (<span class="hljs-params">id</span>) =&gt;<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span><br>        <span class="hljs-built_in">setTimeout</span>(<br>            <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">resolve</span>(&#123; id, <span class="hljs-attr">name</span>: <span class="hljs-string">`用户<span class="hljs-subst">$&#123;id&#125;</span>`</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">10</span> + id &#125;),<br>            id * <span class="hljs-number">1000</span><br>        )<br>    );<br><br><span class="hljs-keyword">const</span> resourceMap = &#123;<br>    <span class="hljs-number">1</span>: <span class="hljs-title function_">wrapPromise</span>(<span class="hljs-title function_">requestUser</span>(<span class="hljs-number">1</span>)),<br>    <span class="hljs-number">3</span>: <span class="hljs-title function_">wrapPromise</span>(<span class="hljs-title function_">requestUser</span>(<span class="hljs-number">3</span>)),<br>    <span class="hljs-number">5</span>: <span class="hljs-title function_">wrapPromise</span>(<span class="hljs-title function_">requestUser</span>(<span class="hljs-number">5</span>)),<br>&#125;;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">User</span> = (<span class="hljs-params">props</span>) =&gt; &#123;<br>    <span class="hljs-keyword">const</span> resource = resourceMap[props.<span class="hljs-property">id</span>];<br>    <span class="hljs-keyword">const</span> user = resource.<span class="hljs-title function_">read</span>();<br>    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>当前用户是: &#123;user.name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;<br>&#125;;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">User</span>;<br></code></pre></td></tr></table></figure>
+
+<p><code>App</code> 组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">ReactDOM</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-dom&quot;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title class_">User</span> = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./User&quot;</span>));<br><span class="hljs-comment">// 此处亦可以不使用 React.lazy()，直接使用以下 import 方式引入也可以</span><br><span class="hljs-comment">// import User from &quot;./User&quot;</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">App</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>    <span class="hljs-keyword">return</span> (<br>        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">React.SuspenseList</span> <span class="hljs-attr">revealOrder</span>=<span class="hljs-string">&quot;forwards&quot;</span> <span class="hljs-attr">tail</span>=<span class="hljs-string">&quot;collapsed&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">React.Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">&#123;</span>&lt;<span class="hljs-attr">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>&#125;&gt;</span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">User</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#123;1&#125;</span> /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">React.Suspense</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">React.Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">&#123;</span>&lt;<span class="hljs-attr">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>&#125;&gt;</span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">User</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#123;3&#125;</span> /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">React.Suspense</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">React.Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">&#123;</span>&lt;<span class="hljs-attr">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>&#125;&gt;</span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">User</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#123;5&#125;</span> /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">React.Suspense</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">React.SuspenseList</span>&gt;</span></span><br>    );<br>&#125;;<br><br><span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">createRoot</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;root&quot;</span>)).<span class="hljs-title function_">render</span>(<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="使用-SuspenseList-后效果图"><a href="#使用-SuspenseList-后效果图" class="headerlink" title="使用 SuspenseList 后效果图"></a>使用 SuspenseList 后效果图</h3><p><img src="data:image/webp;base64,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" srcset="/img/loading.gif" lazyload></p>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li>本文 <code>wrapPromise</code> 方法取自 <a href="https://link.juejin.cn/?target=https://github.com/gaearon" title="https://github.com/gaearon">Dan Abramov</a> 的 <strong><a href="https://link.juejin.cn/?target=https://codesandbox.io/s/frosty-hermann-bztrp?file=/src/fakeApi.js" title="https://codesandbox.io/s/frosty-hermann-bztrp?file=/src/fakeApi.js">frosty-hermann-bztrp</a></strong></li>
+</ul>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>好了，关于 React 中 Suspense 以及 SuspenseList 组件的用法，就已经介绍完了，在 SuspenseList 使用章节，所有的代码均已贴出来了。有疑惑的地方可以说出来一起进行讨论。</p>
+<p>文中有写的不对或不严谨的地方，欢迎大家能提出宝贵的意见，十分感谢。</p>
+<p>如果喜欢或者有所帮助，欢迎 Star。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/React/" class="category-chain-item">-React</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>React18-Suspense和SuspenseList</div>
+      <div>http://example.com/2024/07/08/React18-Suspense和SuspenseList/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文宇函</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/08/React18-%E6%B8%90%E5%8F%98%E6%9B%B4%E6%96%B0/" title="React18-渐变更新">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React18-渐变更新</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/08/React18-%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%BC%8F/" title="React18-并发模式">
+                        <span class="hidden-mobile">React18-并发模式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
