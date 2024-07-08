@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="SleeoWen-Blog">
 <meta property="og:description" content="什么是堆栈栈，又叫堆栈，是和列表类似的一种数据结构，但是却更高效，因为栈内的元素只能通过列表的一端访问，称为栈顶，数据只能在栈顶添加或删除，遵循 先入后出(LIFO，last-in-first-out) 的原则，普遍运用于计算机的方方面面。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//08/19/js%E6%A0%88/duizhan1.webp">
+<meta property="og:image" content="http://example.com/2019/08/19/js%E6%A0%88/duizhan1.webp">
 <meta property="article:published_time" content="2019-08-19T03:39:15.000Z">
 <meta property="article:modified_time" content="2024-07-07T07:40:24.000Z">
 <meta property="article:author" content="文宇函">
 <meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/.com//08/19/js%E6%A0%88/duizhan1.webp">
+<meta name="twitter:image" content="http://example.com/2019/08/19/js%E6%A0%88/duizhan1.webp">
   
   
   
@@ -279,7 +279,7 @@
 <span id="more"></span>
 <p>对栈的操作主要有两种，一是将一个元素压入栈，push方法，另一个就是将栈顶元素出栈，pop方法。</p>
 <p>除此之外，栈还有其他的一些属性和方法：查看当前栈顶的元素值，我们使用 peek 方法，它仅仅返回栈顶元素值，并不删除它；clear 方法用于清空当前栈内的所有元素；top属性记录当前栈顶位置；length方法返回当前栈内元素总数等；接着我们定义栈的数据类型，并利用JS中的数组去实现它。</p>
-<p><img src="/.com//08/19/js%E6%A0%88/duizhan1.webp" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/2019/08/19/js%E6%A0%88/duizhan1.webp" srcset="/img/loading.gif" lazyload alt="image"></p>
 <h2 id="栈的实现"><a href="#栈的实现" class="headerlink" title="栈的实现"></a>栈的实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//定义栈</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Stack</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">dataStore</span> = [];    <span class="hljs-comment">//初始化为空</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">top</span> = <span class="hljs-number">0</span>;           <span class="hljs-comment">//记录栈顶位置</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">pop</span> = pop;         <span class="hljs-comment">//出栈</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">push</span> = push;       <span class="hljs-comment">//入栈</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">peek</span> = peek;       <span class="hljs-comment">//查看栈顶元素</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">length</span> = length;   <span class="hljs-comment">//查看栈内元素总数</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">clear</span> = clear;     <span class="hljs-comment">//清空栈</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>我们利用 dataStore 来保存栈内元素，初始化为空数组，top 属性用于记录当前栈顶位置，初始化的时候为0，<br>表示栈顶对应数组的起始位置是0，如果有元素入栈，则该属性会随之反生变化。</p>

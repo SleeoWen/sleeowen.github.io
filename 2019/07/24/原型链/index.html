@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="SleeoWen-Blog">
 <meta property="og:description" content="原型链的介绍什么是原型？js中，任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。 什么是原型链？  原型链的核心就是依赖对象的_proto_的指向，当自身不存在的属性时，就一层层的扒出创建对象的构造函数，直至到Object">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/yuanxing.png">
-<meta property="og:image" content="http://example.com/.com//07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/gouzao.png">
+<meta property="og:image" content="http://example.com/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/yuanxing.png">
+<meta property="og:image" content="http://example.com/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/gouzao.png">
 <meta property="article:published_time" content="2019-07-24T08:19:43.000Z">
 <meta property="article:modified_time" content="2024-07-07T07:40:24.000Z">
 <meta property="article:author" content="文宇函">
 <meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/.com//07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/yuanxing.png">
+<meta name="twitter:image" content="http://example.com/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/yuanxing.png">
   
   
   
@@ -293,8 +293,8 @@
 <p>  即new一个对象，它的_proto_属性指向了方法的prototype属性，并且constructor指向了prototype的constructor属性。</p>
 <h3 id="创建对象的过程-1"><a href="#创建对象的过程-1" class="headerlink" title="创建对象的过程"></a>创建对象的过程</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Hehe</span>(<span class="hljs-params">name</span>) &#123;<br>		<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>	&#125;<br>	<span class="hljs-keyword">var</span> h = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Hehe</span>(<span class="hljs-string">&quot;笑你妹&quot;</span>);<br>	<span class="hljs-comment">//伪代码:</span><br>	<span class="hljs-keyword">function</span> <span class="hljs-title function_">newObj</span>(<span class="hljs-params">name</span>)&#123;<br>		 <span class="hljs-keyword">var</span> obj = &#123;&#125;;<br>		 obj.<span class="hljs-property">__proto__</span> = <span class="hljs-title class_">Hehe</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>; <br>		 obj.<span class="hljs-property">constructor</span> = <span class="hljs-title class_">Hehe</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">constructor</span>;<br>		 <span class="hljs-keyword">var</span> result = <span class="hljs-title class_">Hehe</span>.<span class="hljs-title function_">call</span>(obj, name);<br>		 <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> result===<span class="hljs-string">&#x27;object&#x27;</span>&amp;&amp; result!=<span class="hljs-literal">null</span> ? result : obj;  <span class="hljs-comment">//当无返回对象或默认时返回obj。</span><br>	&#125;<br>	<span class="hljs-keyword">var</span> hh = <span class="hljs-title function_">newObj</span>(<span class="hljs-string">&quot;笑你妹&quot;</span>);<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(hh);<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(h);<br>	<span class="hljs-comment">//虽然hh!=h,但是可以看到这个hh就和h的结构一样了。</span><br><br></code></pre></td></tr></table></figure>
 <p><strong>过程：先创建一个空对象，设置一个_proto_指向方法的原型，设置constructor，用新对象做this指向方法，返回新对象。</strong></p>
-<h2 id="原型以及原型链关系"><a href="#原型以及原型链关系" class="headerlink" title="原型以及原型链关系"></a>原型以及原型链关系</h2><p><img src="/.com//07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/yuanxing.png" srcset="/img/loading.gif" lazyload alt="image"></p>
-<p><img src="/.com//07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/gouzao.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h2 id="原型以及原型链关系"><a href="#原型以及原型链关系" class="headerlink" title="原型以及原型链关系"></a>原型以及原型链关系</h2><p><img src="/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/yuanxing.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/2019/07/24/%E5%8E%9F%E5%9E%8B%E9%93%BE/gouzao.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><blockquote>
 <p>任何对象都有一个原型对象，这个原型对象由对象的内置属性_proto_指向它的构造函数的prototype指向的对象，即任何对象都是由一个构造函数创建的，但是不是每一个对象都有prototype，只有方法才有prototype。</p>
 </blockquote>
