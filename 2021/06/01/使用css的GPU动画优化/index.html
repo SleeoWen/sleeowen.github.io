@@ -23,17 +23,17 @@
 <meta property="og:site_name" content="SleeoWen-Blog">
 <meta property="og:description" content="相信不少人在做移动端动画的时候遇到了卡顿的问题，这篇文章尝试从浏览器渲染的角度；一点一点告诉你动画优化的原理及其技巧，作为你工作中优化动画的参考。文末有优化技巧的总结。  相信不少人在做移动端动画的时候遇到了卡顿的问题，这篇文章尝试从浏览器渲染的角度；一点一点告诉你动画优化的原理及其技巧，作为你工作中优化动画的参考。文末有优化技巧的总结。 因为 GPU 合成没有官方规范，每个浏览器的问题和解决方">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/pic1.png">
-<meta property="og:image" content="http://example.com/pic2.png">
-<meta property="og:image" content="http://example.com/pic3.png">
-<meta property="og:image" content="http://example.com/pic4.png">
-<meta property="og:image" content="http://example.com/pic5.png">
+<meta property="og:image" content="http://example.com/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic1.png">
+<meta property="og:image" content="http://example.com/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic2.png">
+<meta property="og:image" content="http://example.com/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic3.png">
+<meta property="og:image" content="http://example.com/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic4.png">
+<meta property="og:image" content="http://example.com/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic5.png">
 <meta property="article:published_time" content="2021-06-01T09:17:47.000Z">
-<meta property="article:modified_time" content="2024-07-07T07:40:24.609Z">
+<meta property="article:modified_time" content="2024-07-07T07:40:24.000Z">
 <meta property="article:author" content="文宇函">
 <meta property="article:tag" content="css">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/pic1.png">
+<meta name="twitter:image" content="http://example.com/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic1.png">
   
   
   
@@ -294,7 +294,7 @@
 </ul>
 <p>解析完成之后，浏览器引擎会通过 dom tree 和 css rule tree 来构建 rendering tree：</p>
 <ul>
-<li><p>rendering tree 和 dom tree 并不完全相同，例如：<head></head > 或 display:none 的东西就不会放在渲染树中。</p>
+<li><p>rendering tree 和 dom tree 并不完全相同，例如：<head></head> 或 display:none 的东西就不会放在渲染树中。</p>
 </li>
 <li><p>css rule tree 主要是完成匹配，并把 css rule 附加给 rendering tree 的每个 element。</p>
 </li>
@@ -339,7 +339,7 @@
 <p>假设我们的页面中有 A 和 B 两个元素，它们有 absolute 和 z-index 属性；浏览器会重绘它们，然后将图像发送给 GPU；然后 GPU 将会把多个图像合成展示在屏幕上。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css"><span class="hljs-selector-id">#a</span>, <span class="hljs-selector-id">#b</span> &#123;</span><br><span class="language-css"> <span class="hljs-attribute">position</span>: absolute;</span><br><span class="language-css">&#125;</span><br><span class="language-css"></span><br><span class="language-css"><span class="hljs-selector-id">#a</span> &#123;</span><br><span class="language-css"> <span class="hljs-attribute">left</span>: <span class="hljs-number">30px</span>;</span><br><span class="language-css"> <span class="hljs-attribute">top</span>: <span class="hljs-number">30px</span>;</span><br><span class="language-css"> <span class="hljs-attribute">z-index</span>: <span class="hljs-number">2</span>;</span><br><span class="language-css">&#125;</span><br><span class="language-css"></span><br><span class="language-css"><span class="hljs-selector-id">#b</span> &#123;</span><br><span class="language-css"> <span class="hljs-attribute">z-index</span>: <span class="hljs-number">1</span>;</span><br><span class="language-css">&#125;</span><br><span class="language-css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;#a&quot;</span>&gt;</span>A<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;#b&quot;</span>&gt;</span>B<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<p><img src="/pic1.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic1.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>我们将 A 元素使用 left 属性，做一个移动动画：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css"><span class="hljs-selector-id">#a</span>, <span class="hljs-selector-id">#b</span> &#123;</span><br><span class="language-css"> <span class="hljs-attribute">position</span>: absolute;</span><br><span class="language-css">&#125;</span><br><span class="language-css"></span><br><span class="language-css"><span class="hljs-selector-id">#a</span> &#123;</span><br><span class="language-css"> <span class="hljs-attribute">left</span>: <span class="hljs-number">10px</span>;</span><br><span class="language-css"> <span class="hljs-attribute">top</span>: <span class="hljs-number">10px</span>;</span><br><span class="language-css"> <span class="hljs-attribute">z-index</span>: <span class="hljs-number">2</span>;</span><br><span class="language-css"> <span class="hljs-attribute">animation</span>: move <span class="hljs-number">1s</span> linear;</span><br><span class="language-css">&#125;</span><br><span class="language-css"></span><br><span class="language-css"><span class="hljs-selector-id">#b</span> &#123;</span><br><span class="language-css"> <span class="hljs-attribute">left</span>: <span class="hljs-number">50px</span>;</span><br><span class="language-css"> <span class="hljs-attribute">top</span>: <span class="hljs-number">50px</span>;</span><br><span class="language-css"> <span class="hljs-attribute">z-index</span>: <span class="hljs-number">1</span>;</span><br><span class="language-css">&#125;</span><br><span class="language-css"></span><br><span class="language-css"><span class="hljs-keyword">@keyframes</span> move &#123;</span><br><span class="language-css"> <span class="hljs-selector-tag">from</span> &#123; <span class="hljs-attribute">left</span>: <span class="hljs-number">30px</span>; &#125;</span><br><span class="language-css"> <span class="hljs-selector-tag">to</span> &#123; <span class="hljs-attribute">left</span>: <span class="hljs-number">100px</span>; &#125;</span><br><span class="language-css">&#125;</span><br><span class="language-css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;#a&quot;</span>&gt;</span>A<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;#b&quot;</span>&gt;</span>B<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
@@ -383,7 +383,7 @@
 </ul>
 <p>所以你可以看到，每次当你添加<code>transform:translateZ(0)</code>或<code>will-change：transform</code><br>给一个元素，你都会做同样的工作。重绘是非常消耗性能的，在这里它尤其缓慢。在大多数情况，浏览器不能增量重绘。它不得不重绘先前被复合层覆盖的区域。</p>
 <h3 id="隐式合成"><a href="#隐式合成" class="headerlink" title="隐式合成"></a>隐式合成</h3><p>还记得刚才 a 元素和 b 元素动画的例子吗？现在我们将 b 元素做动画，a 元素静止不动。</p>
-<p><img src="/pic2.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic2.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>和刚才的例子不同，现在 b 元素将拥有一个独立复合层；然后它们将被 GPU 合成。但是因为 a 元素要在 b 元素的上面（因为 a 元素的 z-index 比 b 元素高），那么浏览器会做什么？浏览器会将 a 元素也单独做一个复合层！</p>
 <p>所以我们现在有三个复合层 a 元素所在的复合层、b 元素所在的复合层、其他内容及背景层。</p>
 <p>一个或多个没有自己复合层的元素要出现在有复合层元素的上方，它就会拥有自己的复合层；这种情况被称为隐式合成。</p>
@@ -413,8 +413,8 @@
 <p>假设我们做一个轮播图组件，轮播图有 10 张图片；为了实现图片间平滑过渡的交互；为每个图像添加了 will-change:transform。这将提升图像为复合层，它将多需要 19mb 的空间。800 <em>600</em> 4 * 10 &#x3D;<br>1920000。</p>
 <p>仅仅是一个轮播图组件就需要 19m 的额外空间！</p>
 <p>在 chrome 的开发者工具中打开 setting——》Experiments——》layers 可以看到每个层的内存占用。如图所示：</p>
-<p><img src="/pic3.png" srcset="/img/loading.gif" lazyload alt="image"></p>
-<p><img src="/pic4.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic3.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic4.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <h3 id="GPU-动画的优点和缺点"><a href="#GPU-动画的优点和缺点" class="headerlink" title="GPU 动画的优点和缺点"></a>GPU 动画的优点和缺点</h3><p>现在我们可以总结一下 GPU 动画的优点和缺点：</p>
 <ul>
 <li><p>每秒 60 帧，动画平滑、流畅。</p>
@@ -450,7 +450,7 @@
 <div class="bg-change"></div> <style> .bg-change { width: 100px; height: 100px; background: red; } .bg-change::before { content: ''; display: block; width: 100%; height: 100%; background: blue; opacity: 0; transition: opacity 20s; } .bg-change:hover::before { opacity: 1; } </style>
 
 <h3 id="减小复合层的尺寸"><a href="#减小复合层的尺寸" class="headerlink" title="减小复合层的尺寸"></a>减小复合层的尺寸</h3><p>看一下两张图片，有什么不同吗？</p>
-<p><img src="/pic5.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><img src="/.com//06/01/%E4%BD%BF%E7%94%A8css%E7%9A%84GPU%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96/pic5.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>这两张图片视觉上是一样的，但是它们的尺寸一个是 39kb；另外一个是 400b。不同之处在于，第二个纯色层是通过 scale 放大 10 倍做到的。</p>
 <div id="a"></div> <div id="b"></div> <style> #a, #b { will-change: transform; } #a { width: 100px; height: 100px; } #b { width: 10px; height: 10px; transform: scale(10); } </style>
 
